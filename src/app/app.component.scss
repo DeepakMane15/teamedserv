@@ -206,7 +206,7 @@ mat-tree-node {
 }
 
 .secondary-section {
-  border: 1px solid gray;
+  border: 1px solid #fff;
   margin: 7px;
   border-radius: 4px;
 }
@@ -222,4 +222,7 @@ mat-tree-node {
   background-color: #d0d9de;
   height: 1px;
   width: 100%;
+}
+.color-white {
+  color: #fff;
 }
