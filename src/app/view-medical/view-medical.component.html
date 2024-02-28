@@ -42,8 +42,10 @@
               </div>
               <div class="img-name">{{getName()}}</div>
               <div class="container">
-                <a *ngIf="medicalData['request_exists'] === '0' && medicalData['is_own_team'] === '0'" (click)="openDialog()" class="button">Invite</a>
-                <span *ngIf="medicalData['request_exists'] === '1'">Invitation Sent</span>
+                <a *ngIf=" medicalData['is_paid'] === '0'" (click)="openDialog()" class="button">Pay</a>
+                <a *ngIf=" medicalData['is_paid'] === '1' && medicalData['request_exists'] === '0'" (click)="sendInvitation()" class="button">Send Invite</a>
+                <span *ngIf="medicalData['request_exists'] === '1' && medicalData['is_own_team'] === '0'">Invitation Sent</span>
+                <span *ngIf="medicalData['is_own_team'] === '1'">Owned</span>
               </div>
             </div>
             <div>

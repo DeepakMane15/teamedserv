@@ -143,8 +143,7 @@ export class ViewMedicalComponent {
           console.log(res.message);
           this.medicalData = res.data;
           this.getMapUrl(this.medicalData.address);
-          this.protectedView =
-            res.data?.is_own_team === '0' && res.data?.request_exists === '0';
+          this.protectedView = res.data?.is_paid === '0';
           this.showSpinner = false;
         }
       },
@@ -193,22 +192,24 @@ export class ViewMedicalComponent {
   }
 
   openDialog(): void {
+    const userProfile = this._authService.getUserData();
     const dialogRef = this.dialog.open(PaymentModalComponent, {
-      data: this.medicalData,
+      data: { ...this.medicalData, customerId: userProfile.customer_id },
       width: '600px', // Set width to 600 pixels
       autoFocus: false,
       // height: '800px', // Set height to 400 pixels
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.sendInvitation();
+      if (result) this.savePayment(result);
+      else alert('Error: unexpected error occured');
     });
   }
 
-  private sendInvitation() {
+  public sendInvitation() {
     const fd = new FormData();
     fd.append('pid', this.medicalData.pid.toString());
-    fd.append('sendEmail', "1");
+    fd.append('sendEmail', '1');
     this.showSpinner = true;
     this._apiService.post(APIConstant.SEND_INVITATION, fd).subscribe(
       (res: any) => {
@@ -221,6 +222,27 @@ export class ViewMedicalComponent {
       (error) => {
         this.showSpinner = false;
         console.log(error);
+      }
+    );
+  }
+
+  public savePayment(intent: any) {
+    const fd = new FormData();
+    fd.append('pid', this.medicalData.pid.toString());
+    fd.append('intent_id', intent.id);
+
+    this._apiService.post(APIConstant.SAVE_PAYMENT, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.showSpinner = false;
+          this.fetchMedicalTeamData(this.medicalData.pid.toString());
+        } else {
+          this.showSpinner = false;
+        }
+      },
+      (error) => {
+        this.showSpinner = false;
+        console.log('save failed', error);
       }
     );
   }

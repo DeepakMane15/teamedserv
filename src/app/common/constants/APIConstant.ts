@@ -27,6 +27,7 @@ export enum APIConstant {
 
   // team-board
   FILTER_MEDICAL_TEAM = 'medical/filter-medical-team',
+  SAVE_PAYMENT = 'medical/save-payment',
 
   // patients
   GET_PATIENTS = 'medical/get-patients',
