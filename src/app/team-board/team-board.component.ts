@@ -44,10 +44,10 @@ export class TeamBoardComponent implements OnInit {
 
   teamBoardForm = this.fb.group({
     boardType: TeamBoardType.TEAM,
-    language: [],
-    county: [],
-    profession: [],
-    service_area: [],
+    language: null,
+    county: null,
+    profession: null,
+    service_area: null,
   });
 
   constructor(
@@ -245,5 +245,14 @@ export class TeamBoardComponent implements OnInit {
           }
         );
     }
+  }
+  public reset() {
+    this.teamBoardForm.patchValue({
+      boardType: TeamBoardType.TEAM,
+      language: null,
+      county: null,
+      profession: null,
+      service_area: null,
+    });
   }
 }
