@@ -7,6 +7,7 @@ import { LoginGuard } from './shared/loginguard/login.guard';
 import { TeamBoardComponent } from './team-board/team-board.component';
 import { ViewMedicalComponent } from './view-medical/view-medical.component';
 import { TeamInvitationComponent } from './team-invitation/team-invitation.component';
+import { Path } from 'leaflet';
 
 const routes: Routes = [
   {
@@ -56,6 +57,12 @@ const routes: Routes = [
     component: TeamInvitationComponent,
     pathMatch: 'full',
   },
+  {
+    path: 'assignments',
+    loadChildren: () =>
+      import('./assignment/assignment.module').then((m) => m.AssignmentModule),
+    canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({
