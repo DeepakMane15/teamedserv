@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService } from '../shared/services/api/api.service';
 // import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
@@ -44,10 +44,10 @@ export class TeamBoardComponent implements OnInit {
 
   teamBoardForm = this.fb.group({
     boardType: TeamBoardType.TEAM,
-    language: null,
-    county: null,
-    profession: null,
-    service_area: null,
+    language: [],
+    county: [],
+    profession: [],
+    service_area: [],
   });
 
   constructor(
@@ -208,7 +208,7 @@ export class TeamBoardComponent implements OnInit {
   }
 
   public onSubmit() {
-    if (this.teamBoardForm.valid) {
+    if (this.isAnyControlFilled(this.teamBoardForm)) {
       const formModel: TeamBoardModel = {
         boardType: this.teamBoardForm.value.boardType || TeamBoardType.TEAM,
         language: this.teamBoardForm.value.language || [],
@@ -246,6 +246,26 @@ export class TeamBoardComponent implements OnInit {
         );
     }
   }
+  public isAnyControlFilled(form: FormGroup): boolean {
+    // Iterate through the controls of the form
+    for (const controlName in form.controls) {
+      if (form.controls.hasOwnProperty(controlName)) {
+        const control = form.controls[controlName];
+
+        // Check if the control has a non-null and non-empty value
+        if (
+          control.value !== null &&
+          control.value !== '' &&
+          control.value !== undefined
+        ) {
+          return true; // At least one control is filled
+        }
+      }
+    }
+
+    return false; // No control is filled
+  }
+
   public reset() {
     this.teamBoardForm.patchValue({
       boardType: TeamBoardType.TEAM,
