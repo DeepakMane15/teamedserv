@@ -12,13 +12,7 @@ import { ApiService } from 'src/app/shared/services/api/api.service';
   styleUrls: ['./patient-list.component.scss'],
 })
 export class PatientListComponent {
-  displayedColumns: string[] = [
-    'id',
-    'Name',
-    'Address',
-    'Phone No',
-    'Action',
-  ];
+  displayedColumns: string[] = ['id', 'Name', 'Address', 'Phone No', 'Action'];
   public showSpinner: Boolean = false;
   dataSource = new MatTableDataSource<any>();
 
