@@ -58,6 +58,7 @@ body {
   margin: 0;
   font-family: 'Hind Madurai', sans-serif !important;
 }
+
 div,
 span,
 h1,
@@ -168,7 +169,7 @@ mat-card {
   gap: 10px;
 
   .cancel-btn {
-    background-color: #cecece !important;
+    background-color: #949292 !important;
   }
 }
 
@@ -326,6 +327,10 @@ a {
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
   background-color: #fff !important;
+}
+
+.mat-mdc-form-field-error {
+  font-weight: 500;
 }
 
 // .mdc-text-field--filled :hover {

@@ -151,7 +151,7 @@
             <!-- <input matInput formControlName="timezone"> -->
             <mat-select formControlName="timezone">
               <mat-option *ngFor="let timezone of timezones"
-                value="timezone.timezone">{{timezone.timezone}}</mat-option>
+                [value]="timezone.timezone">{{timezone.timezone}}</mat-option>
             </mat-select>
             <mat-error *ngIf="companyForm.get('timezone')?.invalid && companyForm.get('timezone')?.touched">
               TimeZone is required
@@ -277,8 +277,8 @@
           </div>
         </mat-card-content>
         <mat-card-actions class="action-btns">
-          <button mat-raised-button color="primary" type="submit">Submit</button>
           <button mat-raised-button class="cancel-btn" type="button" (click)="handleCancel()">Cancel</button>
+          <button mat-raised-button color="primary" type="submit">Submit</button>
         </mat-card-actions>
       </mat-card>
 
