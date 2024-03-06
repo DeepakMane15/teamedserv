@@ -1,1 +1,76 @@
-<p>assignment-list works!</p>
+<main>
+  <div class="spinner-overlay" *ngIf="showSpinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+  <mat-card class="assignment-card">
+    <mat-card-header>
+      <mat-card-title>All Assignments</mat-card-title>
+      <button mat-raised-button class="add-assignment" color="primary" type="button" (click)="navigateToAdd()">Add Assignments</button>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="search">
+        <input type="text" class="custom-input" placeholder="Search">
+      </div>
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" class="custom-table">
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="No" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> No </th>
+            <td mat-cell *matCellDef="let element; let i = index" style="max-width: 150px;"> {{ i + 1 }} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="Medical Team" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Medical Team </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;" [matTooltip]="element.name ">
+              {{element.name }} </td>
+          </ng-container>
+
+          <!-- Profession Column -->
+          <ng-container matColumnDef="Patient" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Patient </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.address}} </td>
+          </ng-container>
+
+          <!-- Email/Phone No Column -->
+          <ng-container matColumnDef="Date" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 200px;"> Date </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.mobile}} </td>
+          </ng-container>
+          <!-- Amount -->
+          <ng-container matColumnDef="Amount" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 200px;"> Amount </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.mobile}} </td>
+          </ng-container>
+          <!-- Assignments  -->
+          <ng-container matColumnDef="Assignments" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 200px;"> Assignments</th>
+            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.mobile}} </td>
+          </ng-container>
+
+          <!-- Action Column -->
+          <ng-container matColumnDef="Action" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Action </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;">
+              <div class="icon-container">
+                <mat-icon class="action-mat-icon" (click)="navigateToEdit(element)">edit</mat-icon>
+                <mat-icon class="action-mat-icon" (click)="navigateToView(element)">remove_red_eye</mat-icon>
+                <mat-icon class="action-mat-icon" (click)="handleDeleteAssignment(element.customer_id)">delete</mat-icon>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+          aria-label="Select page of periodic elements">
+        </mat-paginator>
+      </div>
+
+
+    </mat-card-content>
+  </mat-card>
+</main>
