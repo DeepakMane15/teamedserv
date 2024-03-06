@@ -249,7 +249,10 @@ export class TeamBoardComponent implements OnInit {
   public isAnyControlFilled(form: FormGroup): boolean {
     // Iterate through the controls of the form
     for (const controlName in form.controls) {
-      if (form.controls.hasOwnProperty(controlName)) {
+      if (
+        controlName !== 'boardType' &&
+        form.controls.hasOwnProperty(controlName)
+      ) {
         const control = form.controls[controlName];
 
         // Check if the control has a non-null and non-empty value

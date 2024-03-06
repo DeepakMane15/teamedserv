@@ -10,25 +10,25 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DataSource } from '@angular/cdk/collections';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { AddAssignmentComponent } from './add-assignment/add-assignment.component';
 
 const routes: Routes = [
   {
-  path: '',
-  component: AssignmentListComponent,
-  pathMatch: 'full',
-  canActivate: [AuthGuard],
+    path: '',
+    component: AssignmentListComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'add',
+    component: AddAssignmentComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule,
-  MatCardModule,
-  MatProgressSpinnerModule,
-  MatPaginatorModule,
-  MatTooltipModule,
-  MatIconModule,
-  MatTableModule
-]
+  exports: [RouterModule],
 })
-export class AssignmentRoutingModule { }
+export class AssignmentRoutingModule {}

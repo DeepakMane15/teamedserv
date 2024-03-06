@@ -31,5 +31,13 @@ export enum APIConstant {
 
   // patients
   GET_PATIENTS = 'medical/get-patients',
-  GET_ASSIGNMENTS = "GET_ASSIGNMENTS"
+  GET_ASSIGNMENTS = "GET_ASSIGNMENTS",
+  GET_PATIENT_BY_ID = 'medical/get-patient-by-id',
+
+  // Assignment
+  GET_ASSIGNMENT_INITIAL_DATA = 'assignment/get-initial-data',
+  ADD_ASSIGNMENT = 'assignment/add',
+  EDIT_ASSIGNMENT = 'assignment/edit',
+
+
 }

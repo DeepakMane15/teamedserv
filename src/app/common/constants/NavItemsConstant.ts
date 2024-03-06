@@ -145,7 +145,7 @@ export const NavItemsContant: NavLinksModel[] = [
           UserTypeConstant.CUSTOMER_USER,
         ],
         icon: '',
-        url: '/',
+        url: '/assignments/add',
         category: '',
         subItems: [],
       },

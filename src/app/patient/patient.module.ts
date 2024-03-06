@@ -20,12 +20,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { AddPatientComponent } from './add-patient/add-patient.component';
+import { ViewPatientComponent } from './view-patient/view-patient.component';
 @NgModule({
   declarations: [
     PatientListComponent,
-    AddPatientComponent
+    AddPatientComponent,
+    ViewPatientComponent,
   ],
   imports: [
     CommonModule,
@@ -47,7 +49,7 @@ import { AddPatientComponent } from './add-patient/add-patient.component';
     MatTabsModule,
     FlexLayoutModule,
     MatProgressSpinnerModule,
-    MatTooltipModule
-  ]
+    MatTooltipModule,
+  ],
 })
-export class PatientModule { }
+export class PatientModule {}
