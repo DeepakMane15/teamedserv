@@ -35,6 +35,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'chat',
+    loadChildren: () =>
+      import('./chat/chat.module').then((m) => m.ChatModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'team-board',
     component: TeamBoardComponent,
     pathMatch: 'full',

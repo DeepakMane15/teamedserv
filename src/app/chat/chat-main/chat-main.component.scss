@@ -1,0 +1,16 @@
+.chat-main-container {
+  display: flex;
+}
+
+.chat-left-container {
+  flex: 0.3;
+  display: flex;
+}
+
+.chat-list-component {
+  width: 100%;
+}
+
+.chat-right-container {
+  flex: 0.7;
+}
