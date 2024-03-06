@@ -31,9 +31,6 @@
                 <div class="col">
                   <mat-form-field class="full-width">
                     <mat-label>Medical Member</mat-label>
-                    <!-- <div class="uname-input">
-                      <input matInput formControlName="medicalId">
-                    </div> -->
                     <mat-select formControlName="medicalId" (selectionChange)="handleMedicalSelect($event)">
                       <mat-option *ngFor="let medical of medicalTeams" [value]="medical.pid"
                         [disabled]="medical.approved === '0'">{{medical.first_name +
@@ -53,18 +50,6 @@
                     </div>
                   </mat-form-field>
                 </div>
-                <!-- <div class="col">
-                  <mat-form-field class="full-width">
-                    <mat-label>Company User</mat-label>
-                    <div class="uname-input">
-                      <input matInput formControlName="companyUser">
-                    </div>
-                    <mat-error
-                      *ngIf="assignmentForm.get('companyUser')?.invalid && assignmentForm.get('companyUser')?.touched">
-                      Company User is invalid
-                    </mat-error>
-                  </mat-form-field>
-                </div> -->
               </div>
             </div>
           </mat-expansion-panel>
@@ -86,9 +71,13 @@
                 <div class="col">
                   <mat-form-field class="full-width">
                     <mat-label>Assignment</mat-label>
-                    <div class="uname-input">
+                    <!-- <div class="uname-input">
                       <input matInput formControlName="assignment">
-                    </div>
+                    </div> -->
+                    <mat-select formControlName="assignment">
+                      <mat-option *ngFor="let assignment of assignmentsMaster"
+                        [value]="assignment.id">{{assignment.name}}</mat-option>
+                    </mat-select>
                     <mat-error
                       *ngIf="assignmentForm.get('assignment')?.invalid && assignmentForm.get('assignment')?.touched">
                       Assignment is invalid
@@ -105,10 +94,10 @@
                 </div>
                 <div class="col">
                   <mat-form-field class="full-width">
-                    <mat-label>Date</mat-label>
-                    <div class="uname-input">
-                      <input matInput formControlName="date">
-                    </div>
+                    <mat-label> Date</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="date">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
                     <mat-error *ngIf="assignmentForm.get('date')?.invalid && assignmentForm.get('date')?.touched">
                       Date is invalid
                     </mat-error>
@@ -128,11 +117,21 @@
                   </mat-form-field>
                 </div>
                 <div class="col">
-                  <mat-form-field class="full-width">
+                  <!-- <mat-form-field class="full-width">
                     <mat-label>Payment Date</mat-label>
                     <div class="uname-input">
                       <input matInput formControlName="paymentDate">
                     </div>
+                    <mat-error
+                      *ngIf="assignmentForm.get('paymentDate')?.invalid && assignmentForm.get('paymentDate')?.touched">
+                      Payment Date is invalid
+                    </mat-error>
+                  </mat-form-field> -->
+                  <mat-form-field class="full-width">
+                    <mat-label> Payment Date</mat-label>
+                    <input matInput [matDatepicker]="paymentDate" formControlName="paymentDate">
+                    <mat-datepicker-toggle matIconSuffix [for]="paymentDate"></mat-datepicker-toggle>
+                    <mat-datepicker #paymentDate></mat-datepicker>
                     <mat-error
                       *ngIf="assignmentForm.get('paymentDate')?.invalid && assignmentForm.get('paymentDate')?.touched">
                       Payment Date is invalid
@@ -160,20 +159,21 @@
                 <div class="col">
                   <mat-form-field class="full-width">
                     <mat-label>Patient</mat-label>
-                    <div class="uname-input">
-                      <input matInput formControlName="patientId">
-                    </div>
-                    <mat-error
-                      *ngIf="assignmentForm.get('patientId')?.invalid && assignmentForm.get('patientId')?.touched">
-                      Patient is invalid
-                    </mat-error>
+                    <mat-select formControlName="patientId" (selectionChange)="handlePatientSelect($event)">
+                      <mat-option *ngFor="let patient of patientsMaster"
+                        [value]="patient.id">{{patient.name}}</mat-option>
+                    </mat-select>
                   </mat-form-field>
+                  <mat-error
+                    *ngIf="assignmentForm.get('patientId')?.invalid && assignmentForm.get('patientId')?.touched">
+                    Patient is invalid
+                  </mat-error>
                 </div>
                 <div class="col">
                   <mat-form-field class="full-width">
                     <mat-label>Patient Address</mat-label>
                     <div class="uname-input">
-                      <input matInput formControlName="patientAddress">
+                      <input matInput formControlName="patientAddress" readonly>
                     </div>
                   </mat-form-field>
                 </div>
@@ -183,48 +183,32 @@
                   <mat-form-field class="full-width">
                     <mat-label>Contact Person Name</mat-label>
                     <div class="uname-input">
-                      <input matInput formControlName="cPerson1Name">
+                      <input matInput formControlName="cPerson1Name" readonly>
                     </div>
-                    <mat-error
-                      *ngIf="assignmentForm.get('cPerson1Name')?.invalid && assignmentForm.get('cPerson1Name')?.touched">
-                      Contact Person Name is invalid
-                    </mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col">
                   <mat-form-field class="full-width">
                     <mat-label>Contact Person Phone</mat-label>
                     <div class="uname-input">
-                      <input matInput formControlName="cPerson1Phone">
+                      <input matInput formControlName="cPerson1Phone" readonly>
                     </div>
-                    <mat-error
-                      *ngIf="assignmentForm.get('cPerson1Phone')?.invalid && assignmentForm.get('cPerson1Phone')?.touched">
-                      Contact Person Phone is invalid
-                    </mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col">
                   <mat-form-field class="full-width">
                     <mat-label>Contact Person Name</mat-label>
                     <div class="uname-input">
-                      <input matInput formControlName="cPerson2Name">
+                      <input matInput formControlName="cPerson2Name" readonly>
                     </div>
-                    <mat-error
-                      *ngIf="assignmentForm.get('cPerson2Name')?.invalid && assignmentForm.get('cPerson2Name')?.touched">
-                      Contact Person Name is invalid
-                    </mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col">
                   <mat-form-field class="full-width">
                     <mat-label>Contact Person Phone</mat-label>
                     <div class="uname-input">
-                      <input matInput formControlName="cPerson2Phone">
+                      <input matInput formControlName="cPerson2Phone" readonly>
                     </div>
-                    <mat-error
-                      *ngIf="assignmentForm.get('cPerson2Phone')?.invalid && assignmentForm.get('cPerson2Phone')?.touched">
-                      Contact Person Phone is invalid
-                    </mat-error>
                   </mat-form-field>
                 </div>
               </div>
@@ -232,9 +216,12 @@
                 <div class="col">
                   <mat-form-field class="full-width">
                     <mat-label>Visit Date</mat-label>
-                    <div class="uname-input">
+                    <!-- <div class="uname-input">
                       <input matInput formControlName="visitDate">
-                    </div>
+                    </div> -->
+                    <input matInput [matDatepicker]="visitDate" formControlName="visitDate">
+                    <mat-datepicker-toggle matIconSuffix [for]="visitDate"></mat-datepicker-toggle>
+                    <mat-datepicker #visitDate></mat-datepicker>
                     <mat-error
                       *ngIf="assignmentForm.get('visitDate')?.invalid && assignmentForm.get('visitDate')?.touched">
                       Visit Date is invalid

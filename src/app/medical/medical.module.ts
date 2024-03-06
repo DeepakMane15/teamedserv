@@ -22,6 +22,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AddMedicalComponent } from './add-medical/add-medical.component';
 import { ViewMedicalComponent } from './view-medical/view-medical.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
 // import { MedicalListComponent } from '../medical-list/medical-list.component';
 
 
@@ -51,7 +53,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatTabsModule,
     FlexLayoutModule,
     MatProgressSpinnerModule,
-    MatTooltipModule
-  ]
+    MatTooltipModule,
+    MatDatepickerModule
+  ],
+  providers:[provideNativeDateAdapter()]
 })
 export class MedicalModule { }

@@ -35,4 +35,8 @@ export enum APIConstant {
 
   // Assignment
   GET_ASSIGNMENT_INITIAL_DATA = 'assignment/get-initial-data',
+  ADD_ASSIGNMENT = 'assignment/add',
+  EDIT_ASSIGNMENT = 'assignment/edit',
+
+
 }

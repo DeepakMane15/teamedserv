@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
+import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
 import { AssignmentTypeModel } from 'src/app/common/models/AssignmentTypeModel';
 import { MedicalTeamModel } from 'src/app/common/models/MedicalTeamModel';
 import { PatientModel } from 'src/app/common/models/PatientModel';
@@ -111,7 +112,57 @@ export class AddAssignmentComponent implements OnInit {
     this.router.navigate(['/medical-team']);
   }
 
-  public onSubmit() {}
+  onSubmit(): void {
+    if (this.assignmentForm.valid) {
+      const formModel: AssignmentModel = this.assignmentForm
+        .value as AssignmentModel;
+      const formData = new FormData();
+
+      // Convert JSON object to FormData
+      for (const key of Object.keys(formModel)) {
+        const value = formModel[key];
+        formData.append(key, value);
+      }
+      this.showSpinner = true;
+      this._apiService
+        .post(
+          this.assignmentData
+            ? APIConstant.EDIT_ASSIGNMENT
+            : APIConstant.ADD_ASSIGNMENT,
+          formData
+        )
+        .subscribe(
+          (res: any) => {
+            if (res && res.status) {
+              this.showSpinner = false;
+              this.router.navigate(['/assignments']);
+            } else {
+              this.showSpinner = false;
+              console.log(res.message);
+            }
+          },
+          (error) => {
+            this.showSpinner = false;
+            console.error('Operation failed', error);
+          }
+        );
+    }
+    return;
+  }
+
+  public handlePatientSelect(event: MatSelectChange) {
+    let patient = this.patientsMaster.find((pat) => pat.id === event.value);
+
+    if (patient) {
+      this.assignmentForm.patchValue({
+        patientAddress: patient.address,
+        cPerson1Name: patient.contactPerson1_name,
+        cPerson1Phone: patient.contactPerson1_phone,
+        cPerson2Name: patient.contactPerson2_name,
+        cPerson2Phone: patient.contactPerson2_phone,
+      });
+    }
+  }
 
   public usernameAvailabilityValidator(control: any) {
     if (this.isUnameAvailable === false) {
