@@ -88,6 +88,14 @@
               <mat-icon>image</mat-icon>
               <span>Upload Profile Picture</span>
             </button>
+            <button mat-menu-item (click)="opendashboard()">
+              <mat-icon>dashboard</mat-icon>
+              <span>Professional's Dashboard</span>
+            </button>
+            <button mat-menu-item (click)="openDocument()">
+              <mat-icon>description</mat-icon>
+              <span>Documents</span>
+            </button>
             <!-- dynamic option  -->
             <button mat-menu-item *ngIf="canAccessCompany()">
               <mat-icon>person</mat-icon>
