@@ -1,0 +1,11 @@
+<div class="message-main-container">
+    <div [ngClass]="{'message-text-container-fellowuser' : !message.isUser }" class="message-text-container-user"
+        *ngFor="let message of messages">
+        <div class="message">
+            <h4>{{ message.sender }}</h4>
+            <p>{{ message.message }}</p>
+            <p class="timing-text">{{ message.timing }}</p>
+
+        </div>
+    </div>
+</div>

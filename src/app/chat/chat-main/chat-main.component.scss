@@ -9,29 +9,29 @@
   border-right: 2px solid grey;
 }
 
-.chat-left-top-container { 
-  flex: 0.05;
+.chat-left-top-container {
+  flex: 0.1;
   position: fixed;
+  top: 10;
   display: flex;
   width: 21%;
   border-bottom: 1px solid grey;
-  padding: 0.3rem; 
+  padding: 0.3rem;
+  padding-left: 1rem;
   background-color: #555050;
   z-index: 1;
 }
 
 .profile-pic {
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
-  border: 2px solid gray;
 }
 
 .chat-left-bottom-container {
-  flex: 0.95;
-  padding-top: 4rem;
-  padding-bottom: 3rem;
-  
+  flex: 0.9;
+  padding-top: 3.6rem;
+  padding-bottom: 1rem;
 }
 
 .chat-right-container {
@@ -40,7 +40,7 @@
   flex-direction: column;
 }
 
-.chat-right-top-container { 
+.chat-right-top-container {
   flex: 0.1;
   position: fixed;
   width: 100%;
@@ -49,24 +49,24 @@
   align-items: center;
   border-bottom: 1px solid grey;
   border-left: 1px solid grey;
-  padding: 0.3rem; 
+  padding: 0.3rem;
   padding-left: 1rem;
   background-color: #555050;
   z-index: 1;
 }
 
-.fellowuser-name  {
-  font-size: 1.5rem;
+.fellowuser-name {
+  font-size: 1.2rem;
   font-weight: 500;
   margin-left: 1rem;
   color: #fff;
-  align-self: flex-end;
+  align-self: center;
 }
 
 .chat-right-bottom-container {
   flex: 0.9;
   position: fixed;
-  width: 100%;
+  width: 63%;
   max-height: 100vh;
   height: 100vh;
   padding-top: 5rem;
