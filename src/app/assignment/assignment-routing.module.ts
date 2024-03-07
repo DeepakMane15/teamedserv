@@ -11,6 +11,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { AddAssignmentComponent } from './add-assignment/add-assignment.component';
+import { ViewAssignmentComponent } from './view-assignment/view-assignment.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,18 @@ const routes: Routes = [
   {
     path: 'add',
     component: AddAssignmentComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'edit',
+    component: AddAssignmentComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'view',
+    component: ViewAssignmentComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
   },

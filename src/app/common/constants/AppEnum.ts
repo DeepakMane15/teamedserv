@@ -14,3 +14,10 @@ export enum StatusCode {
   EXPIRED = 402,
   OK = 200,
 }
+
+export enum AssignmentStatus {
+  PENDING = 'pending',
+  ACTIVE = 'active',
+  DFD = 'dfd',
+  COMPLETED = 'completed',
+}

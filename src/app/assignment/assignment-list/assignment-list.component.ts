@@ -3,26 +3,31 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
+import { AssignmentStatus } from 'src/app/common/constants/AppEnum';
 // import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 
 @Component({
   selector: 'app-assignment-list',
   templateUrl: './assignment-list.component.html',
-  styleUrl: './assignment-list.component.scss'
+  styleUrl: './assignment-list.component.scss',
 })
 export class AssignmentListComponent {
   displayedColumns: string[] = [
-  'No',
-  'Medical Team',
-  'Patient',
-  'Date',
-  'Amount',
-  'Assignment',
-  'Action'
-  ];;
+    'no',
+    'transaction',
+    'patient',
+    'medicalTeam',
+    'entryDate',
+    'visitDate',
+    'amount',
+    'paymentDate',
+    'status',
+    'action',
+  ];
 
   showSpinner: any;
+  public assignmentStatus = AssignmentStatus;
 
   public showSpinnner: Boolean = false;
   dataSource = new MatTableDataSource<any>();
@@ -30,8 +35,8 @@ export class AssignmentListComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private _apiServices: ApiService, private router: Router) {}
-  ngOnInit(): void{
-    throw new Error ('Method not implemented');
+  ngOnInit(): void {
+    throw new Error('Method not implemented');
   }
 
   ngAfterViewInit() {
@@ -54,7 +59,7 @@ export class AssignmentListComponent {
       }
     );
   }
-  navigateToAdd(){
+  navigateToAdd() {
     this.router.navigate(['/assignments/add']);
   }
 
@@ -65,28 +70,28 @@ export class AssignmentListComponent {
   }
   navigateToView(assignmentData: SlotAssignmentMode) {
     this.router.navigate(['/assignments/view'], {
-      state: { No: assignmentData, tabIndex: 0},
+      state: { No: assignmentData, tabIndex: 0 },
     });
   }
   handleDeleteAssignment(assignmentNO: any) {
     let fd = new FormData();
-    fd.append('assignment_No',assignmentNO);
-    this.showSpinner = true;
-    this._apiServices.post(APIConstant.DELETE_CUSTOMER, fd).subscribe(
-      (res: any) => {
-        if (res && res.status) {
-          this.showSpinner = false;
-          console.log(res.message)
-          this.fetchAssignments();
-        } else {
-          this.showSpinner = false;
-        }
-      },
-      (error) => {
-        this.showSpinner = false;
-        console.log('Delete failed', error);
-      }
-    );
+    fd.append('assignment_No', assignmentNO);
+    // this.showSpinner = true;
+    // this._apiServices.post(APIConstant.DELETE_CUSTOMER, fd).subscribe(
+    //   (res: any) => {
+    //     if (res && res.status) {
+    //       this.showSpinner = false;
+    //       console.log(res.message);
+    //       this.fetchAssignments();
+    //     } else {
+    //       this.showSpinner = false;
+    //     }
+    //   },
+    //   (error) => {
+    //     this.showSpinner = false;
+    //     console.log('Delete failed', error);
+    //   }
+    // );
   }
   public refineLongText(value: string): string {
     let values = value?.split(',');

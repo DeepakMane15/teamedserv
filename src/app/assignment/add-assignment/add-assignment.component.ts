@@ -29,7 +29,6 @@ export class AddAssignmentComponent implements OnInit {
     assignment_id: 0,
     medicalId: ['', Validators.required],
     medicalProfession: [''],
-    // companyUser: ['', Validators.required],
     assignment: ['', Validators.required],
     transaction: [''],
     date: ['', Validators.required],
@@ -56,6 +55,32 @@ export class AddAssignmentComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.assignmentData = history.state.assignmentData;
+    if (this.assignmentData) {
+      console.log(this.assignmentData);
+      this.assignmentForm.patchValue({
+        customer_id: 0,
+        assignment_id: 0,
+        medicalId: this.assignmentData.medical_team,
+        medicalProfession: this.assignmentData.medical_profession,
+        assignment: this.assignmentData.assignment,
+        transaction: this.assignmentData.transaction,
+        date: this.assignmentData.date,
+        amount: this.assignmentData.amount,
+        paymentDate: this.assignmentData.paymentdate,
+        patientId: this.assignmentData.patient,
+        patientAddress: this.assignmentData.name,
+        cPerson1Name: this.assignmentData.cperson1,
+        cPerson1Phone: this.assignmentData.cphone1,
+        cPerson2Name: this.assignmentData.cperson2,
+        cPerson2Phone: this.assignmentData.cphone2,
+        visitDate: this.assignmentData.fromdate,
+        visitTime: this.assignmentData.time,
+        prNotes: this.assignmentData.ptnotes,
+        pNotes: this.assignmentData.pnotes,
+        iNotes: this.assignmentData.inotes,
+      });
+    }
     this.fetchMedicalTeams();
     this.fetchInitialData();
   }
@@ -109,7 +134,7 @@ export class AddAssignmentComponent implements OnInit {
     }
   }
   public navigateBack() {
-    this.router.navigate(['/medical-team']);
+    this.router.navigate(['/assignments']);
   }
 
   onSubmit(): void {

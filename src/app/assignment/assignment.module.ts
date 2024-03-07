@@ -19,9 +19,10 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table';
+import { ViewAssignmentComponent } from './view-assignment/view-assignment.component';
 
 @NgModule({
-  declarations: [AssignmentListComponent, AddAssignmentComponent],
+  declarations: [AssignmentListComponent, AddAssignmentComponent, ViewAssignmentComponent],
   imports: [
     CommonModule,
     AssignmentRoutingModule,
@@ -40,6 +41,7 @@ import { MatTableModule } from '@angular/material/table';
     MatPaginatorModule,
     MatTooltipModule,
     MatTableModule
+
   ],
   providers: [provideNativeDateAdapter()],
 })
