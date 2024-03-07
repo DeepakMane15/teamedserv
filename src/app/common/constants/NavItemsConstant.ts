@@ -117,9 +117,9 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '/',
   },
   {
-    label: 'Chat',
+    label: 'Chat #',
     roles: [
-      UserTypeConstant.ADMIN,  
+      UserTypeConstant.ADMIN,
       UserTypeConstant.CUSTOMER,
       UserTypeConstant.PROFESSIONAL
     ],

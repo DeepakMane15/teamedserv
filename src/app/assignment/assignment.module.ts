@@ -20,6 +20,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table';
 import { ViewAssignmentComponent } from './view-assignment/view-assignment.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [AssignmentListComponent, AddAssignmentComponent, ViewAssignmentComponent],
@@ -40,7 +42,9 @@ import { ViewAssignmentComponent } from './view-assignment/view-assignment.compo
     MatDatepickerModule,
     MatPaginatorModule,
     MatTooltipModule,
-    MatTableModule
+    MatTableModule,
+    MatGridListModule,
+    MatTabsModule
 
   ],
   providers: [provideNativeDateAdapter()],

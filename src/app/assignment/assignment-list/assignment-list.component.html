@@ -36,19 +36,19 @@
           <!-- Name Column -->
           <ng-container matColumnDef="medicalTeam" class="container-tab">
             <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Medical Team </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 150px;" [matTooltip]="element.medical_team_name ">
-              {{element.name }} </td>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;">
+              {{element.medical_team_name }} </td>
           </ng-container>
 
           <!-- Entry Date -->
           <ng-container matColumnDef="entryDate" class="container-tab">
             <th mat-header-cell *matHeaderCellDef style="max-width: 200px;"> Entry Date </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.date}} </td>
+            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.date | date}} </td>
           </ng-container>
           <!-- Visit Date -->
           <ng-container matColumnDef="visitDate" class="container-tab">
             <th mat-header-cell *matHeaderCellDef style="max-width: 200px;"> Visit Date </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.fromdate}} </td>
+            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.fromdate | date}} </td>
           </ng-container>
           <!-- Amount -->
           <ng-container matColumnDef="amount" class="container-tab">
@@ -58,7 +58,7 @@
           <!-- Payment Date  -->
           <ng-container matColumnDef="paymentDate" class="container-tab">
             <th mat-header-cell *matHeaderCellDef style="max-width: 200px;"> Payment Date</th>
-            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.paymentdate}} </td>
+            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.paymentdate | date}} </td>
           </ng-container>
 
           <!-- Status  -->

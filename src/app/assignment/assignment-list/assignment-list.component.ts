@@ -63,14 +63,14 @@ export class AssignmentListComponent {
     this.router.navigate(['/assignments/add']);
   }
 
-  navigateToEdit(assignmentData: SlotAssignmentMode) {
+  navigateToEdit(assignmentData: any) {
     this.router.navigate(['/assignments/edit'], {
       state: { assignmentData: assignmentData },
     });
   }
-  navigateToView(assignmentData: SlotAssignmentMode) {
+  navigateToView(assignmentData: any) {
     this.router.navigate(['/assignments/view'], {
-      state: { No: assignmentData, tabIndex: 0 },
+      state: { assignmentId: assignmentData.id, tabIndex: 0 },
     });
   }
   handleDeleteAssignment(assignmentNO: any) {

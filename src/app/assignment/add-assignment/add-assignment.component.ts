@@ -59,8 +59,8 @@ export class AddAssignmentComponent implements OnInit {
     if (this.assignmentData) {
       console.log(this.assignmentData);
       this.assignmentForm.patchValue({
-        customer_id: 0,
-        assignment_id: 0,
+        customer_id: this.assignmentData.company_id,
+        assignment_id: this.assignmentData.id,
         medicalId: this.assignmentData.medical_team,
         medicalProfession: this.assignmentData.medical_profession,
         assignment: this.assignmentData.assignment,
