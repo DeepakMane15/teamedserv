@@ -2,3 +2,45 @@
   display: flex;
 }
 
+.chat-top-container {
+  flex: 0.9;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-bottom-container {
+  flex: 0.1;
+  display: flex;
+  background-color: #555050;
+  padding: 1rem;
+  gap: 0.5rem;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.input-container {
+  width: 55%;
+  height: 2.4rem;
+  font-size: 1.5rem;
+  color: grey;
+  border: 2px solid grey;
+  border-radius: 0.3rem;
+  outline: none;
+}
+
+.send-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 0px;  
+}
+
+.send-icon { 
+  font-size: 1.6rem;
+  align-self: center;
+  color: grey;
+}
