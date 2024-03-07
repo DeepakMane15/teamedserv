@@ -16,6 +16,19 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '/',
   },
   {
+    label: 'Dashboard 2 #',
+    roles: [
+      UserTypeConstant.ADMIN,
+      UserTypeConstant.CUSTOMER,
+      UserTypeConstant.CUSTOMER_USER,
+      UserTypeConstant.PROFESSIONAL,
+    ],
+    category: '',
+    subItems: [],
+    icon: 'home',
+    url: '/dashboard2',
+  },
+  {
     label: 'Medical Team',
     roles: [
       UserTypeConstant.ADMIN,
