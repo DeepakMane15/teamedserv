@@ -117,6 +117,19 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '/',
   },
   {
+    label: 'Chat',
+    roles: [
+      UserTypeConstant.ADMIN,  
+      UserTypeConstant.CUSTOMER,
+      UserTypeConstant.PROFESSIONAL
+    ],
+    category: '',
+    subItems: [
+    ],
+    icon: 'chat',
+    url: '/chat',
+  },
+  {
     label: 'Assignment/Services #',
     roles: [
       UserTypeConstant.ADMIN,
