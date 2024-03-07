@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,7 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
-import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
+import { HttpClientModule } from '@angular/common/http'; 
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { OverlaySpinnerComponent } from './shared/loader/overlay-spinner/overlay-spinner.component';
@@ -33,13 +32,27 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ViewMedicalComponent } from './view-medical/view-medical.component';
-// import { AgmCoreModule } from '@agm/core';
 import { PaymentModalComponent } from './payment-modal/payment-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
 import { TeamInvitationComponent } from './team-invitation/team-invitation.component';
 import { NgxStripeModule } from 'ngx-stripe';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { CardComponent } from './card/card.component';
+import { Dashboard2Component } from './dashboard2/dashboard2.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { ChartModule } from 'angular-highcharts';
+import { AnnualSalesChartComponent } from './annual-sales-chart/annual-sales-chart.component';
+import { ProductSalesChartComponent } from './product-sales-chart/product-sales-chart.component';
+import { StoreSessionsChartComponent } from './store-sessions-chart/store-sessions-chart.component';
+import { SalesTrafficChartComponent } from './sales-traffic-chart/sales-traffic-chart.component';
+import { MatSortModule } from '@angular/material/sort';
+import { MatChipListbox, MatChipsModule } from '@angular/material/chips';
+import { LastFewTransactionsComponent } from './last-few-transactions/last-few-transactions.component';
+import { TopThreeProductsComponent } from './top-three-products/top-three-products.component';
+//import { DocumentComponent } from './document/document.component';
+import { AssignmentStatusProComponent } from './assignment-status-pro/assignment-status-pro.component';
+import { TransactionStatusProComponent } from './transaction-status-pro/transaction-status-pro.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +63,18 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     TeamBoardComponent,
     ViewMedicalComponent,
     PaymentModalComponent,
-    TeamInvitationComponent
+    TeamInvitationComponent,
+    CardComponent,
+    Dashboard2Component,
+    AnnualSalesChartComponent,
+    ProductSalesChartComponent,
+    StoreSessionsChartComponent,
+    SalesTrafficChartComponent,
+    LastFewTransactionsComponent,
+    TopThreeProductsComponent,
+    //DocumentComponent,
+    AssignmentStatusProComponent,
+    TransactionStatusProComponent,
   ],
   imports: [
     BrowserModule,
@@ -95,7 +119,6 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatRadioModule,
     MatCheckboxModule,
     MatDividerModule,
-    MatTableModule,
     MatPaginatorModule,
     MatIconModule,
     MatTabsModule,
@@ -103,10 +126,16 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatDialogModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    ChartModule,
+    MatSortModule,
+    MatChipsModule,
+    MatChipListbox,
   ],
   exports: [OverlaySpinnerComponent],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
