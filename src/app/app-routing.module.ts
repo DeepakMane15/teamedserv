@@ -59,6 +59,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'assignments',
+    loadChildren: () =>
+      import('./assignment/assignment.module').then((m) => m.AssignmentModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'team-invitation',
     component: TeamInvitationComponent,
     pathMatch: 'full',
