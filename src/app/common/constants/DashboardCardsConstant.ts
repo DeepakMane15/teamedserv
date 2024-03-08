@@ -7,7 +7,7 @@ export const DashboardCardsConstant: DashboardCardsModel[] = [
     cards: {
       setOne: [
         {
-          title: 'Employees',
+          title: 'Employees1',
           cols: 1,
           rows: 1,
           icon: 'mdi mdi-chart-areaspline widget-two-icon',

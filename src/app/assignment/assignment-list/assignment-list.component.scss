@@ -1,18 +1,18 @@
 main {
   margin: 10px;
 
-.add-assignment {
-  background-color: #3c8dbc !important;
-  color: #ffffff !important;
-  height: 34px !important;
-  box-shadow: none;
-  border-radius: 7px !important;
-  border: none;
-}
+  .add-assignment {
+    background-color: #3c8dbc !important;
+    color: #ffffff !important;
+    height: 34px !important;
+    box-shadow: none;
+    border-radius: 7px !important;
+    border: none;
+  }
 
-.container-tab{
-  background-color: #36404e;
-}
+  .container-tab {
+    background-color: #36404e;
+  }
 
 
   .assignment-card {
@@ -27,24 +27,42 @@ main {
     mat-card-content {
       padding-top: 20px;
 
-      .search {
+      .filter-container {
+
+        ::ng-deep .mat-mdc-form-field {
+          background-color: transparent;
+          height: 63px;
+        }
+
+        ::ng-deep .mat-mdc-form-field-infix {
+          padding-top: 8px !important;
+        }
+
+        ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+          background-color: #d9dbe1 !important;
+        }
+
         display: flex;
-        justify-content: end;
-        padding-bottom: 10px;
-        height: 25px;
+        justify-content: space-between;
+        align-items: center;
 
-        .custom-input {
-          width: 260px;
-          border: 1px solid rgb(209, 209, 209);
-          border-radius: 4px;
-          padding: 10px;
+        .search {
+          padding-bottom: 10px;
+          height: 25px;
+
+          .custom-input {
+            width: 260px;
+            border: 1px solid rgb(209, 209, 209);
+            border-radius: 4px;
+            padding: 10px;
+          }
+
+          .custom-input:focus {
+            border: 1px solid solid rgb(109 126 170);
+            outline: none;
+          }
+
         }
-
-        .custom-input:focus {
-          border: 1px solid solid rgb(109 126 170);
-          outline: none;
-        }
-
       }
 
       table {
@@ -77,11 +95,15 @@ main {
 
 
         }
+      }
     }
   }
 }
-}
 
+
+::ng-deep .green {
+  background-color: #82ff82;
+}
 // .mat-table {
 //   width: 100%; /* Ensure table takes full width */
 // }

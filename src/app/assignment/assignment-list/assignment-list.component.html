@@ -9,8 +9,18 @@
         Assignments</button>
     </mat-card-header>
     <mat-card-content>
-      <div class="search">
-        <input type="text" class="custom-input" placeholder="Search">
+      <div class="filter-container">
+        <mat-form-field>
+          <mat-select [(ngModel)]="statusFilter" (selectionChange)="filterByStatus()">
+            <mat-option value="all">All</mat-option>
+            <mat-option value="pending">Pending</mat-option>
+            <mat-option value="active">Active</mat-option>
+            <mat-option value="completed">Completed</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="search">
+          <input type="text" class="custom-input" placeholder="Search">
+        </div>
       </div>
       <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource" class="custom-table">
@@ -87,7 +97,9 @@
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            [ngStyle]="{'background-color': row.status === '0' ? '#82ff82' : row.status === 'pending' ? '#f8b73f' : row.status === 'declined' ? 'red' : ''}">
+          </tr>
         </table>
 
         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons

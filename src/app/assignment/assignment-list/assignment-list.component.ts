@@ -28,8 +28,9 @@ export class AssignmentListComponent {
 
   showSpinner: any;
   public assignmentStatus = AssignmentStatus;
-
+  public statusFilter: string = 'all';
   public showSpinnner: Boolean = false;
+  public originalData: any = [];
   dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -50,6 +51,7 @@ export class AssignmentListComponent {
       (res: any) => {
         if (res && res.status) {
           this.dataSource.data = res.data;
+          this.originalData = res.data;
           console.log(res.data);
         }
         this.showSpinner = false;
@@ -93,6 +95,20 @@ export class AssignmentListComponent {
     //   }
     // );
   }
+  public filterByStatus() {
+    this.showSpinner = true;
+    if (this.statusFilter === 'all') {
+      this.dataSource.data = this.originalData;
+      this.showSpinner = false;
+      return;
+    }
+    let filteredData = this.originalData.filter(
+      (data: any) => data.status === this.statusFilter
+    );
+    this.dataSource.data = filteredData;
+    this.showSpinner = false;
+  }
+
   public refineLongText(value: string): string {
     let values = value?.split(',');
 

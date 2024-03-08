@@ -15,7 +15,7 @@ import { GoogleService } from 'src/app/shared/services/google/google.service';
   templateUrl: './add-patient.component.html',
   styleUrls: ['./add-patient.component.scss'],
 })
-export class AddPatientComponent implements OnInit{
+export class AddPatientComponent implements OnInit {
   public showSpinner: Boolean = false;
   public isUnameAvailable: Boolean = true;
   public isChecking: Boolean = false;
@@ -24,62 +24,19 @@ export class AddPatientComponent implements OnInit{
   public patientData!: PatientModel;
 
   patientForm = this.fb.group({
+    id: 0,
     customer_id: 0,
-    name: [
-      '',
-      [
-        Validators.required,
-        Validators.email,
-        this.usernameAvailabilityValidator.bind(this),
-      ],
-    ],
-    password: ['', Validators.required],
-    company_name: ['', Validators.required],
-    federal_no: [
-      '',
-      [
-        Validators.required,
-        // Validators.pattern('[0-9]*'),
-        Validators.maxLength(10),
-      ],
-    ],
-    physical_address: ['', Validators.required],
-    mailing_address: ['', Validators.required],
-    company_email: ['', [Validators.required, Validators.email]],
-    phone: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern('^\\([0-9]{3}\\) [0-9]{3}-[0-9]{4}$'), // Valid pattern: (XXX) XXX-XXXX
-      ],
-    ],
-    fax: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern('^\\([0-9]{3}\\) [0-9]{3}-[0-9]{4}$'), // Valid pattern: (XXX) XXX-XXXX
-      ],
-    ],
-    website: '',
-    timezone: ['', Validators.required],
-    contact_name: ['', Validators.required],
-    position: '',
-    contact_phone: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern('^\\([0-9]{3}\\) [0-9]{3}-[0-9]{4}$'), // Valid pattern: (XXX) XXX-XXXX
-      ],
-    ],
-    contact_email: ['', [Validators.required, Validators.email]],
-    credit_limit: '',
-    payment_method: '',
-    payment_days: '',
-    payment_terms: '',
-    notes: '',
-    company_id: ['', Validators.required],
-    status: [true, Validators.required],
-    user_type: UserTypeConstant.CUSTOMER,
+    name: ['', Validators.required],
+    address: ['', Validators.required],
+    timeZone: ['', Validators.required],
+    telephone: '',
+    mobile: ['', Validators.required],
+    cperson1: ['', Validators.required],
+    cperson2: ['', Validators.required],
+    cphone1: ['', Validators.required],
+    cphone2: ['', Validators.required],
+    specialNotes: '',
+    internalNotes: '',
   });
 
   constructor(
@@ -93,28 +50,21 @@ export class AddPatientComponent implements OnInit{
   ngOnInit(): void {
     this.getTimeZones();
     this.patientData = history.state.patientData;
-    // this.patientForm.patchValue({
-    //   // customer_id: this.patientData.customer_id,
-    //   customer_id: this.patientData.first_name,
-    //   password: this.patientData.password,
-    //   company_name: this.patientData.company_name,
-    //   physical_address: this.patientData.physical_address,
-    //   mailing_address: this.patientData.mailing_address,
-    //   fax: this.patientData.fax,
-    //   timezone: this.patientData.timezone,
-    //   federal_no: this.patientData.federal_no,
-    //   company_email: this.patientData.company_email,
-    //   phone: this.patientData.phone,
-    //   contact_name: this.patientData.contact_name,
-    //   position: this.patientData.position,
-    //   contact_phone: this.patientData.contact_phone,
-    //   contact_email: this.patientData.contact_email,
-    //   credit_limit: this.patientData.credit_limit,
-    //   payment_method: this.patientData.payment_method,
-    //   payment_days: this.patientData.payment_days,
-    //   payment_terms: this.patientData.payment_terms,
-    //   notes: this.patientData.notes,
-    // });
+    this.patientForm.patchValue({
+      id: this.patientData.id,
+      customer_id: this.patientData.customer_id,
+      name: this.patientData.name,
+      address: this.patientData.address,
+      timeZone: this.patientData.time_zone,
+      telephone: this.patientData.telephone,
+      mobile: this.patientData.mobile,
+      cperson1: this.patientData['contactPerson1_name'],
+      cperson2: this.patientData['contactPerson2_name'],
+      cphone1: this.patientData['contactPerson1_phone'],
+      cphone2: this.patientData['contactPerson2_phone'],
+      specialNotes: this.patientData['special_notes'],
+      internalNotes: this.patientData['internal_notes'],
+    });
   }
 
   onSubmit(): void {
@@ -130,16 +80,14 @@ export class AddPatientComponent implements OnInit{
       this.showSpinner = true;
       this._apiService
         .post(
-          this.patientData
-            ? APIConstant.EDIT_CUSTOMER
-            : APIConstant.ADD_CUSTOMER,
+          this.patientData ? APIConstant.EDIT_PATIENT : APIConstant.ADD_PATIENT,
           formData
         )
         .subscribe(
           (res: any) => {
             if (res && res.status) {
               this.showSpinner = false;
-              this.router.navigate(['/customer']);
+              this.router.navigate(['/patients']);
             } else {
               this.showSpinner = false;
               console.log(res.message);
@@ -152,72 +100,6 @@ export class AddPatientComponent implements OnInit{
         );
     }
     return;
-  }
-
-  public usernameAvailabilityValidator(control: any) {
-    if (this.isUnameAvailable === false) {
-      return { notAvailable: true };
-    }
-    return null;
-  }
-
-  public async checkUsernameAvailable(event: Event) {
-    if (!this.patientForm.get('username')?.hasError('email')) {
-      const inputElement = event.target as HTMLInputElement;
-      let username = inputElement.value;
-      try {
-        this.isChecking = true;
-        console.log(this.isChecking);
-        const isAvailable: boolean =
-          await this._authService.checkUsernameAvailable(username);
-        this.isUnameAvailable = isAvailable;
-        this.patientForm.get('username')?.updateValueAndValidity();
-      } catch (err) {
-        console.log(err);
-      } finally {
-        this.isChecking = false;
-        console.log(this.isChecking);
-      }
-    }
-  }
-
-  public getAddressPredictions(event: Event) {
-    return;
-    if (event) {
-      const inputElement = event.target as HTMLInputElement;
-      let company = inputElement.value;
-      this._googleService
-        .getAddressPredictions(company)
-        .subscribe((predictions: any) => {
-          this.addressPredictions = predictions?.predictions || [];
-          console.log(this.addressPredictions);
-        });
-    }
-  }
-
-  public handleFederalNo(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-    let enteredValue = inputElement.value;
-
-    enteredValue = enteredValue.replace(/\D/g, '');
-
-    if (enteredValue.length > 3) {
-      enteredValue = enteredValue.slice(0, 3) + '-' + enteredValue.slice(3);
-    }
-
-    enteredValue = enteredValue.slice(0, 10);
-
-    this.patientForm.patchValue(
-      { federal_no: enteredValue },
-      { emitEvent: false }
-    );
-    this.patientForm.get('federal_no')?.markAsTouched(); // Mark federal_no as touched
-
-    if (enteredValue.length < 10) {
-      this.patientForm.get('federal_no')?.setErrors({ maxlength: true });
-    } else {
-      this.patientForm.get('federal_no')?.setErrors(null); // Clear the 'maxlength' error
-    }
   }
 
   handleMobileNumber(event: Event, field: string) {
@@ -238,48 +120,16 @@ export class AddPatientComponent implements OnInit{
     // Update form control value and validate
     if (field === 'phone')
       this.patientForm.patchValue(
-        { phone: enteredValue },
+        { mobile: enteredValue },
         { emitEvent: false }
       );
-    else if (field === 'fax')
-      this.patientForm.patchValue({ fax: enteredValue }, { emitEvent: false });
-    else if (field === 'contact_phone')
+    else if (field === 'telephone')
       this.patientForm.patchValue(
-        { contact_phone: enteredValue },
+        { telephone: enteredValue },
         { emitEvent: false }
       );
 
     this.patientForm.get(field)?.markAsTouched(); // Mark phone as touched
-  }
-
-  public handlePasswordCreation(event: MatRadioChange) {
-    if (event.value == 1) {
-      this.patientForm.patchValue({ password: '' });
-    } else {
-      this.patientForm.patchValue({ password: this.generateRandomPassword() });
-    }
-  }
-
-  public generateRandomPassword() {
-    const charset =
-      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$&';
-
-    let password = '';
-    for (let i = 0; i < 8; i++) {
-      const randomIndex = Math.floor(Math.random() * charset.length);
-      password += charset[randomIndex];
-    }
-    return password;
-  }
-
-  public handleMailingAddress(event: MatCheckboxChange) {
-    if (event.checked) {
-      this.patientForm.patchValue({
-        mailing_address: this.patientForm.get('physical_address')?.value,
-      });
-    } else {
-      this.patientForm.patchValue({ mailing_address: '' });
-    }
   }
 
   public getTimeZones() {
@@ -300,11 +150,11 @@ export class AddPatientComponent implements OnInit{
     );
   }
   public handleCancel() {
-    this.router.navigate(['customer'], {
+    this.router.navigate(['patients'], {
       state: { patientData: this.patientData },
     });
   }
   public navigateBack() {
-    this.router.navigate(['/customer']);
+    this.router.navigate(['/patients']);
   }
 }

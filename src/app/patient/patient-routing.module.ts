@@ -7,6 +7,7 @@ import { ViewPatientComponent } from './view-patient/view-patient.component';
 const routes: Routes = [
   { path: '', component: PatientListComponent, pathMatch: 'full' },
   { path: 'add', component: AddPatientComponent, pathMatch: 'full' },
+  { path: 'edit', component: AddPatientComponent, pathMatch: 'full' },
   { path: 'view', component: ViewPatientComponent, pathMatch: 'full' },
 ];
 

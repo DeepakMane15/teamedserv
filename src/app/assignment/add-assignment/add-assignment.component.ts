@@ -56,13 +56,14 @@ export class AddAssignmentComponent implements OnInit {
 
   ngOnInit() {
     this.assignmentData = history.state.assignmentData;
+    console.log(this.assignmentData);
     if (this.assignmentData) {
       console.log(this.assignmentData);
       this.assignmentForm.patchValue({
         customer_id: this.assignmentData.company_id,
         assignment_id: this.assignmentData.id,
         medicalId: this.assignmentData.medical_team,
-        medicalProfession: this.assignmentData.medical_profession,
+        medicalProfession: this.assignmentData.profession,
         assignment: this.assignmentData.assignment,
         transaction: this.assignmentData.transaction,
         date: this.assignmentData.date,
@@ -93,6 +94,18 @@ export class AddAssignmentComponent implements OnInit {
           this.showSpinner = false;
           this.assignmentsMaster = res.data.assignment;
           this.patientsMaster = res.data.patients;
+
+          if (this.patientsMaster && this.assignmentData) {
+            let patientSelected = this.patientsMaster.find(
+              (p) => p.id === this.assignmentData.patient
+            );
+
+            if (patientSelected) {
+              this.assignmentForm.patchValue({
+                patientAddress: patientSelected.address,
+              });
+            }
+          }
         } else {
           console.error('Initial Data fetch failed');
         }
