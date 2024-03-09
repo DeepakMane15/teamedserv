@@ -1,4 +1,5 @@
 import { UserTypeConstant } from '../constants/UserTypeConstant';
+import { Dashboard2CardsModel } from '../models/Dashboard2CardsModel';
 
 export interface Card {
   title: string;
@@ -7,16 +8,10 @@ export interface Card {
   icon: string;
 }
 
-export class Dashboard2CardsModel {
-  public role: UserTypeConstant;
-  public cards: {
-    setOne: Card[];
-  };
-
-  constructor(role: UserTypeConstant) {
-    this.role = role;
-    this.cards = {
-      setOne: role === UserTypeConstant.CUSTOMER ? [
+export const  Dashboard2CardsConstant: Dashboard2CardsModel[] = [
+  {
+    role : UserTypeConstant.CUSTOMER,
+    cards : [
         {
           title: 'Assignment completed',
           cols: 1,
@@ -41,32 +36,36 @@ export class Dashboard2CardsModel {
           rows: 1,
           icon: 'mdi mdi-account-convert widget-two-icon',
         },
-      ] : [
-        {
-          title: 'Employees',
-          cols: 1,
-          rows: 1,
-          icon: 'mdi mdi-chart-areaspline widget-two-icon',
-        },
-        {
-          title: 'Customers',
-          cols: 1,
-          rows: 1,
-          icon: 'mdi mdi-layers widget-two-icon',
-        },
-        {
-          title: 'Medical Teams',
-          cols: 1,
-          rows: 1,
-          icon: 'mdi mdi-access-point-network widget-two-icon',
-        },
-        {
-          title: 'Patients',
-          cols: 1,
-          rows: 1,
-          icon: 'mdi mdi-account-convert widget-two-icon',
-        },
-      ],
-    };
-  }
-}
+      ]
+    },
+    {
+      role : UserTypeConstant.PROFESSIONAL,
+      cards :
+        [
+          {
+            title: 'Employees',
+            cols: 1,
+            rows: 1,
+            icon: 'mdi mdi-chart-areaspline widget-two-icon',
+          },
+          {
+            title: 'Customers',
+            cols: 1,
+            rows: 1,
+            icon: 'mdi mdi-layers widget-two-icon',
+          },
+          {
+            title: 'Medical Teams',
+            cols: 1,
+            rows: 1,
+            icon: 'mdi mdi-access-point-network widget-two-icon',
+          },
+          {
+            title: 'Patients',
+            cols: 1,
+            rows: 1,
+            icon: 'mdi mdi-account-convert widget-two-icon',
+          },
+        ]
+    }
+  ]

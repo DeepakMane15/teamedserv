@@ -27,7 +27,7 @@
 
           <!-- Position Column -->
           <ng-container matColumnDef="no" class="container-tab">
-            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> No </th>
+            <th mat-header-cell mat-sort-header *matHeaderCellDef style="max-width: 150px;"> No </th>
             <td mat-cell *matCellDef="let element; let i = index" style="max-width: 150px;"> {{ i + 1 }} </td>
           </ng-container>
 
@@ -98,7 +98,7 @@
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-            [ngStyle]="{'background-color': row.status === '0' ? '#82ff82' : row.status === 'pending' ? '#f8b73f' : row.status === 'declined' ? 'red' : ''}">
+            [ngStyle]="{'background-color': row.status === '0' ? '#e6ffe6' : row.status === 'pending' ? '#fff6e6' : row.status === 'declined' ? '#ffe6e6' : ''}">
           </tr>
         </table>
 

@@ -7,20 +7,20 @@ import { Component } from '@angular/core';
 })
 export class AssignmentStatusProComponent {
   dataSource = ELEMENT_DATA;
-  displayedColumns: string[] = ['s.no.', 'Assig. id', 'date', 'status'];
+  displayedColumns: string[] = ['sr-no', 'assig-id', 'date', 'status'];
 }
 export interface Row {
   sno: number;
-  Assignid: number;
+  assignId: number;
   date: Date;
   status : string;
 }
 
 const ELEMENT_DATA: Row[] = [
-  { sno: 1, Assignid:1001, date: new Date(),  status: 'paid' },
-  { sno: 2, Assignid:1002, date: new Date(),  status: 'pending' },
-  { sno: 3, Assignid:1009, date: new Date(),  status: 'paid' },
-  { sno: 4, Assignid:1029, date: new Date(),  status: 'pending' },
+  { sno: 1, assignId:1001, date: new Date(),  status: 'paid' },
+  { sno: 2, assignId:1002, date: new Date(),  status: 'pending' },
+  { sno: 3, assignId:1009, date: new Date(),  status: 'paid' },
+  { sno: 4, assignId:1029, date: new Date(),  status: 'pending' },
   // Add more orders as needed
 ];
 

@@ -44,8 +44,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatTooltipModule,
     MatTableModule,
     MatGridListModule,
-    MatTabsModule
-
+    MatTabsModule,
   ],
   providers: [provideNativeDateAdapter()],
 })

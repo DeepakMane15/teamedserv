@@ -34,7 +34,7 @@
           </mat-tree-node>
         </mat-tree>
         <!-- search directory group -->
-        <div *ngIf="authService.dataSource && authService.dataSource1" class="section-title">
+        <div *ngIf="authService.dataSource && authService.dataSource1 && authService.dataSource1.data.length" class="section-title">
           <div class="line"></div>
           <div class="row color-white">
             <mat-icon>search</mat-icon> Search

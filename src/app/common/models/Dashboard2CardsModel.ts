@@ -9,15 +9,10 @@ export interface Card {
 }
 
 export class Dashboard2CardsModel {
-  public role: UserTypeConstant | undefined;
-  public cards: {
-    setOne: Card[];
-  };
+  public role!: UserTypeConstant;
+  public cards: Card[];
 
-  constructor(role: UserTypeConstant | undefined) {
-    this.role = role;
-    this.cards = {
-      setOne: [],
-    };
+  constructor() {
+    this.cards = [];
   }
 }
