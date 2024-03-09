@@ -134,11 +134,10 @@ export const NavItemsContant: NavLinksModel[] = [
     roles: [
       UserTypeConstant.ADMIN,
       UserTypeConstant.CUSTOMER,
-      UserTypeConstant.PROFESSIONAL
+      UserTypeConstant.PROFESSIONAL,
     ],
     category: '',
-    subItems: [
-    ],
+    subItems: [],
     icon: 'chat',
     url: '/chat',
   },
@@ -209,7 +208,16 @@ export const NavItemsContant: NavLinksModel[] = [
     label: 'Ambulance ##',
     roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
     category: 'directory',
-    subItems: [],
+    subItems: [
+      {
+        label: 'All Ambulances ##',
+        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+        category: 'directory',
+        subItems: [],
+        icon: '',
+        url: '/ambulance',
+      },
+    ],
     icon: 'local_car_wash',
     url: '/',
   },
