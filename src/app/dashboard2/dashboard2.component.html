@@ -1,17 +1,34 @@
+<!--dashboard3.component.html-->
 <div class="grid-container">
    <h1 class="mat-h1">Dashboard</h1>
    <mat-grid-list [cols]="(cardLayout | async)?.columns" rowHeight="200px">
       <!-- Mini Cards -->
-      <mat-grid-tile
-         *ngFor="let name of ['Assigmnt completed', 'No. of Comp. Entrolled ', 'Job Openings', 'Payments']"
-         [colspan]="(cardLayout | async)?.miniCard?.cols" [rowspan]="(cardLayout | async)?.miniCard?.rows">
-         <app-card [title]="name + ' Card'" [ngStyle]="{ 'font-size': '30px'}">
-            <div style="color: rgb(98, 221, 184);">2</div>
-         </app-card>
-      </mat-grid-tile>
-
+      <mat-grid-tile *ngFor="let card of dashboardModel?.cards?.setOne" [colspan]="card?.cols" [rowspan]="card?.rows">
+         <mat-card class="dashboard-card">
+           <mat-card-header>
+             <mat-card-title>
+               {{ card?.title }}
+             </mat-card-title>
+           </mat-card-header>
+           <mat-card-content class="dashboard-card-content">
+             <div class="card-content-text">
+               <span>2</span>
+               <mat-icon>arrow_upward</mat-icon>
+             </div>
+             <div>
+               <i [class]="card?.icon"></i>
+             </div>
+           </mat-card-content>
+         </mat-card>
+       </mat-grid-tile>
+       
 
       <!-- Charts -->
+      <mat-grid-tile [colspan]="(cardLayout | async)?.chart?.cols" [rowspan]="(cardLayout | async)?.chart?.rows">
+         <app-card>
+            <app-annual-sales-chart></app-annual-sales-chart>
+         </app-card>
+      </mat-grid-tile>
       <mat-grid-tile [colspan]="(cardLayout | async)?.chart?.cols" [rowspan]="(cardLayout | async)?.chart?.rows">
          <app-card>
             <app-product-sales-chart></app-product-sales-chart>
@@ -22,20 +39,23 @@
             <app-sales-traffic-chart></app-sales-traffic-chart>
          </app-card>
       </mat-grid-tile>
+      <mat-grid-tile [colspan]="(cardLayout | async)?.chart?.cols" [rowspan]="(cardLayout | async)?.chart?.rows">
+         <app-card>
+            <app-store-sessions-chart></app-store-sessions-chart>
+         </app-card>
+      </mat-grid-tile>
       <!-- Table -->
-      <div class="last2">
-         <mat-grid-tile [colspan]="(cardLayout | async)?.table?.cols" [rowspan]="(cardLayout | async)?.table?.rows">
-            <app-card>
-               <!-- <app-top-three-products></app-top-three-products> -->
-               <app-transaction-status-pro></app-transaction-status-pro>
-            </app-card>
-         </mat-grid-tile>
-         <mat-grid-tile [colspan]="(cardLayout | async)?.table2?.cols" [rowspan]="(cardLayout | async)?.table2?.rows">
-            <app-card>
-               <!-- <app-last-few-transactions></app-last-few-transactions> -->
-               <app-assignment-status-pro></app-assignment-status-pro>
-            </app-card>
-         </mat-grid-tile>
-      </div>
+      <mat-grid-tile [colspan]="(cardLayout | async)?.table?.cols" [rowspan]="(cardLayout | async)?.table?.rows">
+         <app-card>
+            <!-- <app-top-three-products></app-top-three-products> -->
+            <app-transaction-status-pro></app-transaction-status-pro>
+         </app-card>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="(cardLayout | async)?.table2?.cols" [rowspan]="(cardLayout | async)?.table2?.rows">
+         <app-card>
+            <!-- <app-last-few-transactions></app-last-few-transactions> -->
+            <app-assignment-status-pro></app-assignment-status-pro>
+         </app-card>
+      </mat-grid-tile>
    </mat-grid-list>
 </div>
