@@ -2,12 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
 import { AuthService } from '../shared/services/auth.service';
-import {
-  Dashboard2CardsModel,
-  Card,
-} from '../common/models/Dashboard2CardsModel';
 import { UserTypeConstant } from '../common/constants/UserTypeConstant';
 import { Dashboard2CardsConstant } from '../common/constants/Dashboard2CardsConstant';
+import { Dashboard2CardsModel } from '../common/models/Dashboard2CardsModel';
 
 @Component({
   selector: 'app-dashboard2',
