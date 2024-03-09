@@ -62,7 +62,6 @@ export class AddMedicalComponent implements OnInit {
   ngOnInit(): void {
     this.medicalData = history.state.medicalData;
     if (this.medicalData) {
-      console.log(this.medicalData);
       this.medicalForm.patchValue({
         customer_id: this.medicalData.customer_id,
         pid: this.medicalData.pid,

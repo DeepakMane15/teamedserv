@@ -16,6 +16,19 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '/',
   },
   {
+    label: 'Dashboard 2 #',
+    roles: [
+      UserTypeConstant.ADMIN,
+      UserTypeConstant.CUSTOMER,
+      UserTypeConstant.CUSTOMER_USER,
+      UserTypeConstant.PROFESSIONAL,
+    ],
+    category: '',
+    subItems: [],
+    icon: 'home',
+    url: '/dashboard2',
+  },
+  {
     label: 'Medical Team',
     roles: [
       UserTypeConstant.ADMIN,
@@ -101,7 +114,7 @@ export const NavItemsContant: NavLinksModel[] = [
         subItems: [],
       },
       {
-        label: 'Add Patient #',
+        label: 'Add Patient',
         roles: [
           UserTypeConstant.ADMIN,
           UserTypeConstant.CUSTOMER,
@@ -117,7 +130,20 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '/',
   },
   {
-    label: 'Assignment/Services #',
+    label: 'Chat #',
+    roles: [
+      UserTypeConstant.ADMIN,
+      UserTypeConstant.CUSTOMER,
+      UserTypeConstant.PROFESSIONAL
+    ],
+    category: '',
+    subItems: [
+    ],
+    icon: 'chat',
+    url: '/chat',
+  },
+  {
+    label: 'Assignment/Services',
     roles: [
       UserTypeConstant.ADMIN,
       UserTypeConstant.CUSTOMER,
@@ -126,7 +152,7 @@ export const NavItemsContant: NavLinksModel[] = [
     category: '',
     subItems: [
       {
-        label: 'All Assignment/Services #',
+        label: 'All Assignment/Services',
         roles: [
           UserTypeConstant.ADMIN,
           UserTypeConstant.CUSTOMER,
@@ -138,7 +164,7 @@ export const NavItemsContant: NavLinksModel[] = [
         subItems: [],
       },
       {
-        label: 'Add Assignment/Services #',
+        label: 'Add Assignment/Services',
         roles: [
           UserTypeConstant.ADMIN,
           UserTypeConstant.CUSTOMER,

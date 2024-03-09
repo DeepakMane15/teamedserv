@@ -173,6 +173,14 @@ mat-card {
   }
 }
 
+.icon-button {
+  height: 34px;
+  width: 34px;
+  background: none;
+  border: none;
+  text-decoration: none;
+}
+
 .mat-mdc-progress-spinner {
   --mdc-circular-progress-active-indicator-color: #3c8dbc !important;
 }
@@ -344,5 +352,6 @@ a {
 //   background-color: #fff !important;
 // }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.green {
+  background-color: #82ff82;
+}

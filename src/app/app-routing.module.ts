@@ -35,6 +35,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'chat',
+    loadChildren: () =>
+      import('./chat/chat.module').then((m) => m.ChatModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'team-board',
     component: TeamBoardComponent,
     pathMatch: 'full',
@@ -50,6 +56,12 @@ const routes: Routes = [
     path: 'patients',
     loadChildren: () =>
       import('./patient/patient.module').then((m) => m.PatientModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'assignments',
+    loadChildren: () =>
+      import('./assignment/assignment.module').then((m) => m.AssignmentModule),
     canActivate: [AuthGuard],
   },
   {

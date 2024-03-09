@@ -1,0 +1,19 @@
+<div class="chat-list-main-container">
+    <ul class="chat-list-container">
+        <li class="chat-list-item" *ngFor="let chat of chatList">
+            <div class="chat-card">
+                <div class="profile-container">
+                    <img [src]="chat.profileImage" class="profile-pic" />
+                </div>
+                <div class="name-container">
+                    <h1>{{ chat.name }}</h1>
+                    <h3>Tap here to chat.</h3>
+                </div>
+                <div class="arrow-container">
+                    <mat-icon class="arrow-icon">arrow_forward_ios</mat-icon>
+                </div>
+
+            </div>
+        </li>
+    </ul>
+</div>

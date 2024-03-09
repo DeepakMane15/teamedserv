@@ -68,7 +68,6 @@ export class AppComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       const type = params['type'];
       this.rid = params['rid'];
-      console.log(type);
       if (type && type === 'invitation') this.isInvitationPage = true;
     });
   }

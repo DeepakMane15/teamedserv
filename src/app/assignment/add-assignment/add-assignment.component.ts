@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
+import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
 import { AssignmentTypeModel } from 'src/app/common/models/AssignmentTypeModel';
 import { MedicalTeamModel } from 'src/app/common/models/MedicalTeamModel';
 import { PatientModel } from 'src/app/common/models/PatientModel';
@@ -28,7 +29,6 @@ export class AddAssignmentComponent implements OnInit {
     assignment_id: 0,
     medicalId: ['', Validators.required],
     medicalProfession: [''],
-    // companyUser: ['', Validators.required],
     assignment: ['', Validators.required],
     transaction: [''],
     date: ['', Validators.required],
@@ -55,6 +55,33 @@ export class AddAssignmentComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.assignmentData = history.state.assignmentData;
+    console.log(this.assignmentData);
+    if (this.assignmentData) {
+      console.log(this.assignmentData);
+      this.assignmentForm.patchValue({
+        customer_id: this.assignmentData.company_id,
+        assignment_id: this.assignmentData.id,
+        medicalId: this.assignmentData.medical_team,
+        medicalProfession: this.assignmentData.profession,
+        assignment: this.assignmentData.assignment,
+        transaction: this.assignmentData.transaction,
+        date: this.assignmentData.date,
+        amount: this.assignmentData.amount,
+        paymentDate: this.assignmentData.paymentdate,
+        patientId: this.assignmentData.patient,
+        patientAddress: this.assignmentData.name,
+        cPerson1Name: this.assignmentData.cperson1,
+        cPerson1Phone: this.assignmentData.cphone1,
+        cPerson2Name: this.assignmentData.cperson2,
+        cPerson2Phone: this.assignmentData.cphone2,
+        visitDate: this.assignmentData.fromdate,
+        visitTime: this.assignmentData.time,
+        prNotes: this.assignmentData.ptnotes,
+        pNotes: this.assignmentData.pnotes,
+        iNotes: this.assignmentData.inotes,
+      });
+    }
     this.fetchMedicalTeams();
     this.fetchInitialData();
   }
@@ -67,6 +94,18 @@ export class AddAssignmentComponent implements OnInit {
           this.showSpinner = false;
           this.assignmentsMaster = res.data.assignment;
           this.patientsMaster = res.data.patients;
+
+          if (this.patientsMaster && this.assignmentData) {
+            let patientSelected = this.patientsMaster.find(
+              (p) => p.id === this.assignmentData.patient
+            );
+
+            if (patientSelected) {
+              this.assignmentForm.patchValue({
+                patientAddress: patientSelected.address,
+              });
+            }
+          }
         } else {
           console.error('Initial Data fetch failed');
         }
@@ -108,10 +147,60 @@ export class AddAssignmentComponent implements OnInit {
     }
   }
   public navigateBack() {
-    this.router.navigate(['/medical-team']);
+    this.router.navigate(['/assignments']);
   }
 
-  public onSubmit() {}
+  onSubmit(): void {
+    if (this.assignmentForm.valid) {
+      const formModel: AssignmentModel = this.assignmentForm
+        .value as AssignmentModel;
+      const formData = new FormData();
+
+      // Convert JSON object to FormData
+      for (const key of Object.keys(formModel)) {
+        const value = formModel[key];
+        formData.append(key, value);
+      }
+      this.showSpinner = true;
+      this._apiService
+        .post(
+          this.assignmentData
+            ? APIConstant.EDIT_ASSIGNMENT
+            : APIConstant.ADD_ASSIGNMENT,
+          formData
+        )
+        .subscribe(
+          (res: any) => {
+            if (res && res.status) {
+              this.showSpinner = false;
+              this.router.navigate(['/assignments']);
+            } else {
+              this.showSpinner = false;
+              console.log(res.message);
+            }
+          },
+          (error) => {
+            this.showSpinner = false;
+            console.error('Operation failed', error);
+          }
+        );
+    }
+    return;
+  }
+
+  public handlePatientSelect(event: MatSelectChange) {
+    let patient = this.patientsMaster.find((pat) => pat.id === event.value);
+
+    if (patient) {
+      this.assignmentForm.patchValue({
+        patientAddress: patient.address,
+        cPerson1Name: patient.contactPerson1_name,
+        cPerson1Phone: patient.contactPerson1_phone,
+        cPerson2Name: patient.contactPerson2_name,
+        cPerson2Phone: patient.contactPerson2_phone,
+      });
+    }
+  }
 
   public usernameAvailabilityValidator(control: any) {
     if (this.isUnameAvailable === false) {
