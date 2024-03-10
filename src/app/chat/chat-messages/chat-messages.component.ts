@@ -33,7 +33,7 @@ export class ChatMessagesComponent {
     "isUser" : false
   }, {
     "sender":"Elon Musk",
-    "message" : "Hello this is my message",
+    "message" : "Hello this is my message fhdjfhdjkhfkhkff jfnfnknd v kfkfdnfk why i ma dmannsdfnsdbs bsdfsk smfhsmf sknfssfs f",
     "timing" : "3.00pm",
     "isUser" : false
   }, {

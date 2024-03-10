@@ -1,7 +1,6 @@
 .message-main-container { 
     display: flex;
     flex-direction: column;
-    gap:0.4rem;
     margin-top: 5px;
 }
 
@@ -12,9 +11,24 @@
     padding: 0.4rem;
     border-radius: 0.5rem;
     margin: 0rem 1rem;
+    margin-bottom: 10px;
     background-color: rgb(191, 198, 196);
     text-align: end; 
-    align-self: flex-end;  
+    align-self: flex-end; 
+    @media only screen and (min-width: 768px) and (max-width: 1023px) {
+        /* Your tablet styles go here */
+        padding-right: 13px;
+        padding-left: 13px;
+        
+      }
+    
+      @media only screen and (min-width: 1024px) and (max-width: 1366px) {
+        /* Your tablet styles go here */
+        padding-right: 13px;
+        padding-left: 13px;
+        
+      } 
+   
 }
 
 // fellowuser is the person to whom user is sending the messages 
@@ -27,9 +41,11 @@
 .message {
     display: flex;
     flex-direction: column;
-    padding: 0;
+    padding: 0px;
+    font-size: 13px;
 }
 
 .timing-text { 
     text-align: end; 
+    font-size: 12px;
 }
