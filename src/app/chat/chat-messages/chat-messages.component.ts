@@ -16,5 +16,45 @@ export class ChatMessagesComponent {
     "message" : "Hello this is my message",
     "timing" : "3.00pm",
     "isUser" : false
-  }]
+  }, {
+    "sender":"Elon Musk",
+    "message" : "Hello this is my message",
+    "timing" : "3.00pm",
+    "isUser" : false
+  }, {
+    "sender":"Elon Musk",
+    "message" : "Hello this is my message",
+    "timing" : "3.00pm",
+    "isUser" : false
+  }, {
+    "sender":"Elon Musk",
+    "message" : "Hello this is my message",
+    "timing" : "3.00pm",
+    "isUser" : false
+  }, {
+    "sender":"Elon Musk",
+    "message" : "Hello this is my message",
+    "timing" : "3.00pm",
+    "isUser" : false
+  }, {
+    "sender":"Elon Musk",
+    "message" : "Hello this is my message",
+    "timing" : "3.00pm",
+    "isUser" : false
+  }, {
+    "sender":"Elon Musk",
+    "message" : "Hello this is my message",
+    "timing" : "3.00pm",
+    "isUser" : false
+  }, {
+    "sender":"Elon Musk",
+    "message" : "Hello this is my message",
+    "timing" : "3.00pm",
+    "isUser" : false
+  }, {
+    "sender":"Elon Musk",
+    "message" : "Hello this is my message",
+    "timing" : "3.00pm",
+    "isUser" : false
+  }, ]
 }

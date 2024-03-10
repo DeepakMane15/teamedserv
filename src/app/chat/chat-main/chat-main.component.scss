@@ -1,25 +1,55 @@
 .chat-main-container {
   display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100% - 48px);
+  overflow-y: hidden;
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Your tablet styles go here */
+    height: calc(100% - 26.5%);
+  }
+
+  @media only screen and (min-width: 768px) and (max-width: 1024px) {
+    /* Your tablet styles go here */
+    height: calc(100% - 13.5%);
+  }
+
+
+  @media only screen and (min-width: 820px) and (max-width: 1180px) {
+    /* Your tablet styles go here */
+    height: calc(100% - 26.5%);
+  }
+
+  @media only screen and (min-width: 1024px) and (max-width: 1366px) {
+    /* Your tablet styles go here */
+    height: calc(100% - 36.5%);
+  }
 }
 
-.chat-left-container {
+.chat-top-container {
+  flex: 0.05;
+  display: flex;
+  width: 100%;
+  border: 1px solid grey;
+  background-color: rgb(188, 178, 178);
+}
+
+.chat-top-left-container {
   flex: 0.25;
   display: flex;
-  flex-direction: column;
   border-right: 2px solid grey;
-}
+  padding: 0.5rem;
+ 
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Your tablet styles go here */
+    flex: 0.4;
+  }
 
-.chat-left-top-container {
-  flex: 0.1;
-  position: fixed;
-  top: 10;
-  display: flex;
-  width: 21%;
-  border-bottom: 1px solid grey;
-  padding: 0.3rem;
-  padding-left: 1rem;
-  background-color: #555050;
-  z-index: 1;
+  @media only screen and (min-width: 1024px) and (max-width: 1366px) {
+    /* Your tablet styles go here */
+    flex: 0.4;
+  }
 }
 
 .profile-pic {
@@ -28,46 +58,79 @@
   border-radius: 50%;
 }
 
-.chat-left-bottom-container {
-  flex: 0.9;
-  padding-top: 3.6rem;
-  padding-bottom: 1rem;
-}
-
-.chat-right-container {
+.chat-top-right-container {
   flex: 0.75;
-  display: flex;
-  flex-direction: column;
-}
-
-.chat-right-top-container {
-  flex: 0.1;
-  position: fixed;
-  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  border-bottom: 1px solid grey;
-  border-left: 1px solid grey;
-  padding: 0.3rem;
-  padding-left: 1rem;
-  background-color: #555050;
-  z-index: 1;
+  padding: 0.5rem;
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Your tablet styles go here */
+    flex: 0.6;
+  }
+  @media only screen and (min-width: 1024px) and (max-width: 1366px) {
+    /* Your tablet styles go here */
+    flex: 0.6;
+  }
 }
 
 .fellowuser-name {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 500;
   margin-left: 1rem;
   color: #fff;
-  align-self: center;
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Your tablet styles go here */
+    font-size: 1.3rem;
+  }
+  @media only screen and (min-width: 1024px) and (max-width: 1366px) {
+    /* Your tablet styles go here */
+    font-size: 1.3rem;
+  }
 }
 
-.chat-right-bottom-container {
-  flex: 0.9;
-  position: fixed;
-  width: 63%;
-  max-height: 100vh;
-  height: 100vh;
-  padding-top: 5rem;
+.chat-bottom-container {
+  flex: 0.95;
+  display: flex;
+  overflow-y: scroll;
+}
+
+.chat-bottom-left-container {
+  flex: 0.25;
+  display: flex;
+  border-right: 2px solid grey;
+  overflow-y: scroll;
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Your tablet styles go here */
+    flex: 0.4;
+  }
+  @media only screen and (min-width: 1024px) and (max-width: 1366px) {
+    /* Your tablet styles go here */
+    flex: 0.4;
+  }
+
+}
+
+.chat-list {
+  width: 100%;
+}
+
+.chat-bottom-right-container {
+  flex: 0.75;
+  display: flex;
+  flex-direction: column;
+ 
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Your tablet styles go here */
+    flex: 0.6;
+  }
+  @media only screen and (min-width: 1024px) and (max-width: 1366px) {
+    /* Your tablet styles go here */
+    flex: 0.6;
+  }
+}
+
+
+.chat-window {
+  height: 100%;
 }

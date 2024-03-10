@@ -1,83 +1,118 @@
-
 .chat-list-main-container {
-    display: flex;
-    min-height: 100vh;
+  display: flex;
+}
+
+.chat-list-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  width: 100%;
+  padding: 0%;
+  margin: 0%;
+  cursor: pointer;
+  background-color: #f2f2f2;
+}
+
+.chat-list-item {
+  border-bottom: 0.6px solid gray;
+  border-color: gray;
+}
+
+.chat-list-item:hover {
+  background-color: #ddd;
+}
+
+.chat-card {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  height: 4.3rem;
+}
+
+.profile-container {
+  flex: 0.2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.profile-pic {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Your tablet styles go here */
+    width: 2rem;
+    height: 2rem;
   }
-  
-  .chat-list-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    list-style-type: none;
-    width: 100%;
-    padding: 0%;
-    margin: 0%;
-    cursor: pointer;
-    background-color: #f2f2f2;
+
+  @media only screen and (min-width: 1024px) and (max-width: 1366px) {
+    /* Your tablet styles go here */
+    width: 2rem;
+    height: 2rem;
   }
-  
-  .chat-list-item {
-    border-bottom: 0.6px solid gray;
-    border-color: gray;
+}
+
+.name-container {
+  flex: 0.65;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 0.5rem;
+}
+
+.name-container h1 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: rgb(136, 124, 124);
+  position: relative;
+  top: 1rem;
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Your tablet styles go here */
+    font-size: 1rem;
   }
-  
-  .chat-list-item:hover {
-    background-color: #ddd;
+
+  @media only screen and (min-width: 1024px) and (max-width: 1366px) {
+    /* Your tablet styles go here */
+    font-size: 1rem;
   }
-  
-  .chat-card {
-    display: flex;
-    flex: 1;
-    width: 100%;
-    height: 4.3rem;
+}
+
+.name-container h3 {
+  font-size: 0.8rem;
+  font-weight: 200;
+  color: grey;
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Your tablet styles go here */
+    font-size: 0.7rem;
   }
-  
-  .profile-container {
-    flex: 0.2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+
+  @media only screen and (min-width: 1024px) and (max-width: 1366px) {
+    /* Your tablet styles go here */
+    font-size: 0.7rem;
   }
-  
-  .profile-pic {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
+}
+
+.arrow-container {
+  flex: 0.15;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrow-icon {
+  color: grey;
+  font-size: 1.5rem;
+  font-weight: 100;
+  @media only screen and (min-width: 768px) and (max-width: 1023px)  {
+    /* Your tablet styles go here */
+    font-size: 0.7rem;
   }
-  
-  .name-container {
-    flex: 0.65;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-left: 0.5rem;
+
+  @media only screen and (min-width: 1024px) and (max-width: 1366px) {
+    /* Your tablet styles go here */
+    font-size: 0.7rem;
   }
-  
-  .name-container h1 {
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: rgb(136, 124, 124);
-    position: relative;
-    top:1rem;
-  }
-  
-  .name-container h3 {
-    font-size: 0.8rem;
-    font-weight: 200;
-    color: grey;
-  }
-  
-  .arrow-container {
-    flex: 0.15;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .arrow-icon {
-    color: grey;
-    font-size: 1.5rem;
-    font-weight: 100;
-  }
- 
+}
