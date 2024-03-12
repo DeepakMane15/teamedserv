@@ -2,6 +2,19 @@ import { NavLinksModel } from '../models/NavLinksModel';
 import { UserTypeConstant } from './UserTypeConstant';
 
 export const NavItemsContant: NavLinksModel[] = [
+  // {
+  //   label: 'Dashboard',
+  //   roles: [
+  //     UserTypeConstant.ADMIN,
+  //     UserTypeConstant.CUSTOMER,
+  //     UserTypeConstant.CUSTOMER_USER,
+  //     UserTypeConstant.PROFESSIONAL,
+  //   ],
+  //   category: '',
+  //   subItems: [],
+  //   icon: 'home',
+  //   url: '/',
+  // },
   {
     label: 'Dashboard',
     roles: [
@@ -13,20 +26,7 @@ export const NavItemsContant: NavLinksModel[] = [
     category: '',
     subItems: [],
     icon: 'home',
-    url: '/',
-  },
-  {
-    label: 'Dashboard 2 #',
-    roles: [
-      UserTypeConstant.ADMIN,
-      UserTypeConstant.CUSTOMER,
-      UserTypeConstant.CUSTOMER_USER,
-      UserTypeConstant.PROFESSIONAL,
-    ],
-    category: '',
-    subItems: [],
-    icon: 'home',
-    url: '/dashboard2',
+    url: '',
   },
   {
     label: 'Medical Team',
@@ -130,18 +130,6 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '/',
   },
   {
-    label: 'Chat #',
-    roles: [
-      UserTypeConstant.ADMIN,
-      UserTypeConstant.CUSTOMER,
-      UserTypeConstant.PROFESSIONAL,
-    ],
-    category: '',
-    subItems: [],
-    icon: 'chat',
-    url: '/chat',
-  },
-  {
     label: 'Assignment/Services',
     roles: [
       UserTypeConstant.ADMIN,
@@ -179,18 +167,27 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '/',
   },
   {
-    label: 'Manage Activities #',
+    label: 'Chat (testing with mobile app)',
     roles: [
       UserTypeConstant.ADMIN,
       UserTypeConstant.CUSTOMER,
-      UserTypeConstant.CUSTOMER_USER,
       UserTypeConstant.PROFESSIONAL,
     ],
     category: '',
     subItems: [],
-    icon: 'task alt',
-    url: '/',
+    icon: 'chat',
+    url: '/chat',
   },
+  // {
+  //   label: 'Manage Activities #',
+  //   roles: [
+  //     UserTypeConstant.ADMIN
+  //   ],
+  //   category: '',
+  //   subItems: [],
+  //   icon: 'task alt',
+  //   url: '/',
+  // },
 
   {
     label: 'Board',
@@ -205,17 +202,25 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '/team-board',
   },
   {
-    label: 'Ambulance ##',
+    label: 'Ambulance (View/Edit pending)',
     roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
     category: 'directory',
     subItems: [
       {
-        label: 'All Ambulances ##',
+        label: 'All Medtrans Bookings',
         roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
         category: 'directory',
         subItems: [],
         icon: '',
         url: '/ambulance',
+      },
+      {
+        label: 'Add Medtrans Booking',
+        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+        category: 'directory',
+        subItems: [],
+        icon: '',
+        url: '/ambulance/add',
       },
     ],
     icon: 'local_car_wash',

@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: HomeComponent,
+    component: Dashboard2Component,
     pathMatch: 'full',
     canActivate: [AuthGuard],
   },
@@ -74,11 +74,11 @@ const routes: Routes = [
     component: TeamInvitationComponent,
     pathMatch: 'full',
   },
-  {
-    path: 'dashboard2',
-    component: Dashboard2Component,
-    canActivate: [AuthGuard],
-  },
+  // {
+  //   path: 'dashboard2',
+  //   component: Dashboard2Component,
+  //   canActivate: [AuthGuard],
+  // },
   //   {
   //     path: 'document',
   //     component : DocumentComponent,

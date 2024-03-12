@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AmbulanceListComponent } from '../ambulance-list/ambulance-list.component';
+import { AmbulanceListComponent } from '../ambulance/ambulance-list/ambulance-list.component';
 import { AuthGuard } from '../shared/authguard/auth.guard';
+import { AddAmbulanceComponent } from './add-ambulance/add-ambulance.component';
 
 const routes: Routes = [
   {
     path: '',
     component: AmbulanceListComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'add',
+    component: AddAmbulanceComponent,
     canActivate: [AuthGuard],
   },
 ];
