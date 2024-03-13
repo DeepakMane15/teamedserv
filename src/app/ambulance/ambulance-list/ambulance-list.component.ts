@@ -70,14 +70,16 @@ export class AmbulanceListComponent implements OnInit{
       state: { assignmentData: assignmentData },
     });
   }
-  navigateToView(assignmentData: any) {
+  navigateToView(ambulanceData: any) {
     this.router.navigate(['/ambulance/view'], {
-      state: { assignmentId: assignmentData.id, tabIndex: 0 },
+      state: { ambulanceId: ambulanceData.id, tabIndex: 0 },
     });
+    console.log(ambulanceData);
   }
-  handleDeleteAssignment(assignmentNO: any) {
+  
+  handleDeleteAssignment(ambulanceNO: any) {
     let fd = new FormData();
-    fd.append('assignment_No', assignmentNO);
+    fd.append('assignment_No', ambulanceNO);
     // this.showSpinner = true;
     // this._apiServices.post(APIConstant.DELETE_CUSTOMER, fd).subscribe(
     //   (res: any) => {

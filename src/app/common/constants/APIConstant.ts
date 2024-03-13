@@ -45,7 +45,7 @@ export enum APIConstant {
   // MedTrans
   ADD_MEDTRANS = 'medtrans/add',
   GET_MEDTRANS = 'medtrans/get',
-
+  GET_MEDTRANS_BY_ID = 'medtrans/get-by-id',
 
 
 }
