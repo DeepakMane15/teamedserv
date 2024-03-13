@@ -17,10 +17,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { ViewAmbulanceComponent } from './view-ambulance/view-ambulance.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @NgModule({
-  declarations: [AmbulanceListComponent, AddAmbulanceComponent],
+  declarations: [AmbulanceListComponent, AddAmbulanceComponent, ViewAmbulanceComponent],
   imports: [
     CommonModule,
     AmbulanceRoutingModule,
@@ -36,7 +39,10 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     MatExpansionModule,
     MatDatepickerModule,
     MatSelectModule,
-    MatDividerModule
+    MatDividerModule,
+    MatGridListModule,
+    MatTableModule,
+    MatTabsModule,
   ],
   providers: [provideNativeDateAdapter()],
 })
