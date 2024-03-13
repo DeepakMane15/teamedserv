@@ -79,7 +79,7 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/document']);
   }
   public opendashboard() {
-    this.router.navigate(['/dashboard2'])
+    this.router.navigate([''])
   }
   public checkIsValid() {
     if (this.isInvitationPage) return true;

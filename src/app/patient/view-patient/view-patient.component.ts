@@ -21,6 +21,7 @@ export class ViewPatientComponent implements OnInit {
   columns: Boolean = true;
   defaultTabIndex!: number;
   public appConstants = AppConstants;
+  public address!: string;
 
   public patientProfile: any = [
     {
@@ -77,12 +78,10 @@ export class ViewPatientComponent implements OnInit {
     if (patientId) this.fetchPatientData(patientId);
     this.defaultTabIndex = (history && history.state.tabIndex) || 0;
     if (!patientId) this.router.navigate(['patients']);
-    console.log(history.state);
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (this.isPageRefresh()) {
-          console.log('refreshed');
         }
       }
     });
@@ -96,6 +95,7 @@ export class ViewPatientComponent implements OnInit {
       (res: any) => {
         if (res && res.status) {
           this.patientData = res.data;
+          this.address = res.data.address;
           this.showSpinner = false;
         }
       },
@@ -114,8 +114,8 @@ export class ViewPatientComponent implements OnInit {
     );
   }
 
-  getMapUrl(address: string | undefined) {
-    const url = `https://www.google.com/maps/embed/v1/place?q=${address}&key=${this.apiKey}`;
+  getMapUrl() {
+    const url = `https://www.google.com/maps/embed/v1/place?q=${this.address}&key=${this.apiKey}`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 

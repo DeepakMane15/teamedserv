@@ -42,4 +42,10 @@ export enum APIConstant {
   GET_ASSIGNMENTS = "assignment/get",
 
 
+  // MedTrans
+  ADD_MEDTRANS = 'medtrans/add',
+  GET_MEDTRANS = 'medtrans/get',
+
+
+
 }

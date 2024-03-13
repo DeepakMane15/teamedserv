@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: HomeComponent,
+    component: Dashboard2Component,
     pathMatch: 'full',
     canActivate: [AuthGuard],
   },
@@ -64,15 +64,21 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'ambulance',
+    loadChildren: () =>
+      import('./ambulance/ambulance.module').then((m) => m.AmbulanceModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'team-invitation',
     component: TeamInvitationComponent,
     pathMatch: 'full',
   },
-  {
-    path: 'dashboard2',
-    component: Dashboard2Component,
-    canActivate: [AuthGuard],
-  },
+  // {
+  //   path: 'dashboard2',
+  //   component: Dashboard2Component,
+  //   canActivate: [AuthGuard],
+  // },
   //   {
   //     path: 'document',
   //     component : DocumentComponent,

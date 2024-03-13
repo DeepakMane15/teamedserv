@@ -8,11 +8,11 @@ import { AssignmentStatus } from 'src/app/common/constants/AppEnum';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 
 @Component({
-  selector: 'app-assignment-list',
-  templateUrl: './assignment-list.component.html',
-  styleUrl: './assignment-list.component.scss',
+  selector: 'app-ambulance-list',
+  templateUrl: './ambulance-list.component.html',
+  styleUrl: './ambulance-list.component.scss'
 })
-export class AssignmentListComponent implements OnInit {
+export class AmbulanceListComponent implements OnInit{
   displayedColumns: string[] = [
     'no',
     'transaction',
@@ -21,7 +21,7 @@ export class AssignmentListComponent implements OnInit {
     'entryDate',
     'visitDate',
     'amount',
-    'paymentDate',
+    // 'paymentDate',
     'status',
     'action',
   ];
@@ -42,12 +42,12 @@ export class AssignmentListComponent implements OnInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.fetchAssignments();
+    this.fetchMedtransBookings();
   }
 
-  fetchAssignments() {
+  fetchMedtransBookings() {
     this.showSpinner = true;
-    this._apiServices.get(APIConstant.GET_ASSIGNMENTS).subscribe(
+    this._apiServices.get(APIConstant.GET_MEDTRANS).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.dataSource.data = res.data;
@@ -62,16 +62,16 @@ export class AssignmentListComponent implements OnInit {
     );
   }
   navigateToAdd() {
-    this.router.navigate(['/assignments/add']);
+    this.router.navigate(['/ambulance/add']);
   }
 
   navigateToEdit(assignmentData: any) {
-    this.router.navigate(['/assignments/edit'], {
+    this.router.navigate(['/ambulance/edit'], {
       state: { assignmentData: assignmentData },
     });
   }
   navigateToView(assignmentData: any) {
-    this.router.navigate(['/assignments/view'], {
+    this.router.navigate(['/ambulance/view'], {
       state: { assignmentId: assignmentData.id, tabIndex: 0 },
     });
   }

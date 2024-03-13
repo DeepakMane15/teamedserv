@@ -4,7 +4,12 @@ import { map } from 'rxjs/operators';
 import { AuthService } from '../shared/services/auth.service';
 import { UserTypeConstant } from '../common/constants/UserTypeConstant';
 import { Dashboard2CardsConstant } from '../common/constants/Dashboard2CardsConstant';
-import { Dashboard2CardsModel } from '../common/models/Dashboard2CardsModel';
+import {
+  Card,
+  Dashboard2CardsModel,
+} from '../common/models/Dashboard2CardsModel';
+import { DashboardCardsConstant } from '../common/constants/DashboardCardsConstant';
+import { ResponsiveService } from '../shared/services/responsive/responsive.service';
 
 @Component({
   selector: 'app-dashboard2',
@@ -15,18 +20,31 @@ export class Dashboard2Component implements OnInit {
   private breakpointObserver = inject(BreakpointObserver);
   public cardsConstant: Dashboard2CardsModel[] = Dashboard2CardsConstant;
   public dashboardModel!: Dashboard2CardsModel | undefined;
+  public cards: Card[] | undefined;
+  public cardsSet2: Card[] | undefined;
+  columns: Boolean = true;
 
-  constructor(public authService: AuthService) {}
+  constructor(
+    public authService: AuthService,
+    private responsiveObserver: ResponsiveService
+  ) {
+    this.responsiveObserver.observeResolution().subscribe((columns) => {
+      this.columns = columns;
+    });
+  }
 
   ngOnInit() {
-    // this.authService.userData$.subscribe((userData) => {
-    // const userRole: UserTypeConstant | undefined = userData?.role;
-    console.log(this.authService.getUserData().user_type);
     let user_type = this.authService.getUserData().user_type;
     this.dashboardModel = this.cardsConstant.find(
       (dashboard) => user_type === dashboard.role
     );
-    console.log(this.dashboardModel);
+
+    let allCards = DashboardCardsConstant.find(
+      (card) => card.role === UserTypeConstant.ADMIN
+    )?.cards;
+    this.cards = allCards?.setOne;
+    this.cardsSet2 = allCards?.setTwo;
+    console.log(this.cards);
     // this.populateCards();
     // });
   }
