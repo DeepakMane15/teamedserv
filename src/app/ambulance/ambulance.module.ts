@@ -20,6 +20,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { ViewAmbulanceComponent } from './view-ambulance/view-ambulance.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatGridListModule,
     MatTableModule,
     MatTabsModule,
+    FlexLayoutModule,
   ],
   providers: [provideNativeDateAdapter()],
 })

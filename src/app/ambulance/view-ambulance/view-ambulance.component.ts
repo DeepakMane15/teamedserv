@@ -12,10 +12,10 @@ import { AppConstants } from 'src/app/common/constants/AppConstants';
 @Component({
   selector: 'app-view-ambulance',
   templateUrl: './view-ambulance.component.html',
-  styleUrl: './view-ambulance.component.scss'
+  styleUrl: './view-ambulance.component.scss',
 })
-export class ViewAmbulanceComponent implements OnInit{
-  public patientData!: PatientModel;
+export class ViewAmbulanceComponent implements OnInit {
+  public ambulanceData!: PatientModel;
   public apiKey = environment.googleMapsApiKey;
   public showSpinner: Boolean = false;
   columns: Boolean = true;
@@ -23,34 +23,66 @@ export class ViewAmbulanceComponent implements OnInit{
   public appConstants = AppConstants;
   public address!: string;
 
-  public patientProfile: any = [
+  public ambulanceProfile: any = [
     {
-      label: 'Patient Name',
-      key: 'name',
+      label: 'Assignment',
+      key: 'assignment',
     },
     {
-      label: 'Address',
-      key: 'address',
+      label: 'Patient',
+      key: 'patient_name',
     },
     {
-      label: 'Time zone',
-      key: 'time_zone',
+      label: 'Date',
+      key: 'date',
     },
     {
-      label: 'Telephone',
-      key: 'telephone',
+      label: 'Amount',
+      key: 'amount',
     },
     {
-      label: 'Mobile No',
-      key: 'mobile',
+      label: 'Payment Date',
+      key: 'paymentDate',
     },
     {
-      label: 'Internal Notes',
-      key: 'internal_notes',
+      label: 'Equipment Model',
+      key: 'vehicleModel',
     },
     {
-      label: 'Special Notes',
-      key: 'special_notes',
+      label: 'Registration No',
+      key: 'registrationNo',
+    },
+    {
+      label: 'Pick Up Address',
+      key: 'pickupAddress',
+    },
+    {
+      label: 'Pick Up Date-Time',
+      key: 'pickupDate',
+    },
+    {
+      label: 'Pick Up PO',
+      key: 'pickupPO',
+    },
+    {
+      label: 'Pick Up PU',
+      key: 'pickupPU',
+    },
+    {
+      label: 'Destination Address',
+      key: 'destAddress',
+    },
+    {
+      label: 'Destination Date-Time',
+      key: 'destDate',
+    },
+    {
+      label: 'Destination PO',
+      key: 'destPO',
+    },
+    {
+      label: 'Destination PU',
+      key: 'destPU',
     },
   ];
 
@@ -75,7 +107,7 @@ export class ViewAmbulanceComponent implements OnInit{
 
   ngOnInit() {
     //let ambulanceId = history.state.id;
-    let ambulanceId = "1";
+    let ambulanceId = '1';
     if (ambulanceId) this.fetchAmbulanceData(ambulanceId);
     this.defaultTabIndex = (history && history.state.tabIndex) || 0;
     if (!ambulanceId) this.router.navigate(['ambulance']);
@@ -95,7 +127,7 @@ export class ViewAmbulanceComponent implements OnInit{
     this._apiService.post(APIConstant.GET_MEDTRANS_BY_ID, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
-          this.patientData = res.data;
+          this.ambulanceData = res.data;
           this.address = res.data.address;
           this.showSpinner = false;
         }
@@ -126,9 +158,7 @@ export class ViewAmbulanceComponent implements OnInit{
 
   navigateToEdit() {
     this.router.navigate(['/patients/edit'], {
-      state: { patientData: this.patientData },
+      state: { ambulanceData: this.ambulanceData },
     });
   }
 }
-
-
