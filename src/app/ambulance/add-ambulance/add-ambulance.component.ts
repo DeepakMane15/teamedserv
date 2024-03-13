@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class AddAmbulanceComponent implements OnInit {
   public showSpinner: Boolean = false;
-  public assignmentData: any;
+  public ambulanceData: any;
   public isUnameAvailable: Boolean = true;
   public panelOpenState = false;
   public patientsMaster: any = [];
@@ -23,10 +23,10 @@ export class AddAmbulanceComponent implements OnInit {
   public customerMaster: any = [];
   public transportationMethod: any = [];
   public awardMethod: any = [];
-  public ambulanceData: boolean = false;
   public assignmentsMaster: any = [];
 
   ambulanceForm = this.fb.group({
+    id:0,
     customer_id: 0,
     assignment: ['', Validators.required],
     date: ['', Validators.required],
@@ -64,31 +64,35 @@ export class AddAmbulanceComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.assignmentData = history.state.assignmentData;
-    console.log(this.assignmentData);
-    if (this.assignmentData) {
-      console.log(this.assignmentData);
-      // this.ambulanceForm.patchValue({
-      // customer_id: this.assignmentData.company_id,
-      // medicalId: this.assignmentData.medical_team,
-      // medicalProfession: this.assignmentData.profession,
-      // assignment: this.assignmentData.assignment,
-      // transaction: this.assignmentData.transaction,
-      // date: this.assignmentData.date,
-      // amount: this.assignmentData.amount,
-      // paymentDate: this.assignmentData.paymentdate,
-      // patientId: this.assignmentData.patient,
-      // patientAddress: this.assignmentData.name,
-      // cPerson1Name: this.assignmentData.cperson1,
-      // cPerson1Phone: this.assignmentData.cphone1,
-      // cPerson2Name: this.assignmentData.cperson2,
-      // cPerson2Phone: this.assignmentData.cphone2,
-      // visitDate: this.assignmentData.fromdate,
-      // visitTime: this.assignmentData.time,
-      // prNotes: this.assignmentData.ptnotes,
-      // pNotes: this.assignmentData.pnotes,
-      // iNotes: this.assignmentData.inotes,
-      // });
+    this.ambulanceData = history.state.ambulanceData;
+    console.log(this.ambulanceData);
+    if (this.ambulanceData) {
+      console.log(this.ambulanceData);
+      this.ambulanceForm.patchValue({
+        id: this.ambulanceData.id,
+        customer_id: this.ambulanceData.company_id,
+        assignment: this.ambulanceData.assignment,
+        date: this.ambulanceData.date,
+        transaction: this.ambulanceData.transaction,
+        patient: this.ambulanceData.patient,
+        amount: this.ambulanceData.amount,
+        paymentDate: this.ambulanceData.paymentDate,
+        driver: this.ambulanceData.driver,
+        vehicleModel: this.ambulanceData.vehicleModel,
+        registrationNo: this.ambulanceData.registrationNo,
+        pickupAddress: this.ambulanceData.pickupAddress,
+        pickupDate: this.ambulanceData.pickupDate,
+        pickupTime: this.ambulanceData.pickupTime,
+        pickupPO: this.ambulanceData.pickupPO,
+        pickupPU: this.ambulanceData.pickupPU,
+        destAddress: this.ambulanceData.destAddress,
+        destDate: this.ambulanceData.destDate,
+        destTime: this.ambulanceData.destTime,
+        destPO: this.ambulanceData.destPO,
+        destPU: this.ambulanceData.destPU,
+        specialNotes: this.ambulanceData.specialNotes,
+        driverNotes: this.ambulanceData.driverNotes,
+      });
     }
     this.fetchMedicalTeams();
     this.fetchInitialData();
@@ -103,14 +107,24 @@ export class AddAmbulanceComponent implements OnInit {
           this.assignmentsMaster = res.data.assignment;
           this.patientsMaster = res.data.patients;
 
-          if (this.patientsMaster && this.assignmentData) {
+          if (res.data.transaction_no) {
+            this.ambulanceForm.patchValue({
+              transaction: res.data.transaction_no,
+            });
+          }
+
+          if (this.patientsMaster && this.ambulanceData) {
             let patientSelected = this.patientsMaster.find(
-              (p: any) => p.id === this.assignmentData.patient
+              (p: any) => p.id === this.ambulanceData.patient
             );
 
             if (patientSelected) {
               this.ambulanceForm.patchValue({
                 patientAddress: patientSelected.address,
+                cPerson1Name: patientSelected.contactPerson1_name,
+                cPerson2Name: patientSelected.contactPerson2_name,
+                cPerson1Phone: patientSelected.contactPerson1_phone,
+                cPerson2Phone: patientSelected.contactPerson2_phone,
               });
             }
           }
@@ -161,7 +175,7 @@ export class AddAmbulanceComponent implements OnInit {
       this._apiService
         .post(
           this.ambulanceData
-            ? APIConstant.EDIT_ASSIGNMENT
+            ? APIConstant.EDIT_MEDTRANS
             : APIConstant.ADD_MEDTRANS,
           formData
         )
@@ -169,7 +183,7 @@ export class AddAmbulanceComponent implements OnInit {
           (res: any) => {
             if (res && res.status) {
               this.showSpinner = false;
-              // this.router.navigate(['/ambulance']);
+              this.router.navigate(['/ambulance']);
             } else {
               this.showSpinner = false;
               console.log(res.message);

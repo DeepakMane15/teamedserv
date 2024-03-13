@@ -222,7 +222,7 @@
                   <mat-form-field class="full-width">
                     <mat-label>Transaction</mat-label>
                     <div class="uname-input">
-                      <input matInput formControlName="transaction" value="TR1213">
+                      <input matInput formControlName="transaction" readonly>
                     </div>
                   </mat-form-field>
                 </div>
@@ -288,8 +288,7 @@
                         [value]="patient.id">{{patient.name}}</mat-option>
                     </mat-select>
                   </mat-form-field>
-                  <mat-error
-                    *ngIf="ambulanceForm.get('patientId')?.invalid && ambulanceForm.get('patientId')?.touched">
+                  <mat-error *ngIf="ambulanceForm.get('patientId')?.invalid && ambulanceForm.get('patientId')?.touched">
                     Patient is invalid
                   </mat-error>
                 </div>
@@ -431,7 +430,10 @@
                 <div class="col">
                   <mat-form-field class="full-width">
                     <mat-label>Pick-Up Date</mat-label>
-                    <input matInput formControlName="pickupDate" />
+                    <!-- <input matInput formControlName="pickupDate" /> -->
+                    <input matInput [matDatepicker]="pickupDate" formControlName="pickupDate">
+                    <mat-datepicker-toggle matIconSuffix [for]="pickupDate"></mat-datepicker-toggle>
+                    <mat-datepicker #pickupDate></mat-datepicker>
                     <mat-error
                       *ngIf="ambulanceForm.get('pickupDate')?.invalid && ambulanceForm.get('pickupDate')?.touched">
                       Pick-Up Date is invalid
@@ -499,21 +501,21 @@
                 </div>
                 <div class="col">
                   <mat-form-field class="full-width">
-                    <mat-label>Pick-Up Date</mat-label>
-                    <input matInput formControlName="destDate" />
-                    <mat-error
-                      *ngIf="ambulanceForm.get('destDate')?.invalid && ambulanceForm.get('destDate')?.touched">
-                      Pick-Up Date is invalid
+                    <mat-label>Destination Date</mat-label>
+                    <input matInput [matDatepicker]="destDate" formControlName="destDate">
+                    <mat-datepicker-toggle matIconSuffix [for]="destDate"></mat-datepicker-toggle>
+                    <mat-datepicker #destDate></mat-datepicker>
+                    <mat-error *ngIf="ambulanceForm.get('destDate')?.invalid && ambulanceForm.get('destDate')?.touched">
+                      Destination Date is invalid
                     </mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col">
                   <mat-form-field class="full-width">
-                    <mat-label>Pick-Up Time</mat-label>
+                    <mat-label>Destination Time</mat-label>
                     <input matInput formControlName="destTime" />
-                    <mat-error
-                      *ngIf="ambulanceForm.get('destTime')?.invalid && ambulanceForm.get('destTime')?.touched">
-                      Pick-Up Time is invalid
+                    <mat-error *ngIf="ambulanceForm.get('destTime')?.invalid && ambulanceForm.get('destTime')?.touched">
+                      Destination Time is invalid
                     </mat-error>
                   </mat-form-field>
                 </div>

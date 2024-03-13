@@ -65,9 +65,9 @@ export class AmbulanceListComponent implements OnInit{
     this.router.navigate(['/ambulance/add']);
   }
 
-  navigateToEdit(assignmentData: any) {
+  navigateToEdit(ambulanceData: any) {
     this.router.navigate(['/ambulance/edit'], {
-      state: { assignmentData: assignmentData },
+      state: { ambulanceData: ambulanceData },
     });
   }
   navigateToView(assignmentData: any) {

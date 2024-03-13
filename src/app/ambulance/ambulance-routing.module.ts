@@ -15,6 +15,11 @@ const routes: Routes = [
     component: AddAmbulanceComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: 'edit',
+    component: AddAmbulanceComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
