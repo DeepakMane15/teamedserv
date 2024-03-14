@@ -21,9 +21,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AddDriverComponent } from './add-driver/add-driver.component';
+import { ViewDriverComponent } from './view-driver/view-driver.component';
 
 @NgModule({
-  declarations: [DriverListComponent, AddDriverComponent],
+  declarations: [DriverListComponent, AddDriverComponent, ViewDriverComponent],
   imports: [
     CommonModule,
     DriverRoutingModule,

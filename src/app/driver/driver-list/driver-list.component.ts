@@ -64,7 +64,7 @@ export class DriverListComponent implements OnInit {
     });
   }
   navigateToView(assignmentData: any) {
-    this.router.navigate(['/assignments/view'], {
+    this.router.navigate(['/driver/view'], {
       state: { assignmentId: assignmentData.id, tabIndex: 0 },
     });
   }
