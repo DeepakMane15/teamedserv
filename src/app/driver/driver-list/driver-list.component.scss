@@ -27,42 +27,25 @@ main {
     mat-card-content {
       padding-top: 20px;
 
-      .filter-container {
 
-        ::ng-deep .mat-mdc-form-field {
-          background-color: transparent;
-          height: 63px;
-        }
-
-        ::ng-deep .mat-mdc-form-field-infix {
-          padding-top: 8px !important;
-        }
-
-        ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-          background-color: #d9dbe1 !important;
-        }
-
+      .search {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        justify-content: end;
+        padding-bottom: 10px;
+        height: 25px;
 
-        .search {
-          padding-bottom: 10px;
-          height: 25px;
-
-          .custom-input {
-            width: 260px;
-            border: 1px solid rgb(209, 209, 209);
-            border-radius: 4px;
-            padding: 10px;
-          }
-
-          .custom-input:focus {
-            border: 1px solid solid rgb(109 126 170);
-            outline: none;
-          }
-
+        .custom-input {
+          width: 260px;
+          border: 1px solid rgb(209, 209, 209);
+          border-radius: 4px;
+          padding: 10px;
         }
+
+        .custom-input:focus {
+          border: 1px solid solid rgb(109 126 170);
+          outline: none;
+        }
+
       }
 
       table {
@@ -104,6 +87,7 @@ main {
 ::ng-deep .green {
   background-color: #82ff82;
 }
+
 // .mat-table {
 //   width: 100%; /* Ensure table takes full width */
 // }
