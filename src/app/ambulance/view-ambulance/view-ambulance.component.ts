@@ -16,6 +16,7 @@ import { AppConstants } from 'src/app/common/constants/AppConstants';
 })
 export class ViewAmbulanceComponent implements OnInit {
   public ambulanceData!: PatientModel;
+  public driverData!: any;
   public apiKey = environment.googleMapsApiKey;
   public showSpinner: Boolean = false;
   columns: Boolean = true;
@@ -43,14 +44,6 @@ export class ViewAmbulanceComponent implements OnInit {
     {
       label: 'Payment Date',
       key: 'paymentDate',
-    },
-    {
-      label: 'Equipment Model',
-      key: 'vehicleModel',
-    },
-    {
-      label: 'Registration No',
-      key: 'registrationNo',
     },
     {
       label: 'Pick Up Address',
@@ -83,6 +76,38 @@ export class ViewAmbulanceComponent implements OnInit {
     {
       label: 'Destination PU',
       key: 'destPU',
+    },
+  ];
+  public equipmentProfile: any = [
+  {
+    label: 'Equipment Model',
+    key: 'vehicleModel',
+  },
+  {
+    label: 'Registration No',
+    key: 'registrationNo',
+  },
+];
+  public driverProfile: any = [
+    {
+      label : 'First name',
+      key : 'first_name',
+    },
+    {
+      label : 'Last name',
+      key : 'last_name',
+    },
+    {
+      label : 'Email',
+      key : 'email',
+    },
+    {
+      label : 'Mobile no.',
+      key : 'mobile_no',
+    },
+    {
+      label : 'Driving License',
+      key : 'dl',
     },
   ];
 
@@ -127,6 +152,8 @@ export class ViewAmbulanceComponent implements OnInit {
     this._apiService.post(APIConstant.GET_MEDTRANS_BY_ID, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
+          // console.log(res.data);
+          this.fetchDriverData(res.data.driver);
           this.ambulanceData = res.data;
           this.address = res.data.address;
           this.showSpinner = false;
@@ -138,6 +165,25 @@ export class ViewAmbulanceComponent implements OnInit {
       }
     );
   }
+  private fetchDriverData(driverId: string) {
+    this.showSpinner = true;
+    const fd = new FormData();
+    fd.append('driver_id', driverId);
+    this._apiService.post(APIConstant.GET_DRIVER_BY_ID, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          console.log(res.data);
+          this.driverData = res.data;
+          this.showSpinner = false;
+        }
+      },
+      (error) => {
+        this.showSpinner = false;
+        console.log(error);
+      }
+    );
+  }
+
 
   isPageRefresh(): boolean {
     return (

@@ -17,7 +17,7 @@
       <mat-grid-list [cols]="columns ? 3 : 1" rowHeight="700" gutterSize="10">
         <mat-grid-tile [colspan]="columns ? 2: 1" [rowspan]="1">
           <mat-tab-group [selectedIndex]="defaultTabIndex">
-            <mat-tab label="Personal Detail">
+            <mat-tab label="General Detail">
               <div class="tab-header-label-container bordered">
                 <mat-icon class="action-mat-icon colored" aria-label="back" (click)="navigateToEdit()">edit</mat-icon>
                 <span>Edit</span>
@@ -36,11 +36,38 @@
                 </div>
               </div>
             </mat-tab>
-            <mat-tab label="Contacts">
-              <div class="company-content pd-top" *ngIf="ambulanceData">
-               <div>In Prgress</div>
+            <mat-tab label="Drivers Details ">
+              <div class="company-content" *ngIf="ambulanceData">
+                <div fxLayout="row" class="content" fxLayoutAlign="start center" *ngFor="let data of driverProfile">
+                  <div fxFlex="40%" fxFlex.xs="100%">
+                    {{data.label}}
+                  </div>
+                  <div style="width: 40px; text-align: center;">
+                    :
+                  </div>
+                  <div fxFlex="60%" fxFlex.xs="100%" class="content-rhs">
+                    {{driverData[data.key] || ''}}
+                  </div>
+                </div>
               </div>
             </mat-tab>
+            <!-- Equipment details -->
+            <mat-tab label="Equipment Details">
+              <div class="company-content" *ngIf="driverData">
+                <div fxLayout="row" class="content" fxLayoutAlign="start center" *ngFor="let data of equipmentProfile">
+                  <div fxFlex="40%" fxFlex.xs="100%">
+                    {{data.label}}
+                  </div>
+                  <div style="width: 40px; text-align: center;">
+                    :
+                  </div>
+                  <div fxFlex="60%" fxFlex.xs="100%" class="content-rhs">
+                    {{ambulanceData[data.key] || ''}}
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
+
           </mat-tab-group>
         </mat-grid-tile>
         <mat-grid-tile [colspan]="1" rowHeight="200" [rowspan]="1">

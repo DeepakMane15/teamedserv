@@ -48,5 +48,6 @@ export enum APIConstant {
   GET_MEDTRANS = 'medtrans/get',
   GET_MEDTRANS_BY_ID = 'medtrans/get-by-id',
 
-
+  //Driver
+  GET_DRIVER_BY_ID ='driver/get-by-id',
 }
