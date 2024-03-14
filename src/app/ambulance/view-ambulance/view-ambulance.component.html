@@ -18,8 +18,8 @@
         <mat-grid-tile [colspan]="columns ? 2: 1" [rowspan]="1">
           <mat-tab-group [selectedIndex]="defaultTabIndex">
             <mat-tab label="General Detail">
-              <div class="tab-header-label-container bordered">
-                <mat-icon class="action-mat-icon colored" aria-label="back" (click)="navigateToEdit()">edit</mat-icon>
+              <div class="tab-header-label-container bordered" (click)="navigateToEdit()">
+                <mat-icon class="action-mat-icon colored" aria-label="back" >edit</mat-icon>
                 <span>Edit</span>
               </div>
               <div class="company-content" *ngIf="ambulanceData">

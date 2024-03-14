@@ -11,10 +11,9 @@ import { AppConstants } from 'src/app/common/constants/AppConstants';
 @Component({
   selector: 'app-view-driver',
   templateUrl: './view-driver.component.html',
-  styleUrl: './view-driver.component.scss'
-
+  styleUrl: './view-driver.component.scss',
 })
-export class ViewDriverComponent implements OnInit{
+export class ViewDriverComponent implements OnInit {
   public showSpinner: Boolean = false;
   columns: Boolean = true;
   defaultTabIndex!: number;
@@ -25,29 +24,28 @@ export class ViewDriverComponent implements OnInit{
 
   public driverProfile: any = [
     {
-      label : 'First name',
-      key : 'first_name',
+      label: 'First name',
+      key: 'first_name',
     },
     {
-      label : 'Last name',
-      key : 'last_name',
+      label: 'Last name',
+      key: 'last_name',
     },
     {
-      label : 'Email',
-      key : 'email',
+      label: 'Email',
+      key: 'email',
     },
     {
-      label : 'Mobile no.',
-      key : 'mobile_no',
+      label: 'Mobile no.',
+      key: 'mobile_no',
     },
-   
   ];
-  public driverDocument: any=[
+  public driverDocument: any = [
     {
-      label : 'Driving License',
-      key : 'dl',
+      label: 'Driving License',
+      key: 'dl',
     },
-  ]
+  ];
 
   constructor(
     private responsiveObserver: ResponsiveService,
@@ -63,7 +61,10 @@ export class ViewDriverComponent implements OnInit{
   ngAfterViewInit() {}
 
   ngOnInit() {
-  this.fetchDriverData("1");
+    let driverId = history.state.driverId;
+    if (driverId) this.fetchDriverData(driverId);
+    else this.router.navigate(['driver']);
+    this.defaultTabIndex = (history && history.state.tabIndex) || 0;
   }
   private fetchDriverData(driverId: string) {
     this.showSpinner = true;
@@ -84,8 +85,18 @@ export class ViewDriverComponent implements OnInit{
     );
   }
 
-getMapUrl() {
-  const url = `https://www.google.com/maps/embed/v1/place?q=${this.address}&key=${this.apiKey}`;
-  return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-}
+  getMapUrl() {
+    const url = `https://www.google.com/maps/embed/v1/place?q=${this.address}&key=${this.apiKey}`;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  navigateBack() {
+    this.router.navigate(['ambulance']);
+  }
+
+  navigateToEdit() {
+    this.router.navigate(['/ambulance/edit'], {
+      state: { driverData: this.driverData },
+    });
+  }
 }

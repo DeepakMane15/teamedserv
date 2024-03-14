@@ -23,6 +23,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { AddDriverComponent } from './add-driver/add-driver.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { ViewDriverComponent } from './view-driver/view-driver.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [DriverListComponent, AddDriverComponent, ViewDriverComponent],
@@ -46,7 +47,8 @@ import { ViewDriverComponent } from './view-driver/view-driver.component';
     MatTableModule,
     MatGridListModule,
     MatTabsModule,
-    MatRadioModule
+    MatRadioModule,
+    FlexLayoutModule
   ],
 })
 export class DriverModule {}

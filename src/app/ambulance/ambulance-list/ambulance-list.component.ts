@@ -74,9 +74,8 @@ export class AmbulanceListComponent implements OnInit{
     this.router.navigate(['/ambulance/view'], {
       state: { ambulanceId: ambulanceData.id, tabIndex: 0 },
     });
-    console.log(ambulanceData);
   }
-  
+
   handleDeleteAssignment(ambulanceNO: any) {
     let fd = new FormData();
     fd.append('assignment_No', ambulanceNO);

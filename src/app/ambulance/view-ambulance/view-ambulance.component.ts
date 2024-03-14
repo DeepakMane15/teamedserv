@@ -15,7 +15,7 @@ import { AppConstants } from 'src/app/common/constants/AppConstants';
   styleUrl: './view-ambulance.component.scss',
 })
 export class ViewAmbulanceComponent implements OnInit {
-  public ambulanceData!: PatientModel;
+  public ambulanceData!: any;
   public driverData!: any;
   public apiKey = environment.googleMapsApiKey;
   public showSpinner: Boolean = false;
@@ -131,8 +131,7 @@ export class ViewAmbulanceComponent implements OnInit {
   ngAfterViewInit() {}
 
   ngOnInit() {
-    //let ambulanceId = history.state.id;
-    let ambulanceId = '1';
+    let ambulanceId = history.state.ambulanceId;
     if (ambulanceId) this.fetchAmbulanceData(ambulanceId);
     this.defaultTabIndex = (history && history.state.tabIndex) || 0;
     if (!ambulanceId) this.router.navigate(['ambulance']);
