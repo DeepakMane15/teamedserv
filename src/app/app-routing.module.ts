@@ -70,6 +70,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'driver',
+    loadChildren: () =>
+      import('./driver/driver.module').then((m) => m.DriverModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'team-invitation',
     component: TeamInvitationComponent,
     pathMatch: 'full',
