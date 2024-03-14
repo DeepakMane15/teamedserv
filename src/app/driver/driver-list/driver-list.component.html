@@ -4,9 +4,9 @@
   </div>
   <mat-card class="assignment-card">
     <mat-card-header>
-      <mat-card-title>All Assignments</mat-card-title>
+      <mat-card-title>All Drivers</mat-card-title>
       <button mat-raised-button class="add-assignment" color="primary" type="button" (click)="navigateToAdd()">Add
-        Assignments</button>
+        Drivers</button>
     </mat-card-header>
     <mat-card-content>
       <div class="search">
@@ -24,7 +24,7 @@
           <!-- Transaction Column -->
           <ng-container matColumnDef="name" class="container-tab">
             <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Name </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.name}} </td>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.full_name}} </td>
           </ng-container>
 
           <!-- Profession Column -->
@@ -41,9 +41,9 @@
           </ng-container>
 
           <!-- Entry Date -->
-          <ng-container matColumnDef="dl" class="container-tab">
-            <th mat-header-cell *matHeaderCellDef style="max-width: 200px;"> Driving Licence </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.dl | date}} </td>
+          <ng-container matColumnDef="address" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 200px;"> Address </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.address}} </td>
           </ng-container>
           <!-- Visit Date -->
 

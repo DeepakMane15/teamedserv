@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { AmbulanceModel } from 'src/app/common/models/AmbulanceModel';
 import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
+import { DriverModel } from 'src/app/common/models/DriverModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
@@ -24,9 +25,10 @@ export class AddAmbulanceComponent implements OnInit {
   public transportationMethod: any = [];
   public awardMethod: any = [];
   public assignmentsMaster: any = [];
+  public driverMaster!: DriverModel[];
 
   ambulanceForm = this.fb.group({
-    id:0,
+    id: 0,
     customer_id: 0,
     assignment: ['', Validators.required],
     date: ['', Validators.required],
@@ -96,6 +98,7 @@ export class AddAmbulanceComponent implements OnInit {
     }
     this.fetchMedicalTeams();
     this.fetchInitialData();
+    this.fetchDrivers()
   }
 
   public fetchInitialData() {
@@ -138,6 +141,21 @@ export class AddAmbulanceComponent implements OnInit {
       }
     );
   }
+  private fetchDrivers() {
+    this.showSpinner = true;
+    this._apiService.get(APIConstant.GET_DRIVERS).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.driverMaster = res.data;
+        }
+        this.showSpinner = false;
+      },
+      (error) => {
+        this.showSpinner = false;
+      }
+    );
+  }
+
   public fetchMedicalTeams() {
     this.showSpinner = true;
     this._apiService.get(APIConstant.GET_MEDICALTEAMS).subscribe(

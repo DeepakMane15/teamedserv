@@ -355,7 +355,11 @@
                 <div class="col">
                   <mat-form-field class="full-width">
                     <mat-label>Fleet</mat-label>
-                    <input matInput formControlName="driver" />
+                    <!-- <input matInput formControlName="driver" /> -->
+                    <mat-select formControlName="driver">
+                      <mat-option *ngFor="let driver of driverMaster"
+                        [value]="driver.id">{{driver['full_name']}}</mat-option>
+                    </mat-select>
                     <mat-error *ngIf="ambulanceForm.get('driver')?.invalid && ambulanceForm.get('driver')?.touched">
                       Fleet is invalid
                     </mat-error>

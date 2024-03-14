@@ -21,6 +21,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AddDriverComponent } from './add-driver/add-driver.component';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [DriverListComponent, AddDriverComponent],
@@ -44,6 +45,7 @@ import { AddDriverComponent } from './add-driver/add-driver.component';
     MatTableModule,
     MatGridListModule,
     MatTabsModule,
+    MatRadioModule
   ],
 })
 export class DriverModule {}

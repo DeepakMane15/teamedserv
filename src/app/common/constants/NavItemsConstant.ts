@@ -168,14 +168,28 @@ export const NavItemsContant: NavLinksModel[] = [
   },
   {
     label: 'Driver',
-    roles: [
-      UserTypeConstant.ADMIN,
-      UserTypeConstant.CUSTOMER
-    ],
+    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
     category: '',
-    subItems: [],
+    subItems: [
+      {
+        label: 'All Drivers',
+        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+        category: '',
+        subItems: [],
+        icon: '',
+        url: '/driver',
+      },
+      {
+        label: 'Add Driver',
+        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+        category: '',
+        subItems: [],
+        icon: '',
+        url: '/add-driver',
+      },
+    ],
     icon: 'chat',
-    url: '/driver',
+    url: '',
   },
   {
     label: 'Chat (testing with mobile app)',
@@ -213,7 +227,7 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '/team-board',
   },
   {
-    label: 'Ambulance (View/Edit pending)',
+    label: 'Ambulance',
     roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
     category: 'directory',
     subItems: [

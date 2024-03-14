@@ -17,7 +17,7 @@ export class DriverListComponent implements OnInit {
     'name',
     'email',
     'mobile',
-    'dl',
+    'address',
     'action',
   ];
 
@@ -55,21 +55,19 @@ export class DriverListComponent implements OnInit {
     );
   }
   navigateToAdd() {
-    this.router.navigate(['/assignments/add']);
+    this.router.navigate(['/driver/add']);
   }
 
-  navigateToEdit(assignmentData: any) {
-    this.router.navigate(['/assignments/edit'], {
-      state: { assignmentData: assignmentData },
+  navigateToEdit(driverData: any) {
+    this.router.navigate(['/driver/edit'], {
+      state: { driverData: driverData },
     });
   }
-  navigateToView(assignmentData: any) {
-    this.router.navigate(['/assignments/view'], {
-      state: { assignmentId: assignmentData.id, tabIndex: 0 },
+  navigateToView(driverData: any) {
+    this.router.navigate(['/driver/view'], {
+      state: { driverId: driverData.id, tabIndex: 0 },
     });
   }
-
-  navigateBack() {}
 
   handleDeleteAssignment(assignmentNO: any) {
     let fd = new FormData();

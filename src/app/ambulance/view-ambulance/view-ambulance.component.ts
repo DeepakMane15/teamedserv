@@ -153,11 +153,11 @@ export class ViewAmbulanceComponent implements OnInit {
   }
 
   navigateBack() {
-    this.router.navigate(['patients']);
+    this.router.navigate(['ambulance']);
   }
 
   navigateToEdit() {
-    this.router.navigate(['/patients/edit'], {
+    this.router.navigate(['/ambulance/edit'], {
       state: { ambulanceData: this.ambulanceData },
     });
   }
