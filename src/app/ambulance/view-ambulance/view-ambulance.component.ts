@@ -27,7 +27,7 @@ export class ViewAmbulanceComponent implements OnInit {
   public ambulanceProfile: any = [
     {
       label: 'Assignment',
-      key: 'assignment',
+      key: 'assignment_name',
     },
     {
       label: 'Patient',
