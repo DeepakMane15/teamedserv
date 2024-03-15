@@ -260,11 +260,28 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '/',
   },
   {
-    label: 'Job-Portal ##',
+    label: 'Job-Portal (view in progress)',
     roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
     category: 'directory',
-    subItems: [],
+    subItems: [
+      {
+        label: 'All Job Openings',
+        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+        category: 'directory',
+        subItems: [],
+        icon: '',
+        url: '/job-portal',
+      },
+      {
+        label: 'Add Job Opening',
+        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+        category: 'directory',
+        subItems: [],
+        icon: '',
+        url: '/job-portal/add',
+      },
+    ],
     icon: 'work',
-    url: '/',
+    url: '',
   },
 ];

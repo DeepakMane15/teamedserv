@@ -76,6 +76,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'job-portal',
+    loadChildren: () =>
+      import('./job-portal/job-portal.module').then((m) => m.JobPortalModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'team-invitation',
     component: TeamInvitationComponent,
     pathMatch: 'full',

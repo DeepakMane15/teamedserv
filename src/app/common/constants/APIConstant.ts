@@ -39,8 +39,7 @@ export enum APIConstant {
   GET_ASSIGNMENT_INITIAL_DATA = 'assignment/get-initial-data',
   ADD_ASSIGNMENT = 'assignment/add',
   EDIT_ASSIGNMENT = 'assignment/edit',
-  GET_ASSIGNMENTS = "assignment/get",
-
+  GET_ASSIGNMENTS = 'assignment/get',
 
   // MedTrans
   ADD_MEDTRANS = 'medtrans/add',
@@ -54,5 +53,8 @@ export enum APIConstant {
   GET_DRIVERS = 'driver/get',
   GET_DRIVER_BY_ID = 'driver/get-by-id',
 
-
+  // Job Portal
+  ADD_JOB_PORTAL = 'job-portal/add',
+  EDIT_JOB_PORTAL = 'job-portal/edit',
+  GET_JOB_PORTAL = 'job-portal/get',
 }
