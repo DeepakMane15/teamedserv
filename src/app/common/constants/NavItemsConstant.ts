@@ -192,7 +192,7 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '',
   },
   {
-    label: 'Chat (testing with mobile app)',
+    label: 'Chat (functional implementation)',
     roles: [
       UserTypeConstant.ADMIN,
       UserTypeConstant.CUSTOMER,
@@ -260,7 +260,7 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '/',
   },
   {
-    label: 'Job-Portal (view in progress)',
+    label: 'Job-Portal (completed, view under testing)',
     roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
     category: 'directory',
     subItems: [
