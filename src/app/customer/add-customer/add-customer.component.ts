@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatRadioChange } from '@angular/material/radio';
+import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { UserTypeConstant } from 'src/app/common/constants/UserTypeConstant';
@@ -22,6 +23,9 @@ export class AddCustomerComponent implements OnInit {
   public timezones: any;
   public addressPredictions: any;
   public customerData!: CustomerModel;
+  public category!: any;
+  public subCategory!: any;
+  public filteredSubCat!: any;
 
   companyForm = this.fb.group({
     customer_id: 0,
@@ -34,6 +38,8 @@ export class AddCustomerComponent implements OnInit {
       ],
     ],
     password: ['', Validators.required],
+    category: [[''], Validators.required],
+    sub_category: ['', Validators.required],
     company_name: ['', Validators.required],
     federal_no: [
       '',
@@ -91,12 +97,15 @@ export class AddCustomerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getCategories();
     this.getTimeZones();
     this.customerData = history.state.customerData;
     this.companyForm.patchValue({
       customer_id: this.customerData.customer_id,
       username: this.customerData.username,
       password: this.customerData.password,
+      category: this.customerData.category?.split(','),
+      sub_category: this.customerData['sub_category']?.split(','),
       company_name: this.customerData.company_name,
       physical_address: this.customerData.physical_address,
       mailing_address: this.customerData.mailing_address,
@@ -119,7 +128,7 @@ export class AddCustomerComponent implements OnInit {
 
   onSubmit(): void {
     if (this.companyForm.valid) {
-      const formModel: CustomerModel = this.companyForm.value as CustomerModel;
+      const formModel: any = this.companyForm.value;
       const formData = new FormData();
 
       // Convert JSON object to FormData
@@ -159,6 +168,13 @@ export class AddCustomerComponent implements OnInit {
       return { notAvailable: true };
     }
     return null;
+  }
+
+  public handleCatChange(event: MatSelectChange) {
+    // console.log(event.value)
+    this.filteredSubCat = this.subCategory.filter((cat: any) =>
+      event.value.includes(cat.category_id)
+    );
   }
 
   public async checkUsernameAvailable(event: Event) {
@@ -296,6 +312,29 @@ export class AddCustomerComponent implements OnInit {
       (error) => {
         this.showSpinner = false;
         console.error('Timexone fetch failed', error);
+      }
+    );
+  }
+  public getCategories() {
+    this.showSpinner = true;
+    this._apiService.get(APIConstant.GET_CATEGORY).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.showSpinner = false;
+          this.category = res.data.category;
+          this.subCategory = res.data['sub-category'];
+          if (this.customerData) {
+            this.filteredSubCat = this.subCategory?.filter((cat: any) =>
+              this.customerData.category?.split(',').includes(cat.category_id)
+            );
+          }
+        } else {
+          console.error('Category fetch failed');
+        }
+      },
+      (error) => {
+        this.showSpinner = false;
+        console.error('Category fetch failed', error);
       }
     );
   }

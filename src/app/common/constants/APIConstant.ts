@@ -7,6 +7,7 @@ export enum APIConstant {
   DELETE_CUSTOMER = 'customer/delete',
   EDIT_CUSTOMER = 'customer/edit',
   GET_TIMEZONE = 'timezones',
+  GET_CATEGORY = "customer/get-category-data",
   // medical-teams
   GET_MEDICALTEAMS = 'medical-teams',
   ADD_MEDICALTEAM = 'medical-team/add',

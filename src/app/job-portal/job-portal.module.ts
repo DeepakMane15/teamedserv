@@ -24,8 +24,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AddJobOpeningComponent } from './add-job-opening/add-job-opening.component';
 import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
+import { ViewJobOpeningComponent } from './view-job-opening/view-job-opening.component';
 @NgModule({
-  declarations: [JobPortalListComponent, AddJobOpeningComponent],
+  declarations: [JobPortalListComponent, AddJobOpeningComponent, ViewJobOpeningComponent],
   imports: [
     CommonModule,
     JobPortalRoutingModule,

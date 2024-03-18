@@ -58,6 +58,34 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
+            <mat-label>Category</mat-label>
+            <!-- <input matInput formControlName="category"> -->
+            <mat-select formControlName="category" (selectionChange)="handleCatChange($event)" multiple>
+              <mat-option *ngFor="let cat of category"
+                [value]="cat.id">{{cat.title}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="companyForm.get('category')?.invalid && companyForm.get('category')?.touched">
+              Category is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Sub-Category</mat-label>
+            <!-- <input matInput formControlName="sub_category"> -->
+            <mat-select formControlName="sub_category" multiple>
+              <mat-option *ngFor="let subCat of filteredSubCat"
+                [value]="subCat.id">{{subCat.title}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="companyForm.get('sub_category')?.invalid && companyForm.get('sub_category')?.touched">
+              Sub-Category is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
             <mat-label>Company Name</mat-label>
             <input matInput formControlName="company_name">
             <mat-error *ngIf="companyForm.get('company_name')?.invalid && companyForm.get('company_name')?.touched">

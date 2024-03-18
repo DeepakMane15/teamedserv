@@ -4,6 +4,7 @@ export class CustomerModel {
   [key: string]: any;
   public customer_id: number;
   public username: string;
+  public category: string;
   public password: string;
   public company_name: string;
   public federal_no: string;
@@ -29,6 +30,7 @@ export class CustomerModel {
   constructor() {
     this.customer_id = 0;
     this.username = '';
+    this.category = '';
     this.password = '';
     this.company_name = '';
     this.federal_no = '';
