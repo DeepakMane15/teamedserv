@@ -57,9 +57,8 @@
     <mat-card-content>
       <div class="row">
         <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Category</mat-label>
-            <!-- <input matInput formControlName="category"> -->
+          <!-- <mat-form-field class="full-width">
+            <mat-label>Category</mat-label>\
             <mat-select formControlName="category" (selectionChange)="handleCatChange($event)" multiple>
               <mat-option *ngFor="let cat of category"
                 [value]="cat.id">{{cat.title}}</mat-option>
@@ -67,20 +66,25 @@
             <mat-error *ngIf="companyForm.get('category')?.invalid && companyForm.get('category')?.touched">
               Category is required
             </mat-error>
-          </mat-form-field>
+          </mat-form-field> -->
+          <ng-multiselect-dropdown [placeholder]="'Select Category'" [settings]="categorySettings" [data]="category"
+            formControlName="category" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+          </ng-multiselect-dropdown>
         </div>
         <div class="col">
-          <mat-form-field class="full-width">
+          <!-- <mat-form-field class="full-width">
             <mat-label>Sub-Category</mat-label>
-            <!-- <input matInput formControlName="sub_category"> -->
             <mat-select formControlName="sub_category" multiple>
-              <mat-option *ngFor="let subCat of filteredSubCat"
-                [value]="subCat.id">{{subCat.title}}</mat-option>
+              <mat-option *ngFor="let subCat of filteredSubCat" [value]="subCat.id">{{subCat.title}}</mat-option>
             </mat-select>
             <mat-error *ngIf="companyForm.get('sub_category')?.invalid && companyForm.get('sub_category')?.touched">
               Sub-Category is required
             </mat-error>
-          </mat-form-field>
+          </mat-form-field> -->
+          <ng-multiselect-dropdown [placeholder]="'Select Sub-Category'" [settings]="subCategorySettings"
+            [data]="category" formControlName="sub_category" (onSelect)="onItemSelect($event)"
+            (onSelectAll)="onSelectAll($event)">
+          </ng-multiselect-dropdown>
         </div>
       </div>
       <div class="row">

@@ -27,6 +27,7 @@ import { ViewCustomerComponent } from './view-customer/view-customer.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AddUserComponent } from './add-user/add-user.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 @NgModule({
   declarations: [CustomersListComponent, AddCustomerComponent, ViewCustomerComponent, AddUserComponent],
   imports: [
@@ -48,7 +49,8 @@ import { AddUserComponent } from './add-user/add-user.component';
     MatPaginatorModule,
     MatIconModule,
     MatTabsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [
     {

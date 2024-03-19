@@ -20,7 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { OverlaySpinnerComponent } from './shared/loader/overlay-spinner/overlay-spinner.component';
@@ -53,6 +53,7 @@ import { TopThreeProductsComponent } from './top-three-products/top-three-produc
 //import { DocumentComponent } from './document/document.component';
 import { AssignmentStatusProComponent } from './assignment-status-pro/assignment-status-pro.component';
 import { TransactionStatusProComponent } from './transaction-status-pro/transaction-status-pro.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -131,6 +132,7 @@ import { TransactionStatusProComponent } from './transaction-status-pro/transact
     MatSortModule,
     MatChipsModule,
     MatChipListbox,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   exports: [OverlaySpinnerComponent],
   providers: [

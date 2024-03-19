@@ -4,6 +4,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatRadioChange } from '@angular/material/radio';
 import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { UserTypeConstant } from 'src/app/common/constants/UserTypeConstant';
 import { CustomerModel } from 'src/app/common/models/CustomerModel';
@@ -26,7 +27,7 @@ export class AddCustomerComponent implements OnInit {
   public category!: any;
   public subCategory!: any;
   public filteredSubCat!: any;
-
+public selCat!: string[];
   companyForm = this.fb.group({
     customer_id: 0,
     username: [
@@ -38,8 +39,8 @@ export class AddCustomerComponent implements OnInit {
       ],
     ],
     password: ['', Validators.required],
-    category: [[''], Validators.required],
-    sub_category: ['', Validators.required],
+    category: [this.selCat, Validators.required],
+    sub_category: [this.selCat, Validators.required],
     company_name: ['', Validators.required],
     federal_no: [
       '',
@@ -88,6 +89,9 @@ export class AddCustomerComponent implements OnInit {
     user_type: UserTypeConstant.CUSTOMER,
   });
 
+  public categorySettings!: IDropdownSettings;
+  public subCategorySettings!: IDropdownSettings;
+
   constructor(
     private fb: FormBuilder,
     private _apiService: ApiService,
@@ -97,6 +101,26 @@ export class AddCustomerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    this.categorySettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'title',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+    };
+    this.subCategorySettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'title',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+    };
+
     this.getCategories();
     this.getTimeZones();
     this.customerData = history.state.customerData;
@@ -126,16 +150,37 @@ export class AddCustomerComponent implements OnInit {
     });
   }
 
+  onItemSelect(item: any) {
+
+  }
+  onSelectAll(items: any) {
+
+  }
+
   onSubmit(): void {
     if (this.companyForm.valid) {
+      this.companyForm.patchValue({
+        category:
+          (this.companyForm.value.category
+            ? this.companyForm.value.category
+            : []
+          ).map((option: any) => option.id) || [],
+          sub_category:
+          (this.companyForm.value.sub_category
+            ? this.companyForm.value.sub_category
+            : []
+          ).map((option: any) => option.id) || [],
+      })
       const formModel: any = this.companyForm.value;
       const formData = new FormData();
 
       // Convert JSON object to FormData
       for (const key of Object.keys(formModel)) {
         const value = formModel[key];
-        formData.append(key, value);
+        // if(key !== 'category' && key !== 'sub_category')
+          formData.append(key, value);
       }
+
       this.showSpinner = true;
       this._apiService
         .post(

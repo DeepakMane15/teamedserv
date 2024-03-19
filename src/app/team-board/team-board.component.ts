@@ -14,6 +14,7 @@ import { TeamBoardMapDataModel } from '../common/models/TeamBoardMapDataModel';
 import { Router } from '@angular/router';
 import * as L from 'leaflet';
 import axios from 'axios';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-team-board',
@@ -49,6 +50,10 @@ export class TeamBoardComponent implements OnInit {
     profession: [],
     service_area: [],
   });
+  public lngSettings!: IDropdownSettings;
+  public countySettings!: IDropdownSettings;
+  public serviceSettings!: IDropdownSettings;
+  public profSettings!: IDropdownSettings;
 
   constructor(
     private fb: FormBuilder,
@@ -66,6 +71,50 @@ export class TeamBoardComponent implements OnInit {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors',
     }).addTo(this.map);
+
+    this.lngSettings = {
+      singleSelection: false,
+      idField: 'lid',
+      textField: 'title',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+    };
+    this.countySettings = {
+      singleSelection: false,
+      idField: 'rid',
+      textField: 'title',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+    };
+    this.serviceSettings = {
+      singleSelection: false,
+      idField: 'said',
+      textField: 'service_area_title',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+    };
+    this.profSettings = {
+      singleSelection: false,
+      idField: 'prid',
+      textField: 'title',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+    };
+  }
+
+  onItemSelect(item: any) {
+
+  }
+  onSelectAll(items: any) {
+
   }
 
   private async addMarkersToMap(map: L.Map | undefined): Promise<void> {
@@ -208,13 +257,30 @@ export class TeamBoardComponent implements OnInit {
   }
 
   public onSubmit() {
+    // console.log(this.teamBoardForm.value.language);
     if (this.isAnyControlFilled(this.teamBoardForm)) {
       const formModel: TeamBoardModel = {
         boardType: this.teamBoardForm.value.boardType || TeamBoardType.TEAM,
-        language: this.teamBoardForm.value.language || [],
-        county: this.teamBoardForm.value.county || [],
-        profession: this.teamBoardForm.value.profession || [],
-        service_area: this.teamBoardForm.value.service_area || [],
+        language:
+          (this.teamBoardForm.value.language
+            ? this.teamBoardForm.value.language
+            : []
+          ).map((option: any) => option.lid) || [],
+        county:
+          (this.teamBoardForm.value.county
+            ? this.teamBoardForm.value.county
+            : []
+          ).map((option: any) => option.rid) || [],
+        profession:
+          (this.teamBoardForm.value.profession
+            ? this.teamBoardForm.value.profession
+            : []
+          ).map((option: any) => option.prid) || [],
+        service_area:
+          (this.teamBoardForm.value.service_area
+            ? this.teamBoardForm.value.service_area
+            : []
+          ).map((option: any) => option.said) || [],
       };
       const formData = new FormData();
 

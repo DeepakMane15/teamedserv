@@ -12,34 +12,40 @@
           <button mat-raised-button
             [ngClass]="{'secondary-btn' : teamBoardForm.get('boardType')?.value !== TeamBoardType.TEAM}" type="button"
             (click)="setBoardType(TeamBoardType.TEAM)">Team Board</button>
-          <button mat-raised-button class = "secondary-btn"
+          <button mat-raised-button class="secondary-btn"
             [ngClass]="{'secondary-btn': teamBoardForm.get('boardType')?.value !== TeamBoardType.PROFMED}" type="button"
             (click)="setBoardType(TeamBoardType.PROFMED)">ProfMed Board</button>
         </div>
         <div class="row" style="margin-top: 20px;">
           <div class="col">
-            <mat-form-field class="full-width">
+            <!-- <mat-form-field class="full-width">
               <mat-label>Languages</mat-label>
               <div class="uname-input">
-                <!-- <input matInput formControlName="languages"> -->
                 <mat-select formControlName="language" multiple>
                   <mat-option *ngFor="let languages of fieldData?.languages"
                     [value]="languages.lid">{{languages.title}}</mat-option>
                 </mat-select>
               </div>
-            </mat-form-field>
+            </mat-form-field> -->
+            <ng-multiselect-dropdown [placeholder]="'languages'" [settings]="lngSettings"
+              [data]="fieldData?.languages" formControlName="language" (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)">
+            </ng-multiselect-dropdown>
           </div>
           <div class="col">
-            <mat-form-field class="full-width">
-              <mat-label>County</mat-label>
-              <!-- <input matInput formControlName="county"> -->
+            <!-- <mat-form-field class="full-width"> -->
+            <!-- <mat-label>County</mat-label>
               <mat-select formControlName="county" multiple>
                 <mat-option *ngFor="let region of fieldData?.region" [value]="region.rid">{{region.title}}</mat-option>
-              </mat-select>
-            </mat-form-field>
+              </mat-select> -->
+            <ng-multiselect-dropdown [placeholder]="'County'" [settings]="countySettings"
+              [data]="fieldData?.region" formControlName="county" (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)">
+            </ng-multiselect-dropdown>
+            <!-- </mat-form-field> -->
           </div>
           <div class="col">
-            <mat-form-field class="full-width">
+            <!-- <mat-form-field class="full-width">
               <mat-label>Service Area</mat-label>
               <div class="uname-input">
                 <mat-select formControlName="service_area" multiple>
@@ -47,10 +53,14 @@
                     [value]="service.said">{{service.service_area_title}}</mat-option>
                 </mat-select>
               </div>
-            </mat-form-field>
+            </mat-form-field> -->
+            <ng-multiselect-dropdown [placeholder]="'Service Area'" [settings]="serviceSettings"
+              [data]="fieldData?.serviceArea" formControlName="service_area" (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)">
+            </ng-multiselect-dropdown>
           </div>
           <div class="col">
-            <mat-form-field class="full-width">
+            <!-- <mat-form-field class="full-width">
               <mat-label>Profession</mat-label>
               <div class="uname-input">
                 <mat-select formControlName="profession" multiple>
@@ -58,7 +68,11 @@
                     [value]="profession.prid">{{profession.title}}</mat-option>
                 </mat-select>
               </div>
-            </mat-form-field>
+            </mat-form-field> -->
+            <ng-multiselect-dropdown [placeholder]="'Profession'" [settings]="profSettings"
+              [data]="fieldData?.profession" formControlName="profession" (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)">
+            </ng-multiselect-dropdown>
           </div>
         </div>
         <div class="row actions">

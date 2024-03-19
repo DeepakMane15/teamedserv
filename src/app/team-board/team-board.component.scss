@@ -26,6 +26,7 @@ mat-card {
   }
 
   .actions {
+    margin-top: 10px;
     justify-content: flex-end;
   }
 
@@ -35,3 +36,16 @@ mat-card {
   padding: 24px;
 }
 
+::ng-deep .multiselect-dropdown .dropdown-btn{
+  font-size: 15px !important;
+  width: 190px !important;
+}
+
+::ng-deep .dropdown-list{
+  font-size: 15px !important;
+  width: 230px !important;
+
+  ul {
+    overflow: hidden !important;
+  }
+}

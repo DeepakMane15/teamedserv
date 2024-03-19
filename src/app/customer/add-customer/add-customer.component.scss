@@ -58,3 +58,17 @@ mat-card {
 
 
 
+::ng-deep .multiselect-dropdown .dropdown-btn{
+  font-size: 15px !important;
+  width: 95% !important;
+}
+
+::ng-deep .dropdown-list{
+  font-size: 15px !important;
+  // width: 230px !important;
+
+  ul {
+    overflow: hidden !important;
+  }
+}
+
