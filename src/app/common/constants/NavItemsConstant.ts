@@ -260,7 +260,15 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '/',
   },
   {
-    label: 'Job-Portal (completed, view under testing)',
+    label: 'Job-Portal',
+    roles: [UserTypeConstant.PROFESSIONAL],
+    category: 'directory',
+    subItems: [],
+    icon: 'directory',
+    url: '/job-portal',
+  },
+  {
+    label: 'Job-Portal',
     roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
     category: 'directory',
     subItems: [

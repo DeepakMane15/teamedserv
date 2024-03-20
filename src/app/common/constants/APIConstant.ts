@@ -58,4 +58,7 @@ export enum APIConstant {
   ADD_JOB_PORTAL = 'job-portal/add',
   EDIT_JOB_PORTAL = 'job-portal/edit',
   GET_JOB_PORTAL = 'job-portal/get',
+  GET_JOB_PORTAL_BY_ID = 'job-portal/get-by-id',
+  APPLY_JOB_OPENING = 'job-portal/apply'
+
 }

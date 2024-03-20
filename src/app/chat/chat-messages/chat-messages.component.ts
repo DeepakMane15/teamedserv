@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class ChatMessagesComponent {
   public messages :any =[{
-    "sender":"Vishal Gaddam",
+    "sender":"User 1",
     "message" : "Hello this is my message",
     "timing" : "3.00pm",
     "isUser" : true

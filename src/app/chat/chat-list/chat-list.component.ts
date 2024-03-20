@@ -6,50 +6,50 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './chat-list.component.scss'
 })
 export class ChatListComponent implements OnInit{
-  public chatList: any 
+  public chatList: any
 
   ngOnInit(): void {
     this.chatList = [{
-      name : "Vishal Gaddam",
-      profileImage : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGxzRY04_C8g4-p9tYcAT9nDeaLRrEanwep4OjmZTTJu1RXd5F5EKFayBW7nCI42jP2Iw&usqp=CAU"
-    }, 
-    {
-      name : "Vishal Gaddam",
-      profileImage : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGxzRY04_C8g4-p9tYcAT9nDeaLRrEanwep4OjmZTTJu1RXd5F5EKFayBW7nCI42jP2Iw&usqp=CAU"
+      name : "User 1",
+      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
     },
     {
-      name : "Vishal Gaddam",
-      profileImage : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGxzRY04_C8g4-p9tYcAT9nDeaLRrEanwep4OjmZTTJu1RXd5F5EKFayBW7nCI42jP2Iw&usqp=CAU"
-    },{
-      name : "Vishal Gaddam",
-      profileImage : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGxzRY04_C8g4-p9tYcAT9nDeaLRrEanwep4OjmZTTJu1RXd5F5EKFayBW7nCI42jP2Iw&usqp=CAU"
-    },{
-      name : "Vishal Gaddam",
-      profileImage : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGxzRY04_C8g4-p9tYcAT9nDeaLRrEanwep4OjmZTTJu1RXd5F5EKFayBW7nCI42jP2Iw&usqp=CAU"
-    },{
-      name : "Vishal Gaddam",
-      profileImage : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGxzRY04_C8g4-p9tYcAT9nDeaLRrEanwep4OjmZTTJu1RXd5F5EKFayBW7nCI42jP2Iw&usqp=CAU"
-    },{
-      name : "Vishal Gaddam",
-      profileImage : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGxzRY04_C8g4-p9tYcAT9nDeaLRrEanwep4OjmZTTJu1RXd5F5EKFayBW7nCI42jP2Iw&usqp=CAU"
+      name : "User 2",
+      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
     },
     {
-      name : "Vishal Gaddam",
-      profileImage : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGxzRY04_C8g4-p9tYcAT9nDeaLRrEanwep4OjmZTTJu1RXd5F5EKFayBW7nCI42jP2Iw&usqp=CAU"
+      name : "User 3",
+      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
     },{
-      name : "Vishal Gaddam",
-      profileImage : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGxzRY04_C8g4-p9tYcAT9nDeaLRrEanwep4OjmZTTJu1RXd5F5EKFayBW7nCI42jP2Iw&usqp=CAU"
+      name : "User 4",
+      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
     },{
-      name : "Vishal Gaddam",
-      profileImage : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGxzRY04_C8g4-p9tYcAT9nDeaLRrEanwep4OjmZTTJu1RXd5F5EKFayBW7nCI42jP2Iw&usqp=CAU"
+      name : "User 5",
+      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
     },{
-      name : "Vishal Gaddam",
-      profileImage : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGxzRY04_C8g4-p9tYcAT9nDeaLRrEanwep4OjmZTTJu1RXd5F5EKFayBW7nCI42jP2Iw&usqp=CAU"
+      name : "User 6",
+      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
     },{
-      name : "Vishal Gaddam",
-      profileImage : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGxzRY04_C8g4-p9tYcAT9nDeaLRrEanwep4OjmZTTJu1RXd5F5EKFayBW7nCI42jP2Iw&usqp=CAU"
+      name : "User 7",
+      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
     },
-    
+    {
+      name : "User 8",
+      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
+    },{
+      name : "User 9",
+      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
+    },{
+      name : "User 10",
+      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
+    },{
+      name : "User 11",
+      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
+    },{
+      name : "User 12",
+      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
+    },
+
   ]
   }
 }

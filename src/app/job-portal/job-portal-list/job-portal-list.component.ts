@@ -3,7 +3,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
+import { UserTypeConstant } from 'src/app/common/constants/UserTypeConstant';
 import { ApiService } from 'src/app/shared/services/api/api.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-job-portal-list',
@@ -24,13 +26,21 @@ export class JobPortalListComponent implements OnInit {
   showSpinner: any;
   public showSpinnner: Boolean = false;
   public originalData: any = [];
+  public isMedical: boolean = false;
   dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private _apiServices: ApiService, private router: Router) {}
-  ngOnInit(): void {
-    throw new Error('Method not implemented');
+  constructor(
+    private _apiServices: ApiService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
+  ngOnInit() {
+    this.isMedical =
+      this.authService.getUserData()?.user_type ===
+      UserTypeConstant.PROFESSIONAL;
+      console.log(this.authService.getUserData());
   }
 
   ngAfterViewInit() {
@@ -90,6 +100,19 @@ export class JobPortalListComponent implements OnInit {
     // );
   }
 
+  public applyJob(jid: string) {
+    this.showSpinner = true;
+    const fd = new FormData();
+    fd.append('jid',jid);
+    this._apiServices.post(APIConstant.APPLY_JOB_OPENING, fd).subscribe(
+      (res: any) => {
+        this.showSpinner = false;
+      },
+      (error) => {
+        this.showSpinner = false;
+      }
+    );
+  }
   public refineLongText(value: string): string {
     let values = value?.split(',');
 
