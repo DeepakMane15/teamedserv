@@ -36,8 +36,8 @@
 
 ::ng-deep .dropdown-list {
   font-size: 15px !important;
-  width: 40% !important;
-  position: fixed !important;
+  // width: 40% !important;
+  position: relative !important;
 
   ul {
     overflow-x: hidden !important;
