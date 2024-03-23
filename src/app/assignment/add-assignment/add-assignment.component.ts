@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
 import { AssignmentTypeModel } from 'src/app/common/models/AssignmentTypeModel';
@@ -27,14 +28,14 @@ export class AddAssignmentComponent implements OnInit {
   assignmentForm = this.fb.group({
     customer_id: 0,
     assignment_id: 0,
-    medicalId: ['', Validators.required],
+    medicalId: [[], Validators.required],
     medicalProfession: [''],
-    assignment: ['', Validators.required],
+    assignment: [[], Validators.required],
     transaction: [''],
     date: ['', Validators.required],
     amount: ['', Validators.required],
     paymentDate: [''],
-    patientId: ['', Validators.required],
+    patientId: [[], Validators.required],
     patientAddress: [''],
     cPerson1Name: [''],
     cPerson1Phone: [''],
@@ -46,6 +47,9 @@ export class AddAssignmentComponent implements OnInit {
     pNotes: [''],
     iNotes: [''],
   });
+  public medSettings!: IDropdownSettings;
+  public assSettings!: IDropdownSettings;
+  public patSettings!: IDropdownSettings;
 
   constructor(
     private fb: FormBuilder,
@@ -55,6 +59,33 @@ export class AddAssignmentComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.medSettings = {
+      singleSelection: true,
+      idField: 'pid',
+      textField: 'first_name',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+    };
+    this.patSettings = {
+      singleSelection: true,
+      idField: 'id',
+      textField: 'name',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+    };
+    this.assSettings = {
+      singleSelection: true,
+      idField: 'id',
+      textField: 'name',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+    };
     this.assignmentData = history.state.assignmentData;
     console.log(this.assignmentData);
     if (this.assignmentData) {
@@ -62,14 +93,14 @@ export class AddAssignmentComponent implements OnInit {
       this.assignmentForm.patchValue({
         customer_id: this.assignmentData.company_id,
         assignment_id: this.assignmentData.id,
-        medicalId: this.assignmentData.medical_team,
+        // medicalId: this.assignmentData.medical_team,
         medicalProfession: this.assignmentData.profession,
-        assignment: this.assignmentData.assignment,
+        // assignment: this.assignmentData.assignment,
         transaction: this.assignmentData.transaction,
         date: this.assignmentData.date,
         amount: this.assignmentData.amount,
         paymentDate: this.assignmentData.paymentdate,
-        patientId: this.assignmentData.patient,
+        // patientId: this.assignmentData.patient,
         patientAddress: this.assignmentData.name,
         cPerson1Name: this.assignmentData.cperson1,
         cPerson1Phone: this.assignmentData.cphone1,
@@ -85,7 +116,10 @@ export class AddAssignmentComponent implements OnInit {
     this.fetchMedicalTeams();
     this.fetchInitialData();
   }
-
+  onItemSelect(item: any) {
+    this.handleMedicalSelect(item);
+  }
+  onSelectAll(items: any) {}
   public fetchInitialData() {
     this.showSpinner = true;
     this._apiService.get(APIConstant.GET_ASSIGNMENT_INITIAL_DATA).subscribe(
@@ -96,6 +130,16 @@ export class AddAssignmentComponent implements OnInit {
           this.patientsMaster = res.data.patients;
 
           if (this.patientsMaster && this.assignmentData) {
+
+              this.assignmentForm.patchValue({
+                patientId: res.data.patients.filter(
+                  (item: any) => this.assignmentData.patient === item.id
+                ),
+                assignment: res.data.assignment.filter(
+                  (item: any) => this.assignmentData.assignment === item.id
+                ),
+              });
+
             let patientSelected = this.patientsMaster.find(
               (p) => p.id === this.assignmentData.patient
             );
@@ -124,6 +168,13 @@ export class AddAssignmentComponent implements OnInit {
         if (res && res.status) {
           this.showSpinner = false;
           this.medicalTeams = res.data;
+          if (this.assignmentData) {
+            this.assignmentForm.patchValue({
+              medicalId: res.data.filter(
+                (item: any) => this.assignmentData.medical_team === item.pid
+              ),
+            });
+          }
         } else {
           console.error('Medical teams fetch failed');
         }
@@ -135,9 +186,9 @@ export class AddAssignmentComponent implements OnInit {
     );
   }
 
-  public handleMedicalSelect(event: MatSelectChange) {
+  public handleMedicalSelect(item: any) {
     let medical = this.medicalTeams.find(
-      (medical) => medical.pid === event.value
+      (medical) => medical.pid === item.pid
     );
 
     if (medical) {
@@ -158,9 +209,33 @@ export class AddAssignmentComponent implements OnInit {
 
       // Convert JSON object to FormData
       for (const key of Object.keys(formModel)) {
-        const value = formModel[key];
-        formData.append(key, value);
+        if (
+          key !== 'medicalId' &&
+          key !== 'assignment' &&
+          key !== 'patientId'
+        ) {
+          const value = formModel[key];
+          formData.append(key, value);
+        }
       }
+      formData.append(
+        'medicalId',
+        (this.assignmentForm.get('medicalId')?.value || [])
+          .map((item: any) => item.pid)
+          .join(', ')
+      );
+      formData.append(
+        'patientId',
+        (this.assignmentForm.get('patientId')?.value || [])
+          .map((item: any) => item.id)
+          .join(', ')
+      );
+      formData.append(
+        'assignment',
+        (this.assignmentForm.get('assignment')?.value || [])
+          .map((item: any) => item.id)
+          .join(', ')
+      );
       this.showSpinner = true;
       this._apiService
         .post(
@@ -188,8 +263,8 @@ export class AddAssignmentComponent implements OnInit {
     return;
   }
 
-  public handlePatientSelect(event: MatSelectChange) {
-    let patient = this.patientsMaster.find((pat) => pat.id === event.value);
+  public handlePatientSelect(item: any) {
+    let patient = this.patientsMaster.find((pat) => pat.id === item.id);
 
     if (patient) {
       this.assignmentForm.patchValue({

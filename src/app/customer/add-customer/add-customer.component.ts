@@ -27,7 +27,7 @@ export class AddCustomerComponent implements OnInit {
   public category!: any;
   public subCategory!: any;
   public filteredSubCat!: any;
-public selCat!: string[];
+  public selCat!: any;
   companyForm = this.fb.group({
     customer_id: 0,
     username: [
@@ -101,7 +101,6 @@ public selCat!: string[];
   ) {}
 
   ngOnInit(): void {
-
     this.categorySettings = {
       singleSelection: false,
       idField: 'id',
@@ -124,12 +123,13 @@ public selCat!: string[];
     this.getCategories();
     this.getTimeZones();
     this.customerData = history.state.customerData;
+    console.log(this.customerData);
     this.companyForm.patchValue({
       customer_id: this.customerData.customer_id,
       username: this.customerData.username,
       password: this.customerData.password,
-      category: this.customerData.category?.split(','),
-      sub_category: this.customerData['sub_category']?.split(','),
+      // category: this.customerData.category?.split(','),
+      // sub_category: this.customerData['sub_category']?.split(','),
       company_name: this.customerData.company_name,
       physical_address: this.customerData.physical_address,
       mailing_address: this.customerData.mailing_address,
@@ -150,12 +150,8 @@ public selCat!: string[];
     });
   }
 
-  onItemSelect(item: any) {
-
-  }
-  onSelectAll(items: any) {
-
-  }
+  onItemSelect(item: any) {}
+  onSelectAll(items: any) {}
 
   onSubmit(): void {
     if (this.companyForm.valid) {
@@ -165,12 +161,12 @@ public selCat!: string[];
             ? this.companyForm.value.category
             : []
           ).map((option: any) => option.id) || [],
-          sub_category:
+        sub_category:
           (this.companyForm.value.sub_category
             ? this.companyForm.value.sub_category
             : []
           ).map((option: any) => option.id) || [],
-      })
+      });
       const formModel: any = this.companyForm.value;
       const formData = new FormData();
 
@@ -178,7 +174,7 @@ public selCat!: string[];
       for (const key of Object.keys(formModel)) {
         const value = formModel[key];
         // if(key !== 'category' && key !== 'sub_category')
-          formData.append(key, value);
+        formData.append(key, value);
       }
 
       this.showSpinner = true;
@@ -215,11 +211,19 @@ public selCat!: string[];
     return null;
   }
 
-  public handleCatChange(event: MatSelectChange) {
+  public handleCatChange(item: any) {
     // console.log(event.value)
-    this.filteredSubCat = this.subCategory.filter((cat: any) =>
-      event.value.includes(cat.category_id)
+    let allids = Array.from(
+      new Set(
+        (this.companyForm.get('category')?.value || []).map(
+          (item: any) => item.id
+        )
+      )
     );
+    this.filteredSubCat = this.subCategory.filter((cat: any) =>
+      allids.includes(cat.category_id)
+    );
+
   }
 
   public async checkUsernameAvailable(event: Event) {
@@ -368,7 +372,16 @@ public selCat!: string[];
           this.showSpinner = false;
           this.category = res.data.category;
           this.subCategory = res.data['sub-category'];
+          // this.filteredSubCat = res.data['sub-category'];
           if (this.customerData) {
+            this.companyForm.patchValue({
+              category: res.data.category.filter((item: any) =>
+                this.customerData.category.split(',').includes(item.id)
+              ),
+              sub_category: res.data['sub-category'].filter((item: any) =>
+              this.customerData['sub_category'].split(',').includes(item.id)
+            ),
+            });
             this.filteredSubCat = this.subCategory?.filter((cat: any) =>
               this.customerData.category?.split(',').includes(cat.category_id)
             );

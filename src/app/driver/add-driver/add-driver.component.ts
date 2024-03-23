@@ -129,12 +129,12 @@ export class AddDriverComponent {
   }
 
   public handleCancel() {
-    this.router.navigate(['drivers'], {
+    this.router.navigate(['driver'], {
       state: { driverData: this.driverData },
     });
   }
   public navigateBack() {
-    this.router.navigate(['/drivers']);
+    this.router.navigate(['/driver']);
   }
 
   public usernameAvailabilityValidator(control: any) {

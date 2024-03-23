@@ -26,3 +26,21 @@
 .action-btns{
   padding: 24px 16px;
 }
+
+
+
+::ng-deep .multiselect-dropdown .dropdown-btn {
+  font-size: 15px !important;
+  width: 95% !important;
+}
+
+::ng-deep .dropdown-list {
+  font-size: 15px !important;
+  width: 40% !important;
+  position: fixed !important;
+
+  ul {
+    overflow-x: hidden !important;
+  }
+
+}

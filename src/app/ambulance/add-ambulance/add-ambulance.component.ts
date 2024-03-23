@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { AmbulanceModel } from 'src/app/common/models/AmbulanceModel';
 import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
@@ -30,10 +31,10 @@ export class AddAmbulanceComponent implements OnInit {
   ambulanceForm = this.fb.group({
     id: 0,
     customer_id: 0,
-    assignment: ['', Validators.required],
+    assignment: [[], Validators.required],
     date: ['', Validators.required],
     transaction: ['', Validators.required],
-    patient: ['', Validators.required],
+    patient: [[], Validators.required],
     patientAddress: ['', Validators.required],
     cPerson1Name: ['', Validators.required],
     cPerson2Name: ['', Validators.required],
@@ -41,7 +42,7 @@ export class AddAmbulanceComponent implements OnInit {
     cPerson2Phone: ['', Validators.required],
     amount: ['', Validators.required],
     paymentDate: ['', Validators.required],
-    driver: ['0', Validators.required],
+    driver: [[], Validators.required],
     vehicleModel: ['', Validators.required],
     registrationNo: ['', Validators.required],
     pickupAddress: ['', Validators.required],
@@ -57,6 +58,9 @@ export class AddAmbulanceComponent implements OnInit {
     specialNotes: [''],
     driverNotes: [''],
   });
+  public drSettings!: IDropdownSettings;
+  public assSettings!: IDropdownSettings;
+  public patSettings!: IDropdownSettings;
 
   constructor(
     private fb: FormBuilder,
@@ -66,6 +70,33 @@ export class AddAmbulanceComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.drSettings = {
+      singleSelection: true,
+      idField: 'id',
+      textField: 'full_name',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+    };
+    this.patSettings = {
+      singleSelection: true,
+      idField: 'id',
+      textField: 'name',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+    };
+    this.assSettings = {
+      singleSelection: true,
+      idField: 'id',
+      textField: 'name',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+    };
     this.ambulanceData = history.state.ambulanceData;
     console.log(this.ambulanceData);
     if (this.ambulanceData) {
@@ -117,6 +148,16 @@ export class AddAmbulanceComponent implements OnInit {
           }
 
           if (this.patientsMaster && this.ambulanceData) {
+
+            this.ambulanceForm.patchValue({
+              patient: res.data.patients.filter(
+                (item: any) => this.ambulanceData.patient === item.id
+              ),
+              assignment: res.data.assignment.filter(
+                (item: any) => this.ambulanceData.assignment === item.id
+              ),
+            });
+
             let patientSelected = this.patientsMaster.find(
               (p: any) => p.id === this.ambulanceData.patient
             );
@@ -141,12 +182,24 @@ export class AddAmbulanceComponent implements OnInit {
       }
     );
   }
+  onItemSelect(item: any) {
+    // this.handleMedicalSelect(item);
+  }
+  onSelectAll(items: any) {}
   private fetchDrivers() {
     this.showSpinner = true;
     this._apiService.get(APIConstant.GET_DRIVERS).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.driverMaster = res.data;
+
+          if(this.ambulanceData) {
+            this.ambulanceForm.patchValue({
+              driver: res.data.filter(
+                (item: any) => this.ambulanceData.driver === item.id
+              )
+            })
+          }
         }
         this.showSpinner = false;
       },
@@ -186,9 +239,21 @@ export class AddAmbulanceComponent implements OnInit {
 
       // Convert JSON object to FormData
       for (const key of Object.keys(formModel)) {
-        const value = formModel[key];
-        formData.append(key, value);
+        if(key !== 'patient' && key !== 'assignment' && key !== 'driver'){
+          const value = formModel[key];
+          formData.append(key, value);
+        }
       }
+      formData.append('patient', (this.ambulanceForm.get('patient')?.value || [])
+      .map((item: any) => item.id)
+      .join(', ') );
+      formData.append('assignment', (this.ambulanceForm.get('assignment')?.value || [])
+      .map((item: any) => item.id)
+      .join(', ') );
+      formData.append('driver',  (this.ambulanceForm.get('driver')?.value || [])
+      .map((item: any) => item.id)
+      .join(', '));
+
       this.showSpinner = true;
       this._apiService
         .post(
@@ -216,9 +281,9 @@ export class AddAmbulanceComponent implements OnInit {
     return;
   }
 
-  public handlePatientSelect(event: MatSelectChange) {
+  public handlePatientSelect(item: any) {
     let patient = this.patientsMaster.find(
-      (pat: any) => pat.id === event.value
+      (pat: any) => pat.id === item.id
     );
 
     if (patient) {

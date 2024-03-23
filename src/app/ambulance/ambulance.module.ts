@@ -21,6 +21,7 @@ import { ViewAmbulanceComponent } from './view-ambulance/view-ambulance.componen
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatTableModule,
     MatTabsModule,
     FlexLayoutModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [provideNativeDateAdapter()],
 })

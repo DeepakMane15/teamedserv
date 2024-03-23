@@ -3,9 +3,9 @@ import { UserTypeConstant } from '../constants/UserTypeConstant';
 export class AssignmentModel {
   [key: string]: any;
   public customer_id: number;
-  public medicalId: string;
+  public medicalId: any;
   public profession: string;
-  public assignment: string;
+  public assignment: any;
   public paymentDate: string;
   public cPerson1Name: string;
   public cPerson1Phone: string;
@@ -15,7 +15,7 @@ export class AssignmentModel {
   public transacti: string;
   public series: string;
   public amount: string;
-  public patient: string;
+  public patient: [];
   public visitDate: string;
   public visitTime: string;
   public pNotes: string;
@@ -24,9 +24,9 @@ export class AssignmentModel {
 
   constructor() {
     this.customer_id = 0;
-    this.medicalId = '';
+    this.medicalId = [];
     this.profession = '';
-    this.assignment = '';
+    this.assignment = [];
     this.paymentDate = '';
     this.cPerson1Name = '';
     this.cPerson1Phone = '';
@@ -36,7 +36,7 @@ export class AssignmentModel {
     this.transacti = '';
     this.series = '';
     this.amount = '';
-    this.patient = '';
+    this.patient = [];
     this.visitDate = '';
     this.visitTime = '';
     this.pNotes = '';

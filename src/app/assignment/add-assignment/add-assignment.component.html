@@ -29,7 +29,7 @@
             <div class="form-body">
               <div class="row">
                 <div class="col">
-                  <mat-form-field class="full-width">
+                  <!-- <mat-form-field class="full-width">
                     <mat-label>Medical Member</mat-label>
                     <mat-select formControlName="medicalId" (selectionChange)="handleMedicalSelect($event)">
                       <mat-option *ngFor="let medical of medicalTeams" [value]="medical.pid"
@@ -40,7 +40,11 @@
                       *ngIf="assignmentForm.get('medicalId')?.invalid && assignmentForm.get('medicalId')?.touched">
                       Medical Member is invalid
                     </mat-error>
-                  </mat-form-field>
+                  </mat-form-field> -->
+                  <ng-multiselect-dropdown [placeholder]="'Medical Member'" [settings]="medSettings"
+                  [data]="medicalTeams" formControlName="medicalId" (onSelect)="onItemSelect($event)"
+                  (onSelectAll)="onSelectAll($event)">
+                </ng-multiselect-dropdown>
                 </div>
                 <div class="col">
                   <mat-form-field class="full-width">
@@ -69,11 +73,8 @@
             <div class="form-body">
               <div class="row">
                 <div class="col">
-                  <mat-form-field class="full-width">
+                  <!-- <mat-form-field class="full-width">
                     <mat-label>Assignment</mat-label>
-                    <!-- <div class="uname-input">
-                      <input matInput formControlName="assignment">
-                    </div> -->
                     <mat-select formControlName="assignment">
                       <mat-option *ngFor="let assignment of assignmentsMaster"
                         [value]="assignment.id">{{assignment.name}}</mat-option>
@@ -82,7 +83,11 @@
                       *ngIf="assignmentForm.get('assignment')?.invalid && assignmentForm.get('assignment')?.touched">
                       Assignment is invalid
                     </mat-error>
-                  </mat-form-field>
+                  </mat-form-field> -->
+                  <ng-multiselect-dropdown [placeholder]="'Assignment'" [settings]="assSettings"
+                  [data]="assignmentsMaster" formControlName="assignment" (onSelect)="onItemSelect($event)"
+                  (onSelectAll)="onSelectAll($event)">
+                </ng-multiselect-dropdown>
                 </div>
                 <div class="col">
                   <mat-form-field class="full-width">
@@ -157,13 +162,17 @@
             <div class="form-body">
               <div class="row">
                 <div class="col">
-                  <mat-form-field class="full-width">
+                  <!-- <mat-form-field class="full-width">
                     <mat-label>Patient</mat-label>
                     <mat-select formControlName="patientId" (selectionChange)="handlePatientSelect($event)">
                       <mat-option *ngFor="let patient of patientsMaster"
                         [value]="patient.id">{{patient.name}}</mat-option>
                     </mat-select>
-                  </mat-form-field>
+                  </mat-form-field> -->
+                  <ng-multiselect-dropdown [placeholder]="'Patient'" [settings]="patSettings"
+                  [data]="patientsMaster" formControlName="patientId" (onSelect)="handlePatientSelect($event)"
+                  (onSelectAll)="onSelectAll($event)">
+                </ng-multiselect-dropdown>
                   <mat-error
                     *ngIf="assignmentForm.get('patientId')?.invalid && assignmentForm.get('patientId')?.touched">
                     Patient is invalid

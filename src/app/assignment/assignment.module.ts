@@ -22,6 +22,7 @@ import { MatTableModule } from '@angular/material/table';
 import { ViewAssignmentComponent } from './view-assignment/view-assignment.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [AssignmentListComponent, AddAssignmentComponent, ViewAssignmentComponent],
@@ -45,6 +46,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatTableModule,
     MatGridListModule,
     MatTabsModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [provideNativeDateAdapter()],
 })

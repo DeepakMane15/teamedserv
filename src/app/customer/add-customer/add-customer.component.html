@@ -68,7 +68,7 @@
             </mat-error>
           </mat-form-field> -->
           <ng-multiselect-dropdown [placeholder]="'Select Category'" [settings]="categorySettings" [data]="category"
-            formControlName="category" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+            formControlName="category" (onSelect)="handleCatChange($event)" (onSelectAll)="onSelectAll($event)">
           </ng-multiselect-dropdown>
         </div>
         <div class="col">
@@ -82,7 +82,7 @@
             </mat-error>
           </mat-form-field> -->
           <ng-multiselect-dropdown [placeholder]="'Select Sub-Category'" [settings]="subCategorySettings"
-            [data]="category" formControlName="sub_category" (onSelect)="onItemSelect($event)"
+            [data]="filteredSubCat" formControlName="sub_category" (onSelect)="onItemSelect($event)"
             (onSelectAll)="onSelectAll($event)">
           </ng-multiselect-dropdown>
         </div>

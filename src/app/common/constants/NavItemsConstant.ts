@@ -185,7 +185,7 @@ export const NavItemsContant: NavLinksModel[] = [
         category: '',
         subItems: [],
         icon: '',
-        url: '/add-driver',
+        url: '/driver/add',
       },
     ],
     icon: 'local_taxi',
