@@ -246,13 +246,13 @@ export class AddAmbulanceComponent implements OnInit {
       }
       formData.append('patient', (this.ambulanceForm.get('patient')?.value || [])
       .map((item: any) => item.id)
-      .join(', ') );
+      .join(',') );
       formData.append('assignment', (this.ambulanceForm.get('assignment')?.value || [])
       .map((item: any) => item.id)
-      .join(', ') );
+      .join(',') );
       formData.append('driver',  (this.ambulanceForm.get('driver')?.value || [])
       .map((item: any) => item.id)
-      .join(', '));
+      .join(','));
 
       this.showSpinner = true;
       this._apiService

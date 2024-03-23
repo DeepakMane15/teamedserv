@@ -183,31 +183,31 @@ export class AddMedicalComponent implements OnInit {
         'profession',
         (this.medicalForm.get('profession')?.value || [])
           .map((item: any) => item.prid)
-          .join(', ')
+          .join(',')
       );
       formData.append(
         'ethnicity',
         (this.medicalForm.get('ethnicity')?.value || [])
           .map((item: any) => item.eid)
-          .join(', ')
+          .join(',')
       );
       formData.append(
         'languages',
         (this.medicalForm.get('languages')?.value || [])
           .map((item: any) => item.lid)
-          .join(', ')
+          .join(',')
       );
       formData.append(
         'country',
         (this.medicalForm.get('county')?.value || [])
           .map((item: any) => item.rid)
-          .join(', ')
+          .join(',')
       );
       formData.append(
         'serviceArea',
         (this.medicalForm.get('service_area')?.value || [])
           .map((item: any) => item.said)
-          .join(', ')
+          .join(',')
       );
 
       this.showSpinner = true;

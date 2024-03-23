@@ -222,19 +222,19 @@ export class AddAssignmentComponent implements OnInit {
         'medicalId',
         (this.assignmentForm.get('medicalId')?.value || [])
           .map((item: any) => item.pid)
-          .join(', ')
+          .join(',')
       );
       formData.append(
         'patientId',
         (this.assignmentForm.get('patientId')?.value || [])
           .map((item: any) => item.id)
-          .join(', ')
+          .join(',')
       );
       formData.append(
         'assignment',
         (this.assignmentForm.get('assignment')?.value || [])
           .map((item: any) => item.id)
-          .join(', ')
+          .join(',')
       );
       this.showSpinner = true;
       this._apiService
