@@ -14,12 +14,12 @@ export class MedicalTeamModel {
   public email: string;
   public photo!: File;
   public avatar!: string;
-  public profession: string;
+  public profession: any;
   public profession_name: string;
-  public ethnicity: string;
-  public languages: string;
-  public county: string;
-  public service_area: string;
+  public ethnicity: any;
+  public languages: any;
+  public county: any;
+  public service_area: any;
   public phone: string;
   public address: string;
   public internal_notes: string;

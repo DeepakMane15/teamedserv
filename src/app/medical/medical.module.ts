@@ -24,6 +24,7 @@ import { ViewMedicalComponent } from './view-medical/view-medical.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 // import { MedicalListComponent } from '../medical-list/medical-list.component';
 
 
@@ -54,7 +55,8 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     FlexLayoutModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers:[provideNativeDateAdapter()]
 })
