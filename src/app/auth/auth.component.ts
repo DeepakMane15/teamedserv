@@ -4,6 +4,7 @@ import { UserAuthModel } from '../common/models/UserAuthModel';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { ChatService } from '../shared/services/chat/chat.service';
 
 @Component({
   selector: 'app-auth',
@@ -31,7 +32,8 @@ export class AuthComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _chatService: ChatService
   ) {}
 
   ngOnInit() {
@@ -51,6 +53,7 @@ export class AuthComponent implements OnInit {
         (response) => {
           if (response.status) {
             this._authService.storeUserData(response.data);
+            this._chatService.createNewUser('angular-firebase@profmedservices.com','firebaseProfmed@2024');
             this.router.navigate(['/']);
           } else {
             console.error('Login failed', response.message);

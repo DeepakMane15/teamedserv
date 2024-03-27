@@ -54,7 +54,7 @@ import { TopThreeProductsComponent } from './top-three-products/top-three-produc
 import { AssignmentStatusProComponent } from './assignment-status-pro/assignment-status-pro.component';
 import { TransactionStatusProComponent } from './transaction-status-pro/transaction-status-pro.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 @NgModule({
   declarations: [
     AppComponent,
@@ -136,7 +136,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
   ],
   exports: [OverlaySpinnerComponent],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase }
   ],
   bootstrap: [AppComponent],
 })

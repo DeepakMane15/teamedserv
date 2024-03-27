@@ -1,4 +1,4 @@
-import { Component,  } from '@angular/core';
+import { Component, Input, OnInit,  } from '@angular/core';
 
 @Component({
   selector: 'app-chat-window',
@@ -6,6 +6,9 @@ import { Component,  } from '@angular/core';
   styleUrl: './chat-window.component.scss'
 })
 
-export class ChatWindowComponent  {
-  
+export class ChatWindowComponent implements OnInit  {
+
+  ngOnInit() {
+
+  }
 }

@@ -1,9 +1,9 @@
 <div class="chat-list-main-container">
     <ul class="chat-list-container">
-        <li class="chat-list-item" *ngFor="let chat of chatList">
+        <li class="chat-list-item" *ngFor="let chat of groups">
             <div class="chat-card">
                 <div class="profile-container">
-                    <img [src]="chat.profileImage" class="profile-pic" />
+                    <img [src]="chat.icon" class="profile-pic" />
                 </div>
                 <div class="name-container">
                     <h1>{{ chat.name }}</h1>

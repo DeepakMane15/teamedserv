@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-chat-list',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatListComponent implements OnInit{
   public chatList: any
+  @Input() groups: any;
 
   ngOnInit(): void {
     this.chatList = [{

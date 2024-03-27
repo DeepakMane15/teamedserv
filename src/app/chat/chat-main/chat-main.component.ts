@@ -1,10 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { map } from 'rxjs';
+import { ChatService } from 'src/app/shared/services/chat/chat.service';
 
 @Component({
   selector: 'app-chat-main',
   templateUrl: './chat-main.component.html',
   styleUrl: './chat-main.component.scss'
 })
-export class ChatMainComponent {
+export class ChatMainComponent implements OnInit {
+
+  public groups!: any;
+  constructor (private _chatService: ChatService) {}
+  ngOnInit() {
+    this.fetGroups()
+  }
+
+  fetGroups(): void {
+    this._chatService.getAll().snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c =>
+          ({ id: c.payload.doc.id, ...c.payload.doc.data() })
+        )
+      )
+    ).subscribe(data => {
+      this.groups = data;
+      console.log(data)
+    });
+  }
 
 }
