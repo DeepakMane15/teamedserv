@@ -5,7 +5,7 @@
                 src="https://app.profmedservices.com/assets/admin/file/documents/profile.png" />
         </div>
         <div class="chat-left-bottom-container">
-            <app-chat-list [groups]="groups"></app-chat-list>
+            <app-chat-list [groups]="groups" (newItemEvent)="getGroup($event)"></app-chat-list>
         </div>
     </div>
     <div class="chat-right-container">
@@ -13,10 +13,10 @@
             <img class="profile-pic"
                 src="https://app.profmedservices.com/assets/admin/file/documents/profile.png" />
 
-            <h1 class="fellowuser-name">User</h1>
+            <h1 class="fellowuser-name">{{selectedGroup?.name}}</h1>
         </div>
         <div class="chat-right-bottom-container">
-            <app-chat-window ></app-chat-window>
+            <app-chat-window [group]="selectedGroup"></app-chat-window>
         </div>
     </div>
 </div>

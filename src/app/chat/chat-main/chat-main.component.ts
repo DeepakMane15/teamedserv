@@ -10,6 +10,7 @@ import { ChatService } from 'src/app/shared/services/chat/chat.service';
 export class ChatMainComponent implements OnInit {
 
   public groups!: any;
+  public selectedGroup!: any;
   constructor (private _chatService: ChatService) {}
   ngOnInit() {
     this.fetGroups()
@@ -28,4 +29,8 @@ export class ChatMainComponent implements OnInit {
     });
   }
 
+  getGroup(newItem: any) {
+    this.selectedGroup = newItem;
+    console.log("from main : ", newItem);
+  }
 }

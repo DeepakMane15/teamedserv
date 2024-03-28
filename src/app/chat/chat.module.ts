@@ -6,14 +6,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { ChatListComponent } from './chat-list/chat-list.component';
 import { ChatMainComponent } from './chat-main/chat-main.component';
 import { ChatMessagesComponent } from './chat-messages/chat-messages.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     ChatMainComponent,
     ChatListComponent,
     ChatWindowComponent,
-    ChatMessagesComponent,
+    ChatMessagesComponent
   ],
-  imports: [CommonModule, ChatRoutingModule, MatIconModule],
+  imports: [CommonModule, ChatRoutingModule, MatIconModule,FormsModule],
 })
 export class ChatModule {}

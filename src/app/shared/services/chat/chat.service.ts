@@ -19,6 +19,13 @@ export class ChatService {
     return this.tutorialsRef;
   }
 
+  getAllMessages(groupId: string): AngularFirestoreCollection<any> {
+    const queryFn = (ref: any) => ref.where('groupId', '==', groupId).orderBy('timestamp', 'asc');;
+    return this.db.collection('/messages', queryFn);
+  }
+  sendMessage(message: any): any {
+    return this.db.collection('/messages').add({...message});
+  }
   async createNewUser(email: string, password: string): Promise<void> {
     try {
       const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);

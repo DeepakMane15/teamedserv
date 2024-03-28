@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-chat-list',
@@ -8,49 +8,12 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ChatListComponent implements OnInit{
   public chatList: any
   @Input() groups: any;
+  @Output() newItemEvent = new EventEmitter<string>();
 
   ngOnInit(): void {
-    this.chatList = [{
-      name : "User 1",
-      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
-    },
-    {
-      name : "User 2",
-      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
-    },
-    {
-      name : "User 3",
-      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
-    },{
-      name : "User 4",
-      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
-    },{
-      name : "User 5",
-      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
-    },{
-      name : "User 6",
-      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
-    },{
-      name : "User 7",
-      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
-    },
-    {
-      name : "User 8",
-      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
-    },{
-      name : "User 9",
-      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
-    },{
-      name : "User 10",
-      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
-    },{
-      name : "User 11",
-      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
-    },{
-      name : "User 12",
-      profileImage : "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
-    },
 
-  ]
+  }
+  selectGroup(value: any) {
+    this.newItemEvent.emit(value);
   }
 }
