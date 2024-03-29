@@ -14,9 +14,9 @@ export class ChatWindowComponent implements OnInit {
   public message!: string;
   public userProfile!: any;
   constructor(private _chatService: ChatService, private authService: AuthService) {}
-
   ngOnInit() {
     this.userProfile = this.authService.getUserData();
+    // alert(this.userProfile.id)
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -27,7 +27,7 @@ export class ChatWindowComponent implements OnInit {
 
   fetchMessages(): void {
     this._chatService
-      .getAllMessages(this.group.id)
+      .getAllMessages(this.group, this.userProfile.id)
       .snapshotChanges()
       .pipe(
         map((changes) =>
@@ -38,6 +38,7 @@ export class ChatWindowComponent implements OnInit {
         )
       )
       .subscribe((data) => {
+        console.log("messages : ", data);
         this.messages = data;
       });
   }
@@ -46,9 +47,9 @@ export class ChatWindowComponent implements OnInit {
     let msgObj = {
       senderId: this.userProfile.id,
       message: this.message,
-      participants: this.group?.type === 'group' ? this.group.members : [this.userProfile.id,1],
-      groupId: this.group?.type === 'group' ? this.group.id : 1,
-      type: this.group.id ? 'group' : 'individual',
+      participants: this.group?.type === 'group' ? this.group.members : [this.userProfile.id,this.group.id],
+      groupId: this.group?.type === 'group' ? this.group.id : null,
+      type: this.group?.type === 'group' ? 'group' : 'individual',
       timestamp: new Date(),
     };
     this._chatService.sendMessage(msgObj);

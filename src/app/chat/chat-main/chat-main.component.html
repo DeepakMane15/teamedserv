@@ -3,7 +3,10 @@
         <div class="chat-left-top-container">
             <img class="profile-pic"
                 src="https://app.profmedservices.com/assets/admin/file/documents/profile.png" />
-        </div>
+                <div class="create" matTooltip="Create Group" (click)="createGroup()">
+                    <mat-icon class="group-add">group_add</mat-icon>
+                </div>
+              </div>
         <div class="chat-left-bottom-container">
             <app-chat-list [groups]="groups" (newItemEvent)="getGroup($event)"></app-chat-list>
         </div>
