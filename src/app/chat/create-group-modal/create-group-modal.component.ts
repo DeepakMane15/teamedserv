@@ -97,5 +97,7 @@ export class CreateGroupModalComponent implements OnInit {
       hideMessageAfter: '12h',
     };
     this._chatService.createGroup(group);
+    this.dialogRef.close();
+
   }
 }

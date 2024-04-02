@@ -192,7 +192,7 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '',
   },
   {
-    label: 'Chat (functional implementation)',
+    label: 'Chat',
     roles: [
       UserTypeConstant.ADMIN,
       UserTypeConstant.CUSTOMER,

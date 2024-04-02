@@ -17,6 +17,8 @@ export class ChatMainComponent implements OnInit {
   public selectedGroup!: any;
   public showSpinner: boolean = false;
   public userProfile: any;
+  public message!: string;
+
   constructor(
     private _chatService: ChatService,
     private _apiServices: ApiService,
@@ -25,6 +27,7 @@ export class ChatMainComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.userProfile = this._authService.getUserData();
+    // alert(this.userProfile.id)
     this.fetGroups();
     this.getParticipants();
     // alert(this.userProfile.id)
@@ -78,7 +81,23 @@ export class ChatMainComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result)
+      this.groups = [];
+      this.fetGroups();
+      this.getParticipants();
     });
+  }
+
+  public sendMessage() {
+    let msgObj = {
+      senderId: this.userProfile.id,
+      message: this.message,
+      participants: this.selectedGroup.type === 'group' ? this.selectedGroup.members : [this.userProfile.id,this.selectedGroup.id],
+      groupId: this.selectedGroup.type === 'group' ? this.selectedGroup.id : null,
+      type: this.selectedGroup.type === 'group' ? 'group' : 'individual',
+      timestamp: new Date(),
+    };
+    console.log(msgObj)
+    this._chatService.sendMessage(msgObj);
+    this.message = "";
   }
 }
