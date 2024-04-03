@@ -252,12 +252,12 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '/',
   },
   {
-    label: 'Living ##',
+    label: 'Living (in-progress)',
     roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
     category: 'directory',
     subItems: [],
     icon: 'home',
-    url: '/',
+    url: '/living',
   },
   {
     label: 'Job-Portal',

@@ -82,6 +82,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'living',
+    loadChildren: () =>
+      import('./living/living.module').then((m) => m.LivingModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'team-invitation',
     component: TeamInvitationComponent,
     pathMatch: 'full',

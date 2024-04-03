@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
@@ -9,6 +9,8 @@ import { ResponsiveService } from 'src/app/shared/services/responsive/responsive
 import { environment } from 'src/environments/environment';
 import { AppConstants } from 'src/app/common/constants/AppConstants';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-view-job-opening',
@@ -24,6 +26,14 @@ export class ViewJobOpeningComponent implements OnInit {
   public appConstants = AppConstants;
   public address!: string;
   public isMedical: boolean = false;
+
+  displayedColumns: string[] = [
+    'no',
+    'name',
+    'profession',
+    'language',
+    'ethnicity'
+  ];
 
   public patientProfile: any = [
     {
@@ -52,7 +62,9 @@ export class ViewJobOpeningComponent implements OnInit {
     },
   ];
 
+  dataSource = new MatTableDataSource<any>();
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private responsiveObserver: ResponsiveService,
@@ -73,13 +85,15 @@ export class ViewJobOpeningComponent implements OnInit {
     console.log('first refreshed');
   }
 
-  ngAfterViewInit() {}
-
-  ngOnInit() {
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
     let jobId = history.state.jobId;
     if (jobId) this.fetchJobData(jobId);
-    this.defaultTabIndex = (history && history.state.tabIndex) || 0;
     if (!jobId) this.router.navigate(['job-portal']);
+  }
+
+  ngOnInit() {
+    this.defaultTabIndex = (history && history.state.tabIndex) || 0;
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -97,8 +111,10 @@ export class ViewJobOpeningComponent implements OnInit {
     this._apiService.post(APIConstant.GET_JOB_PORTAL_BY_ID, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
-          this.patientData = res.data;
-          this.address = res.data.address;
+
+          this.patientData = res.data.jobData;
+          this.address = res.data.jobData.address;
+          this.dataSource = res.data.applicants;
           this.showSpinner = false;
         }
       },
