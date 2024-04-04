@@ -57,6 +57,12 @@ main {
 
       .register-button {
         display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        div {
+          width: fit-content;
+        }
 
         .button {
           display: flex;
