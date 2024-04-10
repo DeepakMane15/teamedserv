@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatRadioChange } from '@angular/material/radio';
 import { Router } from '@angular/router';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { AppConstants } from 'src/app/common/constants/AppConstants';
 import { FileType } from 'src/app/common/constants/AppEnum';
@@ -13,7 +14,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 @Component({
   selector: 'app-add-living',
   templateUrl: './add-living.component.html',
-  styleUrl: './add-living.component.scss'
+  styleUrl: './add-living.component.scss',
 })
 export class AddLivingComponent {
   public showSpinner: Boolean = false;
@@ -28,25 +29,27 @@ export class AddLivingComponent {
   public licenceError!: string;
   public resumeError!: string;
   public fileError: boolean = false;
+  public roomsMaster = [];
+  public amenitiesMaster = [];
 
-  driverForm = this.fb.group({
+  livingForm = this.fb.group({
     id: 0,
     customer_id: 0,
-    first_name: ['', Validators.required],
-    last_name: ['', Validators.required],
-    email: [
-      '',
-      [
-        Validators.required,
-        Validators.email,
-        this.usernameAvailabilityValidator.bind(this),
-      ],
-    ],
-    password: ['', Validators.required],
+    name: ['', Validators.required],
+    // rooms: this.fb.array([this.createRoom()]),
+    price: ['', Validators.required],
+    amenities: ['', Validators.required],
+    description: ['', Validators.required],
     address: ['', Validators.required],
-    mobile_no: ['', Validators.required],
-    licence: null as File | null,
+    ratings: ['', Validators.required],
+    images: null as File | null,
   });
+
+  myForm!: FormGroup;
+
+  public roomSettings!: IDropdownSettings;
+  public amenitySettings!: IDropdownSettings;
+
 
   constructor(
     private fb: FormBuilder,
@@ -56,22 +59,89 @@ export class AddLivingComponent {
   ) {}
 
   ngOnInit(): void {
-    this.driverData = history.state.driverData;
-    this.driverForm.patchValue({
-      id: this.driverData.id,
-      customer_id: this.driverData.customer_id,
-      first_name: this.driverData.first_name,
-      last_name: this.driverData.last_name,
-      email: this.driverData.email,
-      password: this.driverData.password,
-      address: this.driverData.address,
-      mobile_no: this.driverData.mobile_no,
+    this.myForm = this.fb.group({
+      items: this.fb.array([
+        this.fb.group({
+          roomType: ['', Validators.required],
+          amenities: [[], [Validators.required]],
+          price: ['', Validators.required], // Nested FormArray
+        }),
+      ]),
     });
+
+    this.roomSettings = {
+      singleSelection: true,
+      idField: 'id',
+      textField: 'type',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+    };
+    this.amenitySettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'name',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+    };
+
+    this.fetchRoomsMaster();
+
+    // this.driverData = history.state.driverData;
+    // this.livingForm.patchValue({
+    //   id: this.driverData.id,
+    //   customer_id: this.driverData.customer_id,
+    //   name: this.driverData.name,
+    //   rooms: this.driverData.rooms,
+    //   price: this.driverData.price,
+    //   address: this.driverData.address,
+    // });
+  }
+
+  addItem() {
+    const item = this.fb.group({
+      roomType: ['', Validators.required],
+      amenities: [[], [Validators.required]],
+      price: ['', Validators.required]
+      // Add more form controls as needed
+    });
+
+    this.items.push(item);
+  }
+
+  // Helper method to get the 'items' FormArray
+  get items() {
+    return this.myForm.get('items') as FormArray;
+  }
+
+  deleteItem(itemIndex: number) {
+    this.items.removeAt(itemIndex);
+  }
+
+  fetchRoomsMaster() {
+    this.showSpinner = true;
+    this._apiService.get(APIConstant.GET_ROOMS_MASTER).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.roomsMaster = res.data.rooms;
+          this.amenitiesMaster = res.data.amenities;
+
+        }
+        this.showSpinner = false;
+      },
+      (error) => {
+        this.showSpinner = false;
+      }
+    );
   }
 
   onSubmit(): void {
-    if (this.driverForm.valid) {
-      const formModel: any = this.driverForm.value;
+    console.log(this.items.value)
+    if (this.livingForm.valid) {
+      const formModel: any = this.livingForm.value;
       const formData = new FormData();
 
       // Convert JSON object to FormData
@@ -118,14 +188,7 @@ export class AddLivingComponent {
       enteredValue = `${enteredValue.slice(0, 9)}-${enteredValue.slice(9)}`;
     }
 
-    // Update form control value and validate
-    if (field === 'phone')
-      this.driverForm.patchValue(
-        { mobile_no: enteredValue },
-        { emitEvent: false }
-      );
-
-    this.driverForm.get(field)?.markAsTouched(); // Mark phone as touched
+    this.livingForm.get(field)?.markAsTouched(); // Mark phone as touched
   }
 
   public handleCancel() {
@@ -144,8 +207,11 @@ export class AddLivingComponent {
     return null;
   }
 
+  onItemSelect(item: any) {}
+  onSelectAll(items: any) {}
+
   public async checkUsernameAvailable(event: Event) {
-    if (!this.driverForm.get('email')?.hasError('email')) {
+    if (!this.livingForm.get('email')?.hasError('email')) {
       const inputElement = event.target as HTMLInputElement;
       let email = inputElement.value;
       try {
@@ -154,21 +220,13 @@ export class AddLivingComponent {
         const isAvailable: boolean =
           await this._authService.checkUsernameAvailable(email);
         this.isUnameAvailable = isAvailable;
-        this.driverForm.get('email')?.updateValueAndValidity();
+        this.livingForm.get('email')?.updateValueAndValidity();
       } catch (err) {
         console.log(err);
       } finally {
         this.isChecking = false;
         console.log(this.isChecking);
       }
-    }
-  }
-
-  public handlePasswordCreation(event: MatRadioChange) {
-    if (event.value == 1) {
-      this.driverForm.patchValue({ password: '' });
-    } else {
-      this.driverForm.patchValue({ password: this.generateRandomPassword() });
     }
   }
 
@@ -192,7 +250,7 @@ export class AddLivingComponent {
           this.setErrorMsg(type, 'size');
           return;
         }
-        this.driverForm.get('licence')?.patchValue(file);
+        this.livingForm.get('images')?.patchValue(file);
         this.removeErrorMsg(type);
       } else {
         this.setErrorMsg(type, 'type');

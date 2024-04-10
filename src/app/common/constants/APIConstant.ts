@@ -64,5 +64,8 @@ export enum APIConstant {
 
   // chat
 
-  GET_PARTICIPANTS = 'medical/getParticipants'
+  GET_PARTICIPANTS = 'medical/getParticipants',
+
+  // living
+  GET_ROOMS_MASTER = 'living/get-rooms-master'
 }

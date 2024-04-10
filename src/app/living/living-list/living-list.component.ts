@@ -24,6 +24,7 @@ export class LivingListComponent implements OnInit {
   showSpinner: any;
   public showSpinnner: Boolean = false;
   public originalData: any = [];
+  public roomsMaster = [];
   dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -37,6 +38,8 @@ export class LivingListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.fetchDrivers();
   }
+
+
 
   fetchDrivers() {
     this.showSpinner = true;
