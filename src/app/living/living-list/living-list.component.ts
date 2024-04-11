@@ -15,15 +15,15 @@ export class LivingListComponent implements OnInit {
   displayedColumns: string[] = [
     'no',
     'name',
-    'email',
-    'mobile',
+    'description',
     'address',
+    'rooms',
     'action',
   ];
 
   showSpinner: any;
   public showSpinnner: Boolean = false;
-  public originalData: any = [];
+  public livingData: any = [];
   public roomsMaster = [];
   dataSource = new MatTableDataSource<any>();
 
@@ -43,12 +43,11 @@ export class LivingListComponent implements OnInit {
 
   fetchDrivers() {
     this.showSpinner = true;
-    this._apiServices.get(APIConstant.GET_DRIVERS).subscribe(
+    this._apiServices.get(APIConstant.GET_LIVINGS).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.dataSource.data = res.data;
-          this.originalData = res.data;
-          console.log(res.data);
+          this.livingData = res.data;
         }
         this.showSpinner = false;
       },
@@ -61,9 +60,9 @@ export class LivingListComponent implements OnInit {
     this.router.navigate(['/living/add']);
   }
 
-  navigateToEdit(driverData: any) {
+  navigateToEdit(livingData: any) {
     this.router.navigate(['/living/edit'], {
-      state: { driverData: driverData },
+      state: { livingData: livingData },
     });
   }
   navigateToView(driverData: any) {

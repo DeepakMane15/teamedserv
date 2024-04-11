@@ -8,6 +8,8 @@ const routes: Routes = [
   { path: '', component: LivingListComponent, pathMatch: 'full' },
   { path: 'board', component: LivingBoardComponent, pathMatch: 'full' },
   { path: 'add', component: AddLivingComponent, pathMatch: 'full' },
+  { path: 'edit', component: AddLivingComponent, pathMatch: 'full' },
+
 ];
 
 @NgModule({

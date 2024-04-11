@@ -67,5 +67,8 @@ export enum APIConstant {
   GET_PARTICIPANTS = 'medical/getParticipants',
 
   // living
-  GET_ROOMS_MASTER = 'living/get-rooms-master'
+  GET_ROOMS_MASTER = 'living/get-rooms-master',
+  GET_LIVINGS = 'living/get',
+  ADD_LIVING = 'living/addLiving',
+  EDIT_LIVING = 'living/editLiving'
 }
