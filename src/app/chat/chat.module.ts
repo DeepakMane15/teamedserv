@@ -7,7 +7,7 @@ import { ChatListComponent } from './chat-list/chat-list.component';
 import { ChatMainComponent } from './chat-main/chat-main.component';
 import { ChatMessagesComponent } from './chat-messages/chat-messages.component';
 import { FormsModule } from '@angular/forms';
-import { CreateGroupModalComponent } from './create-group-modal/create-group-modal.component';
+// import { CreateGroupModalComponent } from './create-group-modal/create-group-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -22,7 +22,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ChatListComponent,
     ChatWindowComponent,
     ChatMessagesComponent,
-    CreateGroupModalComponent,
+    // CreateGroupModalComponent,
   ],
   imports: [
     CommonModule,

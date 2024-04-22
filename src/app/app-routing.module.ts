@@ -36,9 +36,14 @@ const routes: Routes = [
   },
   {
     path: 'chat',
-    loadChildren: () => import('./chat/chat.module').then((m) => m.ChatModule),
+    loadChildren: () => import('./new-chat/new-chat.module').then((m) => m.NewChatModule),
     canActivate: [AuthGuard],
   },
+  // {
+  //   path: 'new-chat',
+  //   loadChildren: () => import('./new-chat/new-chat.module').then((m) => m.NewChatModule),
+  //   canActivate: [AuthGuard],
+  // },
   {
     path: 'team-board',
     component: TeamBoardComponent,

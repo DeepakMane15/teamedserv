@@ -55,6 +55,7 @@ import { AssignmentStatusProComponent } from './assignment-status-pro/assignment
 import { TransactionStatusProComponent } from './transaction-status-pro/transaction-status-pro.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { CreateGroupModalComponent } from './new-chat/create-group-modal/create-group-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,6 +77,7 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
     //DocumentComponent,
     AssignmentStatusProComponent,
     TransactionStatusProComponent,
+    CreateGroupModalComponent
   ],
   imports: [
     BrowserModule,
