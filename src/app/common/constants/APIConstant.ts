@@ -70,5 +70,9 @@ export enum APIConstant {
   GET_ROOMS_MASTER = 'living/get-rooms-master',
   GET_LIVINGS = 'living/get',
   ADD_LIVING = 'living/addLiving',
-  EDIT_LIVING = 'living/editLiving'
+  EDIT_LIVING = 'living/editLiving',
+  SEARCH_LIVING = 'living/search',
+  GET_LIVING_BY_ID = 'living/get-by-id',
+  GET_ROOM_AMENITY = 'living/get-room-amenity',
+  BOOK_LIVING = 'living/book',
 }

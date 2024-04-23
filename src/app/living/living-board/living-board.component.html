@@ -7,11 +7,11 @@
 <mat-card class="shipping-card">
   <mat-card-header class="card-top">
     <mat-card-title>
-      <form [formGroup]="teamBoardForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="boardForm" (ngSubmit)="onSubmit()">
         <div class="row">
         </div>
         <div class="row actions">
-          <input matInput class="searchInput" placeholder="Search Living Board">
+          <input matInput class="searchInput" formControlName="search" placeholder="Search Living Board by id, name, address">
           <button mat-raised-button class="btn-active" type="submit">Apply</button>
         </div>
       </form>

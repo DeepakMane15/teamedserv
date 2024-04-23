@@ -65,9 +65,9 @@ export class LivingListComponent implements OnInit {
       state: { livingData: livingData },
     });
   }
-  navigateToView(driverData: any) {
+  navigateToView(livingData: any) {
     this.router.navigate(['/living/view'], {
-      state: { driverId: driverData.id, tabIndex: 0 },
+      state: { livingId: livingData.id, tabIndex: 0 },
     });
   }
 

@@ -34,6 +34,7 @@ export class ChatService {
         ref.where('groupId', '==', group.id).orderBy('timestamp', 'asc');
       return this.db.collection('/messages', queryFn);
     } else {
+      // console.log(group)
       const queryFn = (ref: any) =>
         ref
           .where('participants', 'in', [group.id, userId])

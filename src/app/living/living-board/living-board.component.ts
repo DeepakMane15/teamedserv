@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as L from 'leaflet';
 import axios from 'axios';
@@ -41,12 +41,8 @@ export class LivingBoardComponent implements OnInit {
   markerGroup = L.layerGroup();
   public isFilterApplied: boolean = false;
 
-  teamBoardForm = this.fb.group({
-    boardType: TeamBoardType.TEAM,
-    language: [],
-    county: [],
-    profession: [],
-    service_area: [],
+  boardForm = this.fb.group({
+    search: ['', Validators.required]
   });
   public lngSettings!: IDropdownSettings;
   public countySettings!: IDropdownSettings;
@@ -63,49 +59,12 @@ export class LivingBoardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getFieldData();
     this.map = L.map('map').setView([51.505, -0.09], 13);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors',
     }).addTo(this.map);
 
-    this.lngSettings = {
-      singleSelection: false,
-      idField: 'lid',
-      textField: 'title',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
-      allowSearchFilter: true,
-    };
-    this.countySettings = {
-      singleSelection: false,
-      idField: 'rid',
-      textField: 'title',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
-      allowSearchFilter: true,
-    };
-    this.serviceSettings = {
-      singleSelection: false,
-      idField: 'said',
-      textField: 'service_area_title',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
-      allowSearchFilter: true,
-    };
-    this.profSettings = {
-      singleSelection: false,
-      idField: 'prid',
-      textField: 'title',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
-      allowSearchFilter: true,
-    };
   }
 
   onItemSelect(item: any) {
@@ -160,16 +119,13 @@ export class LivingBoardComponent implements OnInit {
         <h3
         style="line-height: 23px;
         font-weight: 500;">
-       <span style="color: #005282;">  ${markerData.name} </span> <br>  <span style="color: #828282; font-size:15px"> ${markerData.profession} </span> </h3>
+       <span style="color: #005282;">  ${markerData.name} </span> </h3>
         <div style="padding-bottom: 5px;">
         <span style="font-weight: 600;
-        color: black;"> Professional ID: </span>  ${markerData.pid}</div>
+        color: black;"> Living ID: </span>  ${markerData.id}</div>
         <div style="padding-bottom: 5px">
         <span style="font-weight: 600;
         color: black;">Address: </span> ${markerData.address}</div>
-        <div style="padding-bottom: 5px">
-        <span style="font-weight: 600;
-        color: black;">Languages: </span> ${markerData.languages}</div>
         <button id="viewMoreBtn" style="    margin-top: 10px;
         width: 101px;
         border-radius: 5px;
@@ -210,14 +166,9 @@ export class LivingBoardComponent implements OnInit {
   }
 
   public viewMore(marker: any) {
-    this.router.navigate(['team-board/medical-team'], {
-      state: { medicalId: marker.pid },
+    this.router.navigate(['/living/board/view'], {
+      state: { livingId: marker.id, tabIndex: 0, backUrl: '/living/board' },
     });
-  }
-  public setBoardType(type: TeamBoardType) {
-    if (this.teamBoardForm.get('boardType')?.value !== type) {
-      this.teamBoardForm.patchValue({ boardType: type });
-    }
   }
 
   getMapUrl() {
@@ -234,24 +185,34 @@ export class LivingBoardComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
-  public getFieldData() {
-    this.showSpinner = true;
-    this._apiService.get(APIConstant.GET_MEDICAL_FIELD_DATA).subscribe(
-      (res: any) => {
-        if (res) {
-          this.fieldData = res;
-        }
-        this.showSpinner = false;
-      },
-      (error) => {
-        console.log(error);
-        this.showSpinner = false;
-      }
-    );
-  }
 
   public onSubmit() {
     // console.log(this.teamBoardForm.value.language);
+    if (this.boardForm.valid) {
+      const formData = new FormData();
+      formData.append('searchValue',this.boardForm.get('search')?.value || "")
+      this.showSpinner = true;
+
+      this._apiService
+        .post(APIConstant.SEARCH_LIVING, formData)
+        .subscribe(
+          async (res: any) => {
+            if (res && res.status) {
+              this.markers = res.data as TeamBoardMapDataModel[];
+              await this.addMarkersToMap(this.map);
+              this.showSpinner = false;
+              this.isFilterApplied = true;
+            } else {
+              this.showSpinner = false;
+              console.log(res.message);
+            }
+          },
+          (error) => {
+            console.log(error);
+            this.showSpinner = false;
+          }
+        );
+    }
 
   }
   public isAnyControlFilled(form: FormGroup): boolean {

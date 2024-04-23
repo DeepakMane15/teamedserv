@@ -25,12 +25,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AddLivingComponent } from './add-living/add-living.component';
 import { LivingBoardComponent } from './living-board/living-board.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { ViewLivingComponent } from './view-living/view-living.component';
 
 @NgModule({
   declarations: [
     LivingListComponent,
     AddLivingComponent,
-    LivingBoardComponent
+    LivingBoardComponent,
+    ViewLivingComponent
   ],
   imports: [
     CommonModule,
