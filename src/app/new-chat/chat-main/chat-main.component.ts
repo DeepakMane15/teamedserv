@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateGroupModalComponent } from 'src/app/new-chat/create-group-modal/create-group-modal.component';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
+import { AppConstants } from 'src/app/common/constants/AppConstants';
 
 @Component({
   selector: 'app-chat-main',
@@ -21,6 +22,7 @@ export class ChatMainComponent implements OnInit {
   public userProfile: any;
   public message!: string;
   public messages:any = [];
+  public default_img = AppConstants.DEFAULT_IMG;
 
   constructor(
     private _chatService: ChatService,

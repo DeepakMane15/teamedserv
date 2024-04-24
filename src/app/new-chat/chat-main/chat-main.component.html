@@ -8,8 +8,8 @@
           <mat-icon class="group-add">group_add</mat-icon>
         </button>
       </div>
-      <div class="chat-list" *ngFor="let group of groups" (click)="handleChatSelect(group)">
-        <img [src]="group.icon" class="icon" />
+      <div class="chat-list" *ngFor="let group of groups; let i=index" [ngClass]="{'first-child': i === 0}" (click)="handleChatSelect(group)">
+        <img [src]="group?.icon || default_img" class="icon" />
         <p>{{group.name}}</p>
       </div>
     </mat-nav-list>
