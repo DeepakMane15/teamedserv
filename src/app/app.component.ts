@@ -20,6 +20,11 @@ import {
 } from '@angular/material/tree';
 import { AuthService } from './shared/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ResetPasswordComponent } from './shared/dialog/reset-password/reset-password.component';
+import { UploadProfileComponent } from './shared/dialog/upload-profile/upload-profile.component';
+import { APIConstant } from './common/constants/APIConstant';
+import { AppConstants } from './common/constants/AppConstants';
 
 @Component({
   selector: 'app-root',
@@ -48,6 +53,7 @@ export class AppComponent implements OnInit {
   public showSpinner = false;
   public userProfile: any;
   public isInvitationPage: boolean = false;
+  public imgUrl: string = AppConstants.MEDICAL_DOCUMENTS_URL;
   public rid!: number;
 
   isHandset$: Observable<boolean> = this.breakpointObserver
@@ -61,7 +67,8 @@ export class AppComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     public authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -77,9 +84,9 @@ export class AppComponent implements OnInit {
   }
   public openDocument() {
     this.router.navigate(['/document']);
-  }
+  }
   public opendashboard() {
-    this.router.navigate([''])
+    this.router.navigate(['']);
   }
   public checkIsValid() {
     if (this.isInvitationPage) return true;
@@ -99,5 +106,20 @@ export class AppComponent implements OnInit {
   }
   public onNodeClicked(node: NavLinksModel) {
     this.router.navigate([node.url]);
+  }
+
+  public uploadPicture() {
+    const dialogRef = this.dialog.open(UploadProfileComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
+  }
+  public openResetPopUp() {
+    const dialogRef = this.dialog.open(ResetPasswordComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 }

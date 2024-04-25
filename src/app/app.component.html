@@ -76,15 +76,15 @@
         </button>
         <span>ProfMedServices</span>
         <div class="profile-pic-dropdown" [matMenuTriggerFor]="menu">
-          <a class="profile-icon"> <img src="https://app.teamedserv.com/assets/admin/images/users/avatar-1.jpg"
+          <a class="profile-icon"> <img [src]="userProfile.avatar ? imgUrl+userProfile.avatar : 'https://app.teamedserv.com/assets/admin/images/users/avatar-1.jpg'"
               alt="user-img" class="img-circle user-img"></a>
           <mat-menu #menu="matMenu" class="custom-menu">
             <span class="profile-text">Hello Deepak!</span>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="openResetPopUp()">
               <mat-icon>lock</mat-icon>
               <span>Reset Password</span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="uploadPicture()">
               <mat-icon>image</mat-icon>
               <span>Upload Profile Picture</span>
             </button>

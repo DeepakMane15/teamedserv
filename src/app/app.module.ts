@@ -56,6 +56,8 @@ import { TransactionStatusProComponent } from './transaction-status-pro/transact
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { CreateGroupModalComponent } from './new-chat/create-group-modal/create-group-modal.component';
+import { ResetPasswordComponent } from './shared/dialog/reset-password/reset-password.component';
+import { UploadProfileComponent } from './shared/dialog/upload-profile/upload-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,7 +79,9 @@ import { CreateGroupModalComponent } from './new-chat/create-group-modal/create-
     //DocumentComponent,
     AssignmentStatusProComponent,
     TransactionStatusProComponent,
-    CreateGroupModalComponent
+    CreateGroupModalComponent,
+    ResetPasswordComponent,
+    UploadProfileComponent
   ],
   imports: [
     BrowserModule,

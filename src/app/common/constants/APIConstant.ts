@@ -1,6 +1,8 @@
 export enum APIConstant {
   LOGIN = '/login',
   IS_USERNAME_AVAILABLE = 'is-username-available',
+  RESET_PASSWORD = 'medical/reset-password',
+  UPLOAD_PROFILE_PICTURE = 'medical/update-picture',
   // customers
   GET_CUSTOMERS = 'customers',
   ADD_CUSTOMER = 'customer/add',
