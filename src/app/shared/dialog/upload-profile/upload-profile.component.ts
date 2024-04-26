@@ -45,7 +45,7 @@ export class UploadProfileComponent {
       this._apiService.post(APIConstant.UPLOAD_PROFILE_PICTURE, fd).subscribe(
         (res: any) => {
           alert("Picture updated successfully");
-          this.dialogRef.close();
+          this.dialogRef.close(res.avatar);
         },
         (error) => {
           this.dialogRef.close();

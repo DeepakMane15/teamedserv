@@ -113,7 +113,11 @@ export class AppComponent implements OnInit {
       width: '400px',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => {
+      let newProfileData = {...this.userProfile};
+      newProfileData.avatar = result;
+      this.authService.storeUserData(newProfileData);
+    });
   }
   public openResetPopUp() {
     const dialogRef = this.dialog.open(ResetPasswordComponent, {

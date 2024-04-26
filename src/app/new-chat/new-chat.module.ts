@@ -9,6 +9,7 @@ import { MatListModule } from '@angular/material/list';
 import { RouterModule, Routes } from '@angular/router';
 import { MatFormField } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SearchPipe } from '../shared/pipe/search.pipe';
 
 const routes: Routes = [
   { path: '', component: ChatMainComponent, pathMatch: 'full' },
@@ -26,7 +27,8 @@ const routes: Routes = [
     MatListModule,
     MatFormField,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    SearchPipe
   ],
 })
 export class NewChatModule {}

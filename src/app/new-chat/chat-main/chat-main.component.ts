@@ -20,9 +20,10 @@ export class ChatMainComponent implements OnInit {
   public selectedGroup!: any;
   public showSpinner: boolean = false;
   public userProfile: any;
-  public message!: string;
-  public messages:any = [];
+  public message: string = "";
+  public messages: any = [];
   public default_img = AppConstants.DEFAULT_IMG;
+  public searchValue!: string;
 
   constructor(
     private _chatService: ChatService,
@@ -102,21 +103,23 @@ export class ChatMainComponent implements OnInit {
   }
 
   public sendMessage() {
-    let msgObj = {
-      senderId: this.userProfile.id,
-      message: this.message,
-      participants:
-        this.selectedGroup.type === 'group'
-          ? this.selectedGroup.members
-          : [this.userProfile.id, this.selectedGroup.id],
-      groupId:
-        this.selectedGroup.type === 'group' ? this.selectedGroup.id : null,
-      type: this.selectedGroup.type === 'group' ? 'group' : 'individual',
-      timestamp: new Date(),
-    };
-    console.log(msgObj);
-    this._chatService.sendMessage(msgObj);
-    this.message = '';
+    if (this.message != '') {
+      let msgObj = {
+        senderId: this.userProfile.id,
+        message: this.message,
+        participants:
+          this.selectedGroup.type === 'group'
+            ? this.selectedGroup.members
+            : [this.userProfile.id, this.selectedGroup.id],
+        groupId:
+          this.selectedGroup.type === 'group' ? this.selectedGroup.id : null,
+        type: this.selectedGroup.type === 'group' ? 'group' : 'individual',
+        timestamp: new Date(),
+      };
+      console.log(msgObj);
+      this._chatService.sendMessage(msgObj);
+      this.message = '';
+    }
   }
 
   // ngOnChanges(changes: SimpleChanges) {
@@ -138,7 +141,7 @@ export class ChatMainComponent implements OnInit {
         )
       )
       .subscribe((data) => {
-        console.log("messages : ", data);
+        console.log('messages : ', data);
         this.messages = data;
       });
   }
@@ -146,5 +149,4 @@ export class ChatMainComponent implements OnInit {
     this.selectedGroup = group;
     this.fetchMessages();
   }
-
 }

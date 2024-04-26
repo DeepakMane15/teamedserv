@@ -277,7 +277,7 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '/',
   },
   {
-    label: 'Living Board (in-progress)',
+    label: 'Living Board',
     roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
     category: 'directory',
     subItems: [],

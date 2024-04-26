@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
@@ -8,6 +9,7 @@ import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
 import { AssignmentTypeModel } from 'src/app/common/models/AssignmentTypeModel';
 import { MedicalTeamModel } from 'src/app/common/models/MedicalTeamModel';
 import { PatientModel } from 'src/app/common/models/PatientModel';
+import { AddFormPopupComponent } from 'src/app/shared/dialog/add-form-popup/add-form-popup.component';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
@@ -55,6 +57,7 @@ export class AddAssignmentComponent implements OnInit {
     private fb: FormBuilder,
     private _apiService: ApiService,
     private router: Router,
+    private dialog: MatDialog,
     private _authService: AuthService
   ) {}
 
@@ -130,15 +133,14 @@ export class AddAssignmentComponent implements OnInit {
           this.patientsMaster = res.data.patients;
 
           if (this.patientsMaster && this.assignmentData) {
-
-              this.assignmentForm.patchValue({
-                patientId: res.data.patients.filter(
-                  (item: any) => this.assignmentData.patient === item.id
-                ),
-                assignment: res.data.assignment.filter(
-                  (item: any) => this.assignmentData.assignment === item.id
-                ),
-              });
+            this.assignmentForm.patchValue({
+              patientId: res.data.patients.filter(
+                (item: any) => this.assignmentData.patient === item.id
+              ),
+              assignment: res.data.assignment.filter(
+                (item: any) => this.assignmentData.assignment === item.id
+              ),
+            });
 
             let patientSelected = this.patientsMaster.find(
               (p) => p.id === this.assignmentData.patient
@@ -187,9 +189,7 @@ export class AddAssignmentComponent implements OnInit {
   }
 
   public handleMedicalSelect(item: any) {
-    let medical = this.medicalTeams.find(
-      (medical) => medical.pid === item.pid
-    );
+    let medical = this.medicalTeams.find((medical) => medical.pid === item.pid);
 
     if (medical) {
       this.assignmentForm.patchValue({
@@ -282,5 +282,16 @@ export class AddAssignmentComponent implements OnInit {
       return { notAvailable: true };
     }
     return null;
+  }
+
+  public openAddPopUpForm() {
+    const dialogRef = this.dialog.open(AddFormPopupComponent, {
+      width: '900px',
+      height: '550px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.fetchInitialData();
+    });
   }
 }

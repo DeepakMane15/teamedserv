@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatRadioChange } from '@angular/material/radio';
@@ -22,6 +22,8 @@ export class AddPatientComponent implements OnInit {
   public timezones: any;
   public addressPredictions: any;
   public patientData!: PatientModel;
+  @Input() fromPopup: boolean = false;
+  @Output() formSubmitted: EventEmitter<void> = new EventEmitter<void>();
 
   patientForm = this.fb.group({
     id: 0,
@@ -87,15 +89,16 @@ export class AddPatientComponent implements OnInit {
           (res: any) => {
             if (res && res.status) {
               this.showSpinner = false;
-              this.router.navigate(['/patients']);
+              if (this.fromPopup) this.formSubmitted.emit();
+              else this.router.navigate(['/patients']);
             } else {
               this.showSpinner = false;
-              console.log(res.message);
+              if (this.fromPopup) this.formSubmitted.emit();
             }
           },
           (error) => {
             this.showSpinner = false;
-            console.error('Operation failed', error);
+            if (this.fromPopup) this.formSubmitted.emit();
           }
         );
     }
@@ -150,11 +153,14 @@ export class AddPatientComponent implements OnInit {
     );
   }
   public handleCancel() {
-    this.router.navigate(['patients'], {
-      state: { patientData: this.patientData },
-    });
+    if (this.fromPopup) this.formSubmitted.emit();
+    else
+      this.router.navigate(['patients'], {
+        state: { patientData: this.patientData },
+      });
   }
   public navigateBack() {
-    this.router.navigate(['/patients']);
+    if (this.fromPopup) this.formSubmitted.emit();
+    else this.router.navigate(['/patients']);
   }
 }

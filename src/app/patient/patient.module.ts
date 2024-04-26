@@ -51,5 +51,8 @@ import { ViewPatientComponent } from './view-patient/view-patient.component';
     MatProgressSpinnerModule,
     MatTooltipModule,
   ],
+  exports:[
+    AddPatientComponent
+  ]
 })
 export class PatientModule {}

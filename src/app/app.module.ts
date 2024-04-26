@@ -58,6 +58,8 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { CreateGroupModalComponent } from './new-chat/create-group-modal/create-group-modal.component';
 import { ResetPasswordComponent } from './shared/dialog/reset-password/reset-password.component';
 import { UploadProfileComponent } from './shared/dialog/upload-profile/upload-profile.component';
+import { AddFormPopupComponent } from './shared/dialog/add-form-popup/add-form-popup.component';
+import { PatientModule } from './patient/patient.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,7 +83,8 @@ import { UploadProfileComponent } from './shared/dialog/upload-profile/upload-pr
     TransactionStatusProComponent,
     CreateGroupModalComponent,
     ResetPasswordComponent,
-    UploadProfileComponent
+    UploadProfileComponent,
+    AddFormPopupComponent
   ],
   imports: [
     BrowserModule,
@@ -138,7 +141,8 @@ import { UploadProfileComponent } from './shared/dialog/upload-profile/upload-pr
     MatSortModule,
     MatChipsModule,
     MatChipListbox,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    PatientModule
   ],
   exports: [OverlaySpinnerComponent],
   providers: [

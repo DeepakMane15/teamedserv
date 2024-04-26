@@ -29,18 +29,6 @@
             <div class="form-body">
               <div class="row">
                 <div class="col">
-                  <!-- <mat-form-field class="full-width">
-                    <mat-label>Medical Member</mat-label>
-                    <mat-select formControlName="medicalId" (selectionChange)="handleMedicalSelect($event)">
-                      <mat-option *ngFor="let medical of medicalTeams" [value]="medical.pid"
-                        [disabled]="medical.approved === '0'">{{medical.first_name +
-                        ' ' +medical.last_name }}</mat-option>
-                    </mat-select>
-                    <mat-error
-                      *ngIf="assignmentForm.get('medicalId')?.invalid && assignmentForm.get('medicalId')?.touched">
-                      Medical Member is invalid
-                    </mat-error>
-                  </mat-form-field> -->
                   <ng-multiselect-dropdown [placeholder]="'Medical Member'" [settings]="medSettings"
                   [data]="medicalTeams" formControlName="medicalId" (onSelect)="onItemSelect($event)"
                   (onSelectAll)="onSelectAll($event)">
@@ -73,17 +61,6 @@
             <div class="form-body">
               <div class="row">
                 <div class="col">
-                  <!-- <mat-form-field class="full-width">
-                    <mat-label>Assignment</mat-label>
-                    <mat-select formControlName="assignment">
-                      <mat-option *ngFor="let assignment of assignmentsMaster"
-                        [value]="assignment.id">{{assignment.name}}</mat-option>
-                    </mat-select>
-                    <mat-error
-                      *ngIf="assignmentForm.get('assignment')?.invalid && assignmentForm.get('assignment')?.touched">
-                      Assignment is invalid
-                    </mat-error>
-                  </mat-form-field> -->
                   <ng-multiselect-dropdown [placeholder]="'Assignment'" [settings]="assSettings"
                   [data]="assignmentsMaster" formControlName="assignment" (onSelect)="onItemSelect($event)"
                   (onSelectAll)="onSelectAll($event)">
@@ -122,16 +99,6 @@
                   </mat-form-field>
                 </div>
                 <div class="col">
-                  <!-- <mat-form-field class="full-width">
-                    <mat-label>Payment Date</mat-label>
-                    <div class="uname-input">
-                      <input matInput formControlName="paymentDate">
-                    </div>
-                    <mat-error
-                      *ngIf="assignmentForm.get('paymentDate')?.invalid && assignmentForm.get('paymentDate')?.touched">
-                      Payment Date is invalid
-                    </mat-error>
-                  </mat-form-field> -->
                   <mat-form-field class="full-width">
                     <mat-label> Payment Date</mat-label>
                     <input matInput [matDatepicker]="paymentDate" formControlName="paymentDate">
@@ -162,13 +129,6 @@
             <div class="form-body">
               <div class="row">
                 <div class="col">
-                  <!-- <mat-form-field class="full-width">
-                    <mat-label>Patient</mat-label>
-                    <mat-select formControlName="patientId" (selectionChange)="handlePatientSelect($event)">
-                      <mat-option *ngFor="let patient of patientsMaster"
-                        [value]="patient.id">{{patient.name}}</mat-option>
-                    </mat-select>
-                  </mat-form-field> -->
                   <ng-multiselect-dropdown [placeholder]="'Patient'" [settings]="patSettings"
                   [data]="patientsMaster" formControlName="patientId" (onSelect)="handlePatientSelect($event)"
                   (onSelectAll)="onSelectAll($event)">
@@ -177,6 +137,7 @@
                     *ngIf="assignmentForm.get('patientId')?.invalid && assignmentForm.get('patientId')?.touched">
                     Patient is invalid
                   </mat-error>
+                  <button mat-button (click)="openAddPopUpForm()">Add</button>
                 </div>
                 <div class="col">
                   <mat-form-field class="full-width">
@@ -225,9 +186,6 @@
                 <div class="col">
                   <mat-form-field class="full-width">
                     <mat-label>Visit Date</mat-label>
-                    <!-- <div class="uname-input">
-                      <input matInput formControlName="visitDate">
-                    </div> -->
                     <input matInput [matDatepicker]="visitDate" formControlName="visitDate">
                     <mat-datepicker-toggle matIconSuffix [for]="visitDate"></mat-datepicker-toggle>
                     <mat-datepicker #visitDate></mat-datepicker>
