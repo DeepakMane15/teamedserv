@@ -76,7 +76,7 @@
                     <td mat-cell *matCellDef="let element">
                       <mat-icon class="action-mat-icon" (click)="editUser()">edit</mat-icon>
                       <!-- <mat-icon class="action-mat-icon">remove_red_eye</mat-icon> -->
-                      <mat-icon class="action-mat-icon" *ngIf="canDeleteUser(element.user_type)" (click)="deleteUser(element.id)">delete</mat-icon>
+                      <mat-icon class="action-mat-icon" *ngIf="canDeleteUser(element.user_type)" (click)="deleteUser(element.id)"class="delete-icon">delete</mat-icon>
                     </td>
                   </ng-container>
 

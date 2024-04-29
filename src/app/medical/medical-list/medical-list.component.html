@@ -62,7 +62,7 @@
               <div class="icon-container">
                 <mat-icon class="action-mat-icon" (click)="navigateToEdit(element)">edit</mat-icon>
                 <mat-icon class="action-mat-icon" (click)="navigateToView(element)">remove_red_eye</mat-icon>
-                <mat-icon class="action-mat-icon" (click)="handleDeleteCustomer(element.customer_id)">delete</mat-icon>
+                <mat-icon class="action-mat-icon" (click)="handleDeleteCustomer(element.customer_id)"class="delete-icon">delete</mat-icon>
                 <mat-icon *ngIf="element.approved === '0'" (click)="approveMedicalTeam(element.pid)"
                   class="action-mat-icon check" matTooltip="Approve"
                   (click)="handleDeleteCustomer(element.customer_id)">check</mat-icon>
