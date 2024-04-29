@@ -163,4 +163,7 @@ export class AddPatientComponent implements OnInit {
     if (this.fromPopup) this.formSubmitted.emit();
     else this.router.navigate(['/patients']);
   }
+  closeDialog() {
+    this.formSubmitted.emit();
+  }
 }

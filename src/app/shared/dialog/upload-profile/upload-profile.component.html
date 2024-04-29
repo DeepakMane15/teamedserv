@@ -1,5 +1,10 @@
 <main style="padding: 16px;">
-  <h1>Upload Profile Picture</h1>
+  <div class="title-container">
+    <h1>Upload Profile Picture</h1>
+    <button class="close-btn" mat-button (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
   <mat-divider></mat-divider>
   <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
     <div>

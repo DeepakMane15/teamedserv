@@ -54,4 +54,7 @@ export class UploadProfileComponent {
       );
     }
   }
+  public closeDialog() {
+    this.dialogRef.close();
+  }
 }

@@ -3,9 +3,14 @@
 </div>
 <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
   <div class="header-label-container">
-    <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
-    <span class="title">
-      {{patientData ? 'Edit' : 'Add'}} Patient</span>
+    <div>
+      <mat-icon *ngIf="!fromPopup" class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+      <span class="title">
+        {{patientData ? 'Edit' : 'Add'}} Patient</span>
+    </div>
+    <button class="close-btn" mat-button (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
   <mat-divider></mat-divider>
   <mat-card class="shipping-card">

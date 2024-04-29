@@ -114,9 +114,11 @@ export class AppComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      let newProfileData = {...this.userProfile};
-      newProfileData.avatar = result;
-      this.authService.storeUserData(newProfileData);
+      if (result) {
+        let newProfileData = { ...this.userProfile };
+        newProfileData.avatar = result;
+        this.authService.storeUserData(newProfileData);
+      }
     });
   }
   public openResetPopUp() {
