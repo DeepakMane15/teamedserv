@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
+import { ADD_POPUP_COMPONENT } from 'src/app/common/constants/AppEnum';
 import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
 import { AssignmentTypeModel } from 'src/app/common/models/AssignmentTypeModel';
 import { MedicalTeamModel } from 'src/app/common/models/MedicalTeamModel';
@@ -288,6 +289,9 @@ export class AddAssignmentComponent implements OnInit {
     const dialogRef = this.dialog.open(AddFormPopupComponent, {
       width: '900px',
       height: '550px',
+      data: {
+        component: ADD_POPUP_COMPONENT.PATIENT,
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {

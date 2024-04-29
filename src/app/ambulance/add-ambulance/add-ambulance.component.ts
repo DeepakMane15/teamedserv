@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
+import { ADD_POPUP_COMPONENT } from 'src/app/common/constants/AppEnum';
 import { AmbulanceModel } from 'src/app/common/models/AmbulanceModel';
 import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
 import { DriverModel } from 'src/app/common/models/DriverModel';
+import { AddDriverComponent } from 'src/app/driver/add-driver/add-driver.component';
+import { AddFormPopupComponent } from 'src/app/shared/dialog/add-form-popup/add-form-popup.component';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
@@ -66,7 +70,8 @@ export class AddAmbulanceComponent implements OnInit {
     private fb: FormBuilder,
     private _apiService: ApiService,
     private router: Router,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -129,7 +134,7 @@ export class AddAmbulanceComponent implements OnInit {
     }
     this.fetchMedicalTeams();
     this.fetchInitialData();
-    this.fetchDrivers()
+    this.fetchDrivers();
   }
 
   public fetchInitialData() {
@@ -148,7 +153,6 @@ export class AddAmbulanceComponent implements OnInit {
           }
 
           if (this.patientsMaster && this.ambulanceData) {
-
             this.ambulanceForm.patchValue({
               patient: res.data.patients.filter(
                 (item: any) => this.ambulanceData.patient === item.id
@@ -193,12 +197,12 @@ export class AddAmbulanceComponent implements OnInit {
         if (res && res.status) {
           this.driverMaster = res.data;
 
-          if(this.ambulanceData) {
+          if (this.ambulanceData) {
             this.ambulanceForm.patchValue({
               driver: res.data.filter(
                 (item: any) => this.ambulanceData.driver === item.id
-              )
-            })
+              ),
+            });
           }
         }
         this.showSpinner = false;
@@ -239,20 +243,29 @@ export class AddAmbulanceComponent implements OnInit {
 
       // Convert JSON object to FormData
       for (const key of Object.keys(formModel)) {
-        if(key !== 'patient' && key !== 'assignment' && key !== 'driver'){
+        if (key !== 'patient' && key !== 'assignment' && key !== 'driver') {
           const value = formModel[key];
           formData.append(key, value);
         }
       }
-      formData.append('patient', (this.ambulanceForm.get('patient')?.value || [])
-      .map((item: any) => item.id)
-      .join(',') );
-      formData.append('assignment', (this.ambulanceForm.get('assignment')?.value || [])
-      .map((item: any) => item.id)
-      .join(',') );
-      formData.append('driver',  (this.ambulanceForm.get('driver')?.value || [])
-      .map((item: any) => item.id)
-      .join(','));
+      formData.append(
+        'patient',
+        (this.ambulanceForm.get('patient')?.value || [])
+          .map((item: any) => item.id)
+          .join(',')
+      );
+      formData.append(
+        'assignment',
+        (this.ambulanceForm.get('assignment')?.value || [])
+          .map((item: any) => item.id)
+          .join(',')
+      );
+      formData.append(
+        'driver',
+        (this.ambulanceForm.get('driver')?.value || [])
+          .map((item: any) => item.id)
+          .join(',')
+      );
 
       this.showSpinner = true;
       this._apiService
@@ -282,9 +295,7 @@ export class AddAmbulanceComponent implements OnInit {
   }
 
   public handlePatientSelect(item: any) {
-    let patient = this.patientsMaster.find(
-      (pat: any) => pat.id === item.id
-    );
+    let patient = this.patientsMaster.find((pat: any) => pat.id === item.id);
 
     if (patient) {
       this.ambulanceForm.patchValue({
@@ -295,5 +306,32 @@ export class AddAmbulanceComponent implements OnInit {
         cPerson2Phone: patient.contactPerson2_phone,
       });
     }
+  }
+  public openAddPopUpForm() {
+    const dialogRef = this.dialog.open(AddFormPopupComponent, {
+      width: '900px',
+      height: '550px',
+      data: {
+        component: ADD_POPUP_COMPONENT.PATIENT,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.fetchInitialData();
+    });
+  }
+
+  public openAddFleetPopUpForm() {
+    const dialogRef = this.dialog.open(AddFormPopupComponent, {
+      width: '900px',
+      height: '550px',
+      data: {
+        component: ADD_POPUP_COMPONENT.FLEET,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.fetchDrivers();
+    });
   }
 }

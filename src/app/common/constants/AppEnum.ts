@@ -21,3 +21,8 @@ export enum AssignmentStatus {
   DFD = 'dfd',
   COMPLETED = 'completed',
 }
+
+export enum ADD_POPUP_COMPONENT {
+  PATIENT = 1,
+  FLEET = 2
+}

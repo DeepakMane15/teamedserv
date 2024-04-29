@@ -60,6 +60,7 @@ import { ResetPasswordComponent } from './shared/dialog/reset-password/reset-pas
 import { UploadProfileComponent } from './shared/dialog/upload-profile/upload-profile.component';
 import { AddFormPopupComponent } from './shared/dialog/add-form-popup/add-form-popup.component';
 import { PatientModule } from './patient/patient.module';
+import { DriverModule } from './driver/driver.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -142,7 +143,8 @@ import { PatientModule } from './patient/patient.module';
     MatChipsModule,
     MatChipListbox,
     NgMultiSelectDropDownModule.forRoot(),
-    PatientModule
+    PatientModule,
+    DriverModule
   ],
   exports: [OverlaySpinnerComponent],
   providers: [

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ADD_POPUP_COMPONENT } from 'src/app/common/constants/AppEnum';
 
 @Component({
   selector: 'app-add-form-popup',
@@ -7,8 +8,11 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrl: './add-form-popup.component.scss'
 })
 export class AddFormPopupComponent {
+  public addPopupComponent = ADD_POPUP_COMPONENT;
   constructor(
-    public dialogRef: MatDialogRef<AddFormPopupComponent>
+    public dialogRef: MatDialogRef<AddFormPopupComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+
   ) {}
 
   closeDialog() {

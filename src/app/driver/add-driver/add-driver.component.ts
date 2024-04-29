@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatRadioChange } from '@angular/material/radio';
 import { Router } from '@angular/router';
@@ -28,6 +28,8 @@ export class AddDriverComponent {
   public licenceError!: string;
   public resumeError!: string;
   public fileError: boolean = false;
+  @Input() fromPopup: boolean = false;
+  @Output() formSubmitted: EventEmitter<void> = new EventEmitter<void>();
 
   driverForm = this.fb.group({
     id: 0,
@@ -57,16 +59,18 @@ export class AddDriverComponent {
 
   ngOnInit(): void {
     this.driverData = history.state.driverData;
-    this.driverForm.patchValue({
-      id: this.driverData.id,
-      customer_id: this.driverData.customer_id,
-      first_name: this.driverData.first_name,
-      last_name: this.driverData.last_name,
-      email: this.driverData.email,
-      password: this.driverData.password,
-      address: this.driverData.address,
-      mobile_no: this.driverData.mobile_no,
-    });
+    if (this.driverData)
+      this.driverForm.patchValue({
+        id: this.driverData.id,
+        customer_id: this.driverData.customer_id,
+        first_name: this.driverData.first_name,
+        last_name: this.driverData.last_name,
+        email: this.driverData.email,
+        password: this.driverData.password,
+        address: this.driverData.address,
+        mobile_no: this.driverData.mobile_no,
+      });
+    console.log(this.fromPopup);
   }
 
   onSubmit(): void {
@@ -89,14 +93,16 @@ export class AddDriverComponent {
           (res: any) => {
             if (res && res.status) {
               this.showSpinner = false;
-              this.router.navigate(['/driver']);
+              if (this.fromPopup) this.formSubmitted.emit();
+              else this.router.navigate(['/driver']);
             } else {
               this.showSpinner = false;
+              if (this.fromPopup) this.formSubmitted.emit();
             }
           },
           (error) => {
             this.showSpinner = false;
-            console.error('Operation failed', error);
+            if (this.fromPopup) this.formSubmitted.emit();
           }
         );
     }
@@ -129,12 +135,15 @@ export class AddDriverComponent {
   }
 
   public handleCancel() {
-    this.router.navigate(['driver'], {
-      state: { driverData: this.driverData },
-    });
+    if (this.fromPopup) this.formSubmitted.emit();
+    else
+      this.router.navigate(['driver'], {
+        state: { driverData: this.driverData },
+      });
   }
   public navigateBack() {
-    this.router.navigate(['/driver']);
+    if (this.fromPopup) this.formSubmitted.emit();
+    else this.router.navigate(['/driver']);
   }
 
   public usernameAvailabilityValidator(control: any) {
@@ -232,5 +241,9 @@ export class AddDriverComponent {
       default:
         break;
     }
+  }
+
+  closeDialog() {
+    this.formSubmitted.emit();
   }
 }

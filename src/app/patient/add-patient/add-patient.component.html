@@ -8,7 +8,7 @@
       <span class="title">
         {{patientData ? 'Edit' : 'Add'}} Patient</span>
     </div>
-    <button class="close-btn" mat-button (click)="closeDialog()">
+    <button *ngIf="fromPopup" class="close-btn" mat-button (click)="closeDialog()">
       <mat-icon>close</mat-icon>
     </button>
   </div>
