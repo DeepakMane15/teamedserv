@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { CustomerModel } from 'src/app/common/models/CustomerModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
+import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
 
 @Component({
   selector: 'app-customers-list',
@@ -23,14 +24,21 @@ export class CustomersListComponent implements AfterViewInit {
   ];
   public showSpinner: Boolean = false;
   dataSource = new MatTableDataSource<any>();
+  public filteredDataSource!: any[];
+  public searchTerm!: string;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private _apiService: ApiService, private router: Router) {}
+  constructor(private _apiService: ApiService, private router: Router,
+    private filterService: FilterServiceService) {}
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.fetchCustomers();
+  }
+
+  applyFilter(): void {
+    this.filteredDataSource = this.filterService.applyFilter(this.dataSource.data, this.searchTerm);
   }
 
   fetchCustomers() {
@@ -39,6 +47,7 @@ export class CustomersListComponent implements AfterViewInit {
       (res: any) => {
         if (res && res.status) {
           this.dataSource.data = res.data;
+          this.filteredDataSource = this.dataSource.data.slice();
         }
         this.showSpinner = false;
       },

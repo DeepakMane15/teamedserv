@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { PatientModel } from 'src/app/common/models/PatientModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
+import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
 
 @Component({
   selector: 'app-patient-list',
@@ -15,10 +16,11 @@ export class PatientListComponent {
   displayedColumns: string[] = ['id', 'Name', 'Address', 'Phone No', 'Action'];
   public showSpinner: Boolean = false;
   dataSource = new MatTableDataSource<any>();
-
+  public filteredDataSource!: any[];
+  public searchTerm!: string;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private _apiService: ApiService, private router: Router) {}
+  constructor(private _apiService: ApiService, private filterService: FilterServiceService, private router: Router) {}
   ngOnInit(): void {
     throw new Error('Method not implemented.');
   }
@@ -28,13 +30,17 @@ export class PatientListComponent {
     this.fetchPatients();
   }
 
+  applyFilter(): void {
+    this.filteredDataSource = this.filterService.applyFilter(this.dataSource.data, this.searchTerm);
+  }
+
   fetchPatients() {
     this.showSpinner = true;
     this._apiService.get(APIConstant.GET_PATIENTS).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.dataSource.data = res.data;
-          console.log(res.data);
+           this.filteredDataSource = this.dataSource.data.slice();
         }
         this.showSpinner = false;
       },

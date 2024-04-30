@@ -6,6 +6,7 @@ import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { UserTypeConstant } from 'src/app/common/constants/UserTypeConstant';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
 
 @Component({
   selector: 'app-job-portal-list',
@@ -28,13 +29,16 @@ export class JobPortalListComponent implements OnInit {
   public originalData: any = [];
   public isMedical: boolean = false;
   dataSource = new MatTableDataSource<any>();
+  public filteredDataSource!: any[];
+  public searchTerm!: string;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private _apiServices: ApiService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private filterService: FilterServiceService
   ) {}
   ngOnInit() {
     this.isMedical =
@@ -48,6 +52,10 @@ export class JobPortalListComponent implements OnInit {
     this.fetchDrivers();
   }
 
+  applyFilter(): void {
+    this.filteredDataSource = this.filterService.applyFilter(this.dataSource.data, this.searchTerm);
+  }
+
   fetchDrivers() {
     this.showSpinner = true;
     this._apiServices.get(APIConstant.GET_JOB_PORTAL).subscribe(
@@ -55,7 +63,7 @@ export class JobPortalListComponent implements OnInit {
         if (res && res.status) {
           this.dataSource.data = res.data;
           this.originalData = res.data;
-          console.log(res.data);
+          this.filteredDataSource = this.dataSource.data.slice();
         }
         this.showSpinner = false;
       },

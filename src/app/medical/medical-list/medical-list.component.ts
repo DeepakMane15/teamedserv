@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { MedicalTeamModel } from 'src/app/common/models/MedicalTeamModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
+import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
 
 @Component({
   selector: 'app-medical-list',
@@ -23,12 +24,14 @@ export class MedicalListComponent implements OnInit {
     // 'Address',
     'Action',
   ];
+
   public showSpinner: Boolean = false;
   dataSource = new MatTableDataSource<any>();
-
+  public filteredDataSource!: any[];
+  public searchTerm!: string;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private _apiService: ApiService, private router: Router) {}
+  constructor(private _apiService: ApiService, private router: Router, private filterService: FilterServiceService) {}
   ngOnInit(): void {
     throw new Error('Method not implemented.');
   }
@@ -44,6 +47,7 @@ export class MedicalListComponent implements OnInit {
       (res: any) => {
         if (res && res.status) {
           this.dataSource.data = res.data;
+          this.filteredDataSource = this.dataSource.data.slice();
           console.log(res.data);
         }
         this.showSpinner = false;
@@ -57,6 +61,10 @@ export class MedicalListComponent implements OnInit {
     this.router.navigate(['/medical-team/add']);
   }
 
+  applyFilter(): void {
+    this.filteredDataSource = this.filterService.applyFilter(this.dataSource.data, this.searchTerm);
+  }
+
   navigateToEdit(medicalData: MedicalTeamModel) {
     this.router.navigate(['/medical-team/edit'], {
       state: { medicalData: medicalData },
@@ -67,6 +75,7 @@ export class MedicalListComponent implements OnInit {
       state: { pid: medicalData.pid, tabIndex: 0 },
     });
   }
+
   handleDeleteCustomer(customerId: any) {
     return;
     let fd = new FormData();

@@ -6,6 +6,7 @@ import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { AssignmentStatus } from 'src/app/common/constants/AppEnum';
 // import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
+import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
 
 @Component({
   selector: 'app-ambulance-list',
@@ -31,11 +32,13 @@ export class AmbulanceListComponent implements OnInit{
   public statusFilter: string = 'all';
   public showSpinnner: Boolean = false;
   public originalData: any = [];
+  public filteredDataSource!: any[];
+  public searchTerm!: string;
   dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private _apiServices: ApiService, private router: Router) {}
+  constructor(private _apiServices: ApiService, private router: Router, private filterService: FilterServiceService) {}
   ngOnInit(): void {
     throw new Error('Method not implemented');
   }
@@ -45,6 +48,10 @@ export class AmbulanceListComponent implements OnInit{
     this.fetchMedtransBookings();
   }
 
+  applyFilter(): void {
+    this.filteredDataSource = this.filterService.applyFilter(this.dataSource.data, this.searchTerm);
+  }
+
   fetchMedtransBookings() {
     this.showSpinner = true;
     this._apiServices.get(APIConstant.GET_MEDTRANS).subscribe(
@@ -52,7 +59,7 @@ export class AmbulanceListComponent implements OnInit{
         if (res && res.status) {
           this.dataSource.data = res.data;
           this.originalData = res.data;
-          console.log(res.data);
+          this.filteredDataSource = this.dataSource.data.slice();
         }
         this.showSpinner = false;
       },

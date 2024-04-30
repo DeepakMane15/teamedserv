@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { AssignmentStatus } from 'src/app/common/constants/AppEnum';
 import { ApiService } from 'src/app/shared/services/api/api.service';
+import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
 
 @Component({
   selector: 'app-living-list',
@@ -26,10 +27,12 @@ export class LivingListComponent implements OnInit {
   public livingData: any = [];
   public roomsMaster = [];
   dataSource = new MatTableDataSource<any>();
+  public filteredDataSource!: any[];
+  public searchTerm!: string;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private _apiServices: ApiService, private router: Router) {}
+  constructor(private _apiServices: ApiService, private filterService: FilterServiceService, private router: Router) {}
   ngOnInit(): void {
     throw new Error('Method not implemented');
   }
@@ -39,7 +42,9 @@ export class LivingListComponent implements OnInit {
     this.fetchDrivers();
   }
 
-
+  applyFilter(): void {
+    this.filteredDataSource = this.filterService.applyFilter(this.dataSource.data, this.searchTerm);
+  }
 
   fetchDrivers() {
     this.showSpinner = true;
@@ -48,6 +53,7 @@ export class LivingListComponent implements OnInit {
         if (res && res.status) {
           this.dataSource.data = res.data;
           this.livingData = res.data;
+          this.filteredDataSource = this.dataSource.data.slice();
         }
         this.showSpinner = false;
       },
