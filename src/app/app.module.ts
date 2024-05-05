@@ -61,6 +61,7 @@ import { UploadProfileComponent } from './shared/dialog/upload-profile/upload-pr
 import { AddFormPopupComponent } from './shared/dialog/add-form-popup/add-form-popup.component';
 import { PatientModule } from './patient/patient.module';
 import { DriverModule } from './driver/driver.module';
+import { DeleteConfirmComponent } from './shared/dialog/delete-confirm/delete-confirm.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -85,7 +86,8 @@ import { DriverModule } from './driver/driver.module';
     CreateGroupModalComponent,
     ResetPasswordComponent,
     UploadProfileComponent,
-    AddFormPopupComponent
+    AddFormPopupComponent,
+    DeleteConfirmComponent
   ],
   imports: [
     BrowserModule,

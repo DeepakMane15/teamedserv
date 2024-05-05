@@ -1,9 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
-import { AssignmentStatus, DELETE_TYPE } from 'src/app/common/constants/AppEnum';
+import {
+  AssignmentStatus,
+  DELETE_TYPE,
+} from 'src/app/common/constants/AppEnum';
+import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/delete-confirm.component';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
 
@@ -30,7 +35,12 @@ export class DriverListComponent implements OnInit {
   public searchTerm!: string;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private _apiServices: ApiService, private filterService: FilterServiceService, private router: Router) {}
+  constructor(
+    private _apiServices: ApiService,
+    private filterService: FilterServiceService,
+    private router: Router,
+    private dialog: MatDialog
+  ) {}
   ngOnInit(): void {
     throw new Error('Method not implemented');
   }
@@ -41,7 +51,10 @@ export class DriverListComponent implements OnInit {
   }
 
   applyFilter(): void {
-    this.filteredDataSource = this.filterService.applyFilter(this.dataSource.data, this.searchTerm);
+    this.filteredDataSource = this.filterService.applyFilter(
+      this.dataSource.data,
+      this.searchTerm
+    );
   }
 
   fetchDrivers() {
@@ -76,24 +89,33 @@ export class DriverListComponent implements OnInit {
   }
 
   handleDelete(id: any) {
-    let fd = new FormData();
-    fd.append('id', id);
-    fd.append('type', DELETE_TYPE.DRIVER.toString());
-    this.showSpinner = true;
-    this._apiServices.post(APIConstant.COMMON_DELETE, fd).subscribe(
-      (res: any) => {
-        if (res && res.status) {
-          this.showSpinner = false;
-          this.fetchDrivers();
-        } else {
-          this.showSpinner = false;
-        }
-      },
-      (error) => {
-        this.showSpinner = false;
-        console.log('Delete failed', error);
+    const dialogRef = this.dialog.open(DeleteConfirmComponent, {
+      width: '400px',
+      data: { name: 'Driver' },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        let fd = new FormData();
+        fd.append('id', id);
+        fd.append('type', DELETE_TYPE.DRIVER.toString());
+        this.showSpinner = true;
+        this._apiServices.post(APIConstant.COMMON_DELETE, fd).subscribe(
+          (res: any) => {
+            if (res && res.status) {
+              this.showSpinner = false;
+              this.fetchDrivers();
+            } else {
+              this.showSpinner = false;
+            }
+          },
+          (error) => {
+            this.showSpinner = false;
+            console.log('Delete failed', error);
+          }
+        );
       }
-    );
+    });
   }
 
   public refineLongText(value: string): string {

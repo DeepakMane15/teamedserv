@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { AssignmentStatus, DELETE_TYPE } from 'src/app/common/constants/AppEnum';
+import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/delete-confirm.component';
 // import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
@@ -38,7 +40,7 @@ export class AssignmentListComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private _apiServices: ApiService, private router: Router, private filterService: FilterServiceService) {}
+  constructor(private _apiServices: ApiService, private router: Router, private filterService: FilterServiceService, private dialog: MatDialog) {}
   ngOnInit(): void {
     throw new Error('Method not implemented');
   }
@@ -83,6 +85,13 @@ export class AssignmentListComponent implements OnInit {
     });
   }
   handleDeleteAssignment(id: any) {
+    const dialogRef = this.dialog.open(DeleteConfirmComponent, {
+      width: '400px',
+      data: { name: 'Assignment' },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
     let fd = new FormData();
     fd.append('id', id);
     fd.append('type', DELETE_TYPE.ASSIGNMENT.toString());
@@ -101,6 +110,7 @@ export class AssignmentListComponent implements OnInit {
         console.log('Delete failed', error);
       }
     );
+  } })
   }
   public filterByStatus() {
     this.showSpinner = true;

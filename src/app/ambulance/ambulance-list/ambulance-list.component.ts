@@ -1,9 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
-import { AssignmentStatus, DELETE_TYPE } from 'src/app/common/constants/AppEnum';
+import {
+  AssignmentStatus,
+  DELETE_TYPE,
+} from 'src/app/common/constants/AppEnum';
+import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/delete-confirm.component';
 // import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
@@ -11,9 +16,9 @@ import { FilterServiceService } from 'src/app/shared/services/filter-service/fil
 @Component({
   selector: 'app-ambulance-list',
   templateUrl: './ambulance-list.component.html',
-  styleUrl: './ambulance-list.component.scss'
+  styleUrl: './ambulance-list.component.scss',
 })
-export class AmbulanceListComponent implements OnInit{
+export class AmbulanceListComponent implements OnInit {
   displayedColumns: string[] = [
     'no',
     'transaction',
@@ -38,7 +43,12 @@ export class AmbulanceListComponent implements OnInit{
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private _apiServices: ApiService, private router: Router, private filterService: FilterServiceService) {}
+  constructor(
+    private _apiServices: ApiService,
+    private router: Router,
+    private filterService: FilterServiceService,
+    private dialog: MatDialog
+  ) {}
   ngOnInit(): void {
     throw new Error('Method not implemented');
   }
@@ -49,7 +59,10 @@ export class AmbulanceListComponent implements OnInit{
   }
 
   applyFilter(): void {
-    this.filteredDataSource = this.filterService.applyFilter(this.dataSource.data, this.searchTerm);
+    this.filteredDataSource = this.filterService.applyFilter(
+      this.dataSource.data,
+      this.searchTerm
+    );
   }
 
   fetchMedtransBookings() {
@@ -84,25 +97,34 @@ export class AmbulanceListComponent implements OnInit{
   }
 
   handleDelete(id: any) {
-    let fd = new FormData();
-    fd.append('id', id);
-    fd.append('type', DELETE_TYPE.AMBULANCE.toString());
-    this.showSpinner = true;
-    this._apiServices.post(APIConstant.COMMON_DELETE, fd).subscribe(
-      (res: any) => {
-        if (res && res.status) {
-          this.showSpinner = false;
-          console.log(res.message);
-          this.fetchMedtransBookings();
-        } else {
-          this.showSpinner = false;
-        }
-      },
-      (error) => {
-        this.showSpinner = false;
-        console.log('Delete failed', error);
+    const dialogRef = this.dialog.open(DeleteConfirmComponent, {
+      width: '400px',
+      data: { name: 'Booking' },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        let fd = new FormData();
+        fd.append('id', id);
+        fd.append('type', DELETE_TYPE.AMBULANCE.toString());
+        this.showSpinner = true;
+        this._apiServices.post(APIConstant.COMMON_DELETE, fd).subscribe(
+          (res: any) => {
+            if (res && res.status) {
+              this.showSpinner = false;
+              console.log(res.message);
+              this.fetchMedtransBookings();
+            } else {
+              this.showSpinner = false;
+            }
+          },
+          (error) => {
+            this.showSpinner = false;
+            console.log('Delete failed', error);
+          }
+        );
       }
-    );
+    });
   }
   public filterByStatus() {
     this.showSpinner = true;

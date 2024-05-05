@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { DELETE_TYPE } from 'src/app/common/constants/AppEnum';
 import { MedicalTeamModel } from 'src/app/common/models/MedicalTeamModel';
+import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/delete-confirm.component';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
 
@@ -32,7 +34,12 @@ export class MedicalListComponent implements OnInit {
   public searchTerm!: string;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private _apiService: ApiService, private router: Router, private filterService: FilterServiceService) {}
+  constructor(
+    private _apiService: ApiService,
+    private router: Router,
+    private filterService: FilterServiceService,
+    private dialog: MatDialog
+  ) {}
   ngOnInit(): void {
     throw new Error('Method not implemented.');
   }
@@ -63,7 +70,10 @@ export class MedicalListComponent implements OnInit {
   }
 
   applyFilter(): void {
-    this.filteredDataSource = this.filterService.applyFilter(this.dataSource.data, this.searchTerm);
+    this.filteredDataSource = this.filterService.applyFilter(
+      this.dataSource.data,
+      this.searchTerm
+    );
   }
 
   navigateToEdit(medicalData: MedicalTeamModel) {
@@ -77,25 +87,43 @@ export class MedicalListComponent implements OnInit {
     });
   }
 
+  public openResetPopUp() {
+    const dialogRef = this.dialog.open(DeleteConfirmComponent, {
+      width: '400px',
+      data: { name: 'Medical-Team' },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
+  }
+
   handleDelete(pid: any) {
-    let fd = new FormData();
-    fd.append('type', DELETE_TYPE.MEDICAL.toString());
-    fd.append('pid', pid);
-    this.showSpinner = true;
-    this._apiService.post(APIConstant.COMMON_DELETE, fd).subscribe(
-      (res: any) => {
-        if (res && res.status) {
-          this.showSpinner = false;
-          this.fetchMedicalTeams();
-        } else {
-          this.showSpinner = false;
-        }
-      },
-      (error) => {
-        this.showSpinner = false;
-        console.log('Delete failed', error);
+    const dialogRef = this.dialog.open(DeleteConfirmComponent, {
+      width: '400px',
+      data: { name: 'Medical-Team' },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        let fd = new FormData();
+        fd.append('type', DELETE_TYPE.MEDICAL.toString());
+        fd.append('pid', pid);
+        this.showSpinner = true;
+        this._apiService.post(APIConstant.COMMON_DELETE, fd).subscribe(
+          (res: any) => {
+            if (res && res.status) {
+              this.showSpinner = false;
+              this.fetchMedicalTeams();
+            } else {
+              this.showSpinner = false;
+            }
+          },
+          (error) => {
+            this.showSpinner = false;
+            console.log('Delete failed', error);
+          }
+        );
       }
-    );
+    });
   }
   public refineLongText(value: string): string {
     let values = value?.split(',');

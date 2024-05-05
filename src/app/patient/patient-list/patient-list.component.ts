@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { DELETE_TYPE } from 'src/app/common/constants/AppEnum';
 import { PatientModel } from 'src/app/common/models/PatientModel';
+import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/delete-confirm.component';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
 
@@ -21,7 +23,12 @@ export class PatientListComponent {
   public searchTerm!: string;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private _apiService: ApiService, private filterService: FilterServiceService, private router: Router) {}
+  constructor(
+    private _apiService: ApiService,
+    private filterService: FilterServiceService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
   ngOnInit(): void {
     throw new Error('Method not implemented.');
   }
@@ -32,7 +39,10 @@ export class PatientListComponent {
   }
 
   applyFilter(): void {
-    this.filteredDataSource = this.filterService.applyFilter(this.dataSource.data, this.searchTerm);
+    this.filteredDataSource = this.filterService.applyFilter(
+      this.dataSource.data,
+      this.searchTerm
+    );
   }
 
   fetchPatients() {
@@ -41,7 +51,7 @@ export class PatientListComponent {
       (res: any) => {
         if (res && res.status) {
           this.dataSource.data = res.data;
-           this.filteredDataSource = this.dataSource.data.slice();
+          this.filteredDataSource = this.dataSource.data.slice();
         }
         this.showSpinner = false;
       },
@@ -65,24 +75,33 @@ export class PatientListComponent {
     });
   }
   handleDeletePatient(patientId: any) {
-    let fd = new FormData();
-    fd.append('type', DELETE_TYPE.PATIENT.toString());
-    fd.append('id', patientId);
-    this.showSpinner = true;
-    this._apiService.post(APIConstant.COMMON_DELETE, fd).subscribe(
-      (res: any) => {
-        if (res && res.status) {
-          this.showSpinner = false;
-          this.fetchPatients();
-        } else {
-          this.showSpinner = false;
-        }
-      },
-      (error) => {
-        this.showSpinner = false;
-        console.log('Delete failed', error);
+    const dialogRef = this.dialog.open(DeleteConfirmComponent, {
+      width: '400px',
+      data: { name: 'Patient' },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        let fd = new FormData();
+        fd.append('type', DELETE_TYPE.PATIENT.toString());
+        fd.append('id', patientId);
+        this.showSpinner = true;
+        this._apiService.post(APIConstant.COMMON_DELETE, fd).subscribe(
+          (res: any) => {
+            if (res && res.status) {
+              this.showSpinner = false;
+              this.fetchPatients();
+            } else {
+              this.showSpinner = false;
+            }
+          },
+          (error) => {
+            this.showSpinner = false;
+            console.log('Delete failed', error);
+          }
+        );
       }
-    );
+    });
   }
   public refineLongText(value: string): string {
     let values = value?.split(',');

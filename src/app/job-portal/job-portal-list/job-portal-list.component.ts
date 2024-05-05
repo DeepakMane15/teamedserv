@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { DELETE_TYPE } from 'src/app/common/constants/AppEnum';
 import { UserTypeConstant } from 'src/app/common/constants/UserTypeConstant';
+import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/delete-confirm.component';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
@@ -39,13 +41,14 @@ export class JobPortalListComponent implements OnInit {
     private _apiServices: ApiService,
     private router: Router,
     private authService: AuthService,
-    private filterService: FilterServiceService
+    private filterService: FilterServiceService,
+    private dialog: MatDialog
   ) {}
   ngOnInit() {
     this.isMedical =
       this.authService.getUserData()?.user_type ===
       UserTypeConstant.PROFESSIONAL;
-      console.log(this.authService.getUserData());
+    console.log(this.authService.getUserData());
   }
 
   ngAfterViewInit() {
@@ -54,7 +57,10 @@ export class JobPortalListComponent implements OnInit {
   }
 
   applyFilter(): void {
-    this.filteredDataSource = this.filterService.applyFilter(this.dataSource.data, this.searchTerm);
+    this.filteredDataSource = this.filterService.applyFilter(
+      this.dataSource.data,
+      this.searchTerm
+    );
   }
 
   fetchJobs() {
@@ -89,30 +95,39 @@ export class JobPortalListComponent implements OnInit {
   }
 
   handleDelete(id: any) {
-    let fd = new FormData();
-    fd.append('id', id);
-    fd.append('type', DELETE_TYPE.JOB_PORTAL.toString());
-    this.showSpinner = true;
-    this._apiServices.post(APIConstant.COMMON_DELETE, fd).subscribe(
-      (res: any) => {
-        if (res && res.status) {
-          this.showSpinner = false;
-          this.fetchJobs();
-        } else {
-          this.showSpinner = false;
-        }
-      },
-      (error) => {
-        this.showSpinner = false;
-        console.log('Delete failed', error);
+    const dialogRef = this.dialog.open(DeleteConfirmComponent, {
+      width: '400px',
+      data: { name: 'Job Opening' },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        let fd = new FormData();
+        fd.append('id', id);
+        fd.append('type', DELETE_TYPE.JOB_PORTAL.toString());
+        this.showSpinner = true;
+        this._apiServices.post(APIConstant.COMMON_DELETE, fd).subscribe(
+          (res: any) => {
+            if (res && res.status) {
+              this.showSpinner = false;
+              this.fetchJobs();
+            } else {
+              this.showSpinner = false;
+            }
+          },
+          (error) => {
+            this.showSpinner = false;
+            console.log('Delete failed', error);
+          }
+        );
       }
-    );
+    });
   }
 
   public applyJob(jid: string) {
     this.showSpinner = true;
     const fd = new FormData();
-    fd.append('jid',jid);
+    fd.append('jid', jid);
     this._apiServices.post(APIConstant.APPLY_JOB_OPENING, fd).subscribe(
       (res: any) => {
         this.showSpinner = false;
