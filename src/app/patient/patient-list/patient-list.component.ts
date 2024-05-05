@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
+import { DELETE_TYPE } from 'src/app/common/constants/AppEnum';
 import { PatientModel } from 'src/app/common/models/PatientModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
@@ -65,13 +66,13 @@ export class PatientListComponent {
   }
   handleDeletePatient(patientId: any) {
     let fd = new FormData();
-    fd.append('patient_id', patientId);
+    fd.append('type', DELETE_TYPE.PATIENT.toString());
+    fd.append('id', patientId);
     this.showSpinner = true;
-    this._apiService.post(APIConstant.DELETE_CUSTOMER, fd).subscribe(
+    this._apiService.post(APIConstant.COMMON_DELETE, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.showSpinner = false;
-          console.log(res.message);
           this.fetchPatients();
         } else {
           this.showSpinner = false;

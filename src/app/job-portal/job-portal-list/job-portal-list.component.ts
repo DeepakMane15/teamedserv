@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
+import { DELETE_TYPE } from 'src/app/common/constants/AppEnum';
 import { UserTypeConstant } from 'src/app/common/constants/UserTypeConstant';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -49,14 +50,14 @@ export class JobPortalListComponent implements OnInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.fetchDrivers();
+    this.fetchJobs();
   }
 
   applyFilter(): void {
     this.filteredDataSource = this.filterService.applyFilter(this.dataSource.data, this.searchTerm);
   }
 
-  fetchDrivers() {
+  fetchJobs() {
     this.showSpinner = true;
     this._apiServices.get(APIConstant.GET_JOB_PORTAL).subscribe(
       (res: any) => {
@@ -87,25 +88,25 @@ export class JobPortalListComponent implements OnInit {
     });
   }
 
-  handleDeleteAssignment(assignmentNO: any) {
+  handleDelete(id: any) {
     let fd = new FormData();
-    fd.append('assignment_No', assignmentNO);
-    // this.showSpinner = true;
-    // this._apiServices.post(APIConstant.DELETE_CUSTOMER, fd).subscribe(
-    //   (res: any) => {
-    //     if (res && res.status) {
-    //       this.showSpinner = false;
-    //       console.log(res.message);
-    //       this.fetchAssignments();
-    //     } else {
-    //       this.showSpinner = false;
-    //     }
-    //   },
-    //   (error) => {
-    //     this.showSpinner = false;
-    //     console.log('Delete failed', error);
-    //   }
-    // );
+    fd.append('id', id);
+    fd.append('type', DELETE_TYPE.JOB_PORTAL.toString());
+    this.showSpinner = true;
+    this._apiServices.post(APIConstant.COMMON_DELETE, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.showSpinner = false;
+          this.fetchJobs();
+        } else {
+          this.showSpinner = false;
+        }
+      },
+      (error) => {
+        this.showSpinner = false;
+        console.log('Delete failed', error);
+      }
+    );
   }
 
   public applyJob(jid: string) {

@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
-import { AssignmentStatus } from 'src/app/common/constants/AppEnum';
+import { AssignmentStatus, DELETE_TYPE } from 'src/app/common/constants/AppEnum';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
 
@@ -39,14 +39,14 @@ export class LivingListComponent implements OnInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.fetchDrivers();
+    this.fetchLivings();
   }
 
   applyFilter(): void {
     this.filteredDataSource = this.filterService.applyFilter(this.dataSource.data, this.searchTerm);
   }
 
-  fetchDrivers() {
+  fetchLivings() {
     this.showSpinner = true;
     this._apiServices.get(APIConstant.GET_LIVINGS).subscribe(
       (res: any) => {
@@ -77,25 +77,25 @@ export class LivingListComponent implements OnInit {
     });
   }
 
-  handleDeleteAssignment(assignmentNO: any) {
+  handleDelete(type: any) {
     let fd = new FormData();
-    fd.append('assignment_No', assignmentNO);
-    // this.showSpinner = true;
-    // this._apiServices.post(APIConstant.DELETE_CUSTOMER, fd).subscribe(
-    //   (res: any) => {
-    //     if (res && res.status) {
-    //       this.showSpinner = false;
-    //       console.log(res.message);
-    //       this.fetchAssignments();
-    //     } else {
-    //       this.showSpinner = false;
-    //     }
-    //   },
-    //   (error) => {
-    //     this.showSpinner = false;
-    //     console.log('Delete failed', error);
-    //   }
-    // );
+    fd.append('type', DELETE_TYPE.LIVING.toString());
+    fd.append('id', type);
+    this.showSpinner = true;
+    this._apiServices.post(APIConstant.COMMON_DELETE, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.showSpinner = false;
+          this.fetchLivings();
+        } else {
+          this.showSpinner = false;
+        }
+      },
+      (error) => {
+        this.showSpinner = false;
+        console.log('Delete failed', error);
+      }
+    );
   }
 
   public refineLongText(value: string): string {

@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
+import { DELETE_TYPE } from 'src/app/common/constants/AppEnum';
 import { MedicalTeamModel } from 'src/app/common/models/MedicalTeamModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
@@ -24,7 +25,7 @@ export class MedicalListComponent implements OnInit {
     // 'Address',
     'Action',
   ];
-
+  public deleteType = DELETE_TYPE;
   public showSpinner: Boolean = false;
   dataSource = new MatTableDataSource<any>();
   public filteredDataSource!: any[];
@@ -76,16 +77,15 @@ export class MedicalListComponent implements OnInit {
     });
   }
 
-  handleDeleteCustomer(customerId: any) {
-    return;
+  handleDelete(pid: any) {
     let fd = new FormData();
-    fd.append('customer_id', customerId);
+    fd.append('type', DELETE_TYPE.MEDICAL.toString());
+    fd.append('pid', pid);
     this.showSpinner = true;
-    this._apiService.post(APIConstant.DELETE_MEDICALTEAM, fd).subscribe(
+    this._apiService.post(APIConstant.COMMON_DELETE, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.showSpinner = false;
-          console.log(res.message);
           this.fetchMedicalTeams();
         } else {
           this.showSpinner = false;
