@@ -205,6 +205,13 @@ mat-tree-node {
   // border-radius: 10px;
 }
 
+.navbar-title {
+  display: flex;
+  gap: 3px;
+}
+.text-title {
+  text-transform: capitalize;
+}
 .secondary-section {
   border: 1px solid #fff;
   margin: 7px;
