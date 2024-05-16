@@ -15,11 +15,14 @@ import { FilterServiceService } from 'src/app/shared/services/filter-service/fil
 export class CustomersListComponent implements AfterViewInit {
   displayedColumns: string[] = [
     'id',
-    'User name',
-    'Company Name',
-    // 'Time Zone',
-    'Email',
+    'Code',
+    'Name',
+    'Sewa Type',
     'Phone',
+    // 'Time Zone',
+    // 'Email',
+    'Status',
+    'Department',
     'Action',
   ];
   public showSpinner: Boolean = false;
@@ -43,7 +46,10 @@ export class CustomersListComponent implements AfterViewInit {
 
   fetchCustomers() {
     this.showSpinner = true;
-    this._apiService.get(APIConstant.GET_CUSTOMERS).subscribe(
+    const fd = new FormData();
+    fd.append('type', '1');
+
+    this._apiService.post(APIConstant.GET_DRIVERS, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.dataSource.data = res.data;

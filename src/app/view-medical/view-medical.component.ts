@@ -130,7 +130,7 @@ export class ViewMedicalComponent {
     this.showSpinner = true;
     let medicalId = history.state.medicalId;
     if (medicalId) this.fetchMedicalTeamData(medicalId);
-    if (!medicalId) this.router.navigate(['team-board']);
+    // if (!medicalId) this.router.navigate(['team-board']);
   }
 
   private fetchMedicalTeamData(pid: string) {

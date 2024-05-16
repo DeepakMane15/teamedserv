@@ -18,14 +18,11 @@ import { FilterServiceService } from 'src/app/shared/services/filter-service/fil
 export class AssignmentListComponent implements OnInit {
   displayedColumns: string[] = [
     'no',
-    'transaction',
-    'patient',
-    'medicalTeam',
-    'entryDate',
-    'visitDate',
-    'amount',
-    'paymentDate',
-    'status',
+    'vehicle',
+    'driver',
+    'date',
+    'time',
+    'km',
     'action',
   ];
 
@@ -56,7 +53,9 @@ export class AssignmentListComponent implements OnInit {
 
   fetchAssignments() {
     this.showSpinner = true;
-    this._apiServices.get(APIConstant.GET_ASSIGNMENTS).subscribe(
+    const fd = new FormData();
+    fd.append('type','5');
+    this._apiServices.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.dataSource.data = res.data;

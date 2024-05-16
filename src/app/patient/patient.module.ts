@@ -23,11 +23,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AddPatientComponent } from './add-patient/add-patient.component';
 import { ViewPatientComponent } from './view-patient/view-patient.component';
+import { ImprestListComponent } from './imprest-list/imprest-list.component';
 @NgModule({
   declarations: [
     PatientListComponent,
     AddPatientComponent,
     ViewPatientComponent,
+    ImprestListComponent,
   ],
   imports: [
     CommonModule,

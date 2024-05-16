@@ -5,104 +5,54 @@
   <div class="header-label-container">
     <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
     <span class="title">
-      {{customerData ? 'Edit' : 'Add'}} Customer</span>
+      {{customerData ? 'Edit' : 'Add'}} Driver/Sewadar</span>
   </div>
   <mat-divider></mat-divider>
-  <mat-card class="shipping-card">
-    <mat-card-header>
-      <mat-card-title>Portal</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Username</mat-label>
-            <div class="uname-input">
-              <input matInput formControlName="username" (change)="checkUsernameAvailable($event)">
-              <span *ngIf="isChecking" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            </div>
-
-            <mat-error *ngIf="companyForm.get('username')?.hasError('email') && companyForm.get('username')?.touched">
-              Username is invalid
-            </mat-error>
-            <mat-hint *ngIf="!isUnameAvailable"
-              class="mat-mdc-form-field-error mat-mdc-form-field-bottom-align ng-tns-c19-25 ng-star-inserted">
-              Username is not available
-            </mat-hint>
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Password</mat-label>
-            <input matInput formControlName="password">
-            <mat-error *ngIf="companyForm.get('password')?.invalid && companyForm.get('password')?.touched">
-              Password is required
-            </mat-error>
-          </mat-form-field>
-          <mat-radio-group aria-label="Password option" (change)="handlePasswordCreation($event)">
-            <mat-radio-button value="1" checked>Let me create the password</mat-radio-button>
-            <mat-radio-button value="2">Auto-Generated password</mat-radio-button>
-          </mat-radio-group>
-        </div>
-      </div>
-
-    </mat-card-content>
-  </mat-card>
 
   <!-- company -->
   <mat-card class="shipping-card">
     <mat-card-header>
-      <mat-card-title>Company Info</mat-card-title>
+      <mat-card-title>General Info</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
-        <div class="col">
-          <!-- <mat-form-field class="full-width">
-            <mat-label>Category</mat-label>\
-            <mat-select formControlName="category" (selectionChange)="handleCatChange($event)" multiple>
-              <mat-option *ngFor="let cat of category"
-                [value]="cat.id">{{cat.title}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="companyForm.get('category')?.invalid && companyForm.get('category')?.touched">
-              Category is required
-            </mat-error>
-          </mat-form-field> -->
+        <!-- <div class="col">
           <ng-multiselect-dropdown [placeholder]="'Select Category'" [settings]="categorySettings" [data]="category"
             formControlName="category" (onSelect)="handleCatChange($event)" (onSelectAll)="onSelectAll($event)">
           </ng-multiselect-dropdown>
         </div>
         <div class="col">
-          <!-- <mat-form-field class="full-width">
-            <mat-label>Sub-Category</mat-label>
-            <mat-select formControlName="sub_category" multiple>
-              <mat-option *ngFor="let subCat of filteredSubCat" [value]="subCat.id">{{subCat.title}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="companyForm.get('sub_category')?.invalid && companyForm.get('sub_category')?.touched">
-              Sub-Category is required
-            </mat-error>
-          </mat-form-field> -->
           <ng-multiselect-dropdown [placeholder]="'Select Sub-Category'" [settings]="subCategorySettings"
             [data]="filteredSubCat" formControlName="sub_category" (onSelect)="onItemSelect($event)"
             (onSelectAll)="onSelectAll($event)">
           </ng-multiselect-dropdown>
-        </div>
+        </div> -->
       </div>
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>Company Name</mat-label>
-            <input matInput formControlName="company_name">
-            <mat-error *ngIf="companyForm.get('company_name')?.invalid && companyForm.get('company_name')?.touched">
-              Company Name is required
+            <mat-label>Sewadar Code</mat-label>
+            <input matInput formControlName="code">
+            <mat-error *ngIf="companyForm.get('code')?.invalid && companyForm.get('code')?.touched">
+              Sewadar Code is required
             </mat-error>
           </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>Federal Id/EIN No.</mat-label>
-            <input matInput formControlName="federal_no" (input)="handleFederalNo($event)" placeholder="Federal Number">
-            <mat-error *ngIf="companyForm.get('federal_no')?.invalid && companyForm.get('federal_no')?.touched">
-              Federal Id/EIN No. is invalid
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="fname" placeholder="First Name">
+            <mat-error *ngIf="companyForm.get('fname')?.invalid && companyForm.get('fname')?.touched">
+              First Name is invalid
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lname" placeholder="Last Name">
+            <mat-error *ngIf="companyForm.get('lname')?.invalid && companyForm.get('lname')?.touched">
+              Last Name is invalid
             </mat-error>
           </mat-form-field>
         </div>
@@ -131,6 +81,35 @@
             <mat-error
               *ngIf="companyForm.get('mailing_address')?.invalid && companyForm.get('mailing_address')?.touched">
               Mailing Address is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label> Phone</mat-label>
+            <input matInput formControlName="phone">
+            <mat-error *ngIf="companyForm.get('phone')?.invalid && companyForm.get('phone')?.touched">
+              Sewadar Phone is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Status</mat-label>
+            <input matInput formControlName="status" placeholder="Status">
+            <mat-error *ngIf="companyForm.get('status')?.invalid && companyForm.get('status')?.touched">
+              Status is invalid
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Department</mat-label>
+            <input matInput formControlName="department" placeholder="Department">
+            <mat-error *ngIf="companyForm.get('department')?.invalid && companyForm.get('department')?.touched">
+              Department is invalid
             </mat-error>
           </mat-form-field>
         </div>

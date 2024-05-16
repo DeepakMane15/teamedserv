@@ -54,7 +54,7 @@ export enum APIConstant {
   // Driver
   ADD_DRIVER = 'driver/add',
   EDIT_DRIVER = 'driver/edit',
-  GET_DRIVERS = 'driver/get',
+  GET_DRIVERS = 'snm-get',
   GET_DRIVER_BY_ID = 'driver/get-by-id',
 
   // Job Portal
@@ -78,4 +78,11 @@ export enum APIConstant {
   GET_LIVING_BY_ID = 'living/get-by-id',
   GET_ROOM_AMENITY = 'living/get-room-amenity',
   BOOK_LIVING = 'living/book',
+
+
+
+  GET_VEHICLE = 'snm-get',
+  SNM_GET = 'snm-get',
+
+  // SNM
 }

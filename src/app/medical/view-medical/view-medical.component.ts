@@ -111,7 +111,7 @@ export class ViewMedicalComponent implements OnInit {
     let pid = history.state.pid;
     if (pid) this.fetchMedicalTeamData(pid);
     this.defaultTabIndex = (history && history.state.tabIndex) || 0;
-    if (!pid) this.router.navigate(['medical-team']);
+    // if (!pid) this.router.navigate(['medical-team']);
     console.log(history.state);
 
     this.router.events.subscribe((event) => {

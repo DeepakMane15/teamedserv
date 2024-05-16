@@ -4,8 +4,8 @@
   </div>
   <mat-card class="customer-card">
     <mat-card-header>
-      <mat-card-title>All Medical Teams</mat-card-title>
-      <button mat-raised-button color="primary" type="button" (click)="navigateToAdd()">Add Medical Teams</button>
+      <mat-card-title>All Vehicles</mat-card-title>
+      <button mat-raised-button color="primary" type="button" (click)="navigateToAdd()">Add Vehicles</button>
     </mat-card-header>
     <mat-card-content>
       <div class="search">
@@ -20,41 +20,51 @@
             <td mat-cell *matCellDef="let element; let i = index" style="max-width: 150px;"> {{ i + 1 }} </td>
           </ng-container>
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="Name">
-            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Name </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 150px;"
-              [matTooltip]="element.first_name + ' ' + element.last_name"> {{element.first_name + ' ' +
-              element.last_name }} </td>
-          </ng-container>
-
           <!-- Email/Phone No Column -->
-          <ng-container matColumnDef="Email/Phn No">
-            <th mat-header-cell *matHeaderCellDef style="max-width: 200px;"> Email <br>Phone No </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> <span
-                [matTooltip]="element.email">{{element.email}}</span> <br> {{element.phone_no}} </td>
+          <ng-container matColumnDef="Registration">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Registration No </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"
+              [matTooltip]="element.first_name + ' ' + element.last_name"> {{element.registeration_no}} </td>
           </ng-container>
 
-          <!-- Profession Column -->
-          <ng-container matColumnDef="Profession">
-            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Profession </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.profession_name}} </td>
+          <!-- Name Column -->
+          <ng-container matColumnDef="Chasis">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Chasis No </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.chassis_no }}</td>
           </ng-container>
 
           <!-- Languages Column -->
-          <ng-container matColumnDef="Languages">
-            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Languages </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 150px;" [matTooltip]="element.language_names">
-              {{element.language_names}} </td>
+          <ng-container matColumnDef="Engine">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Engine No </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;" [matTooltip]="element.engine_no">
+              {{element.engine_no}} </td>
           </ng-container>
 
           <!-- Service Area Column -->
-          <ng-container matColumnDef="Service_area">
-            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Service Area </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 150px;" [matTooltip]="element.service_area_names">
-              {{element.service_area_names}} </td>
+          <ng-container matColumnDef="Model">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Model Name </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;" [matTooltip]="element.model_name">
+              {{element.model_name}} </td>
           </ng-container>
 
+
+          <ng-container matColumnDef="Color">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Color </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;" [matTooltip]="element.color">
+              {{element.color}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Make">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Manufacturer </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;" [matTooltip]="element.vehicle_make">
+              {{element.vehicle_make}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Type">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Type </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;" [matTooltip]="element.fuel_type">
+              {{element.fuel_type}} </td>
+          </ng-container>
           <!-- Action Column -->
           <ng-container matColumnDef="Action">
             <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Action </th>

@@ -16,7 +16,7 @@ import { FilterServiceService } from 'src/app/shared/services/filter-service/fil
   styleUrls: ['./patient-list.component.scss'],
 })
 export class PatientListComponent {
-  displayedColumns: string[] = ['id', 'Name', 'Address', 'Phone No', 'Action'];
+  displayedColumns: string[] = ['id', 'receipt', 'fuel', 'rate', 'amount', 'transaction', 'Action'];
   public showSpinner: Boolean = false;
   dataSource = new MatTableDataSource<any>();
   public filteredDataSource!: any[];
@@ -47,7 +47,9 @@ export class PatientListComponent {
 
   fetchPatients() {
     this.showSpinner = true;
-    this._apiService.get(APIConstant.GET_PATIENTS).subscribe(
+    const fd = new FormData();
+    fd.append('type', '3');
+    this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.dataSource.data = res.data;
