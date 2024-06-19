@@ -8,6 +8,7 @@ import { DELETE_TYPE } from 'src/app/common/constants/AppEnum';
 import { MedicalTeamModel } from 'src/app/common/models/MedicalTeamModel';
 import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/delete-confirm.component';
 import { ApiService } from 'src/app/shared/services/api/api.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
 
 @Component({
@@ -38,10 +39,13 @@ export class MedicalListComponent implements OnInit {
     private _apiService: ApiService,
     private router: Router,
     private filterService: FilterServiceService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authService: AuthService
   ) {}
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    if(this.authService.getUserData().user_type === 'professional') {
+      this.router.navigateByUrl('');
+    }
   }
 
   ngAfterViewInit() {

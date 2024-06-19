@@ -18,7 +18,7 @@
         <mat-grid-tile [colspan]="columns ? (isMedical ? 2 : 3 ): 1" [rowspan]="1">
           <mat-tab-group [selectedIndex]="defaultTabIndex">
             <mat-tab label="Detail">
-              <div class="tab-header-label-container bordered">
+              <div class="tab-header-label-container bordered" *ngIf="!isMedical">
                 <mat-icon class="action-mat-icon colored" aria-label="back" (click)="navigateToEdit()">edit</mat-icon>
                 <span>Edit</span>
               </div>

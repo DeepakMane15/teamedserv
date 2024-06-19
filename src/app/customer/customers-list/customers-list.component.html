@@ -5,14 +5,14 @@
   <mat-card class="customer-card">
     <mat-card-header>
       <mat-card-title>All Customer/Company</mat-card-title>
-      <button mat-raised-button color="primary" type="button" (click)="navigateToAdd()">Add Customer/Company</button>
+      <button *ngIf="!isProf" mat-raised-button color="primary" type="button" (click)="navigateToAdd()">Add Customer/Company</button>
     </mat-card-header>
     <mat-card-content>
       <div class="search">
         <input type="text" [(ngModel)]="searchTerm" (input)="applyFilter()" class="custom-input" placeholder="Search">
       </div>
       <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="filteredDataSource">
+        <table mat-table [dataSource]="filteredDataSource" matSort >
 
           <!-- Position Column -->
           <ng-container matColumnDef="id">
@@ -21,8 +21,8 @@
           </ng-container>
 
           <!-- Name Column -->
-          <ng-container matColumnDef="User name">
-            <th mat-header-cell *matHeaderCellDef> Username </th>
+          <ng-container matColumnDef="User name" >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header > Username </th>
             <td mat-cell *matCellDef="let element"> {{element.username}} </td>
           </ng-container>
 
@@ -51,9 +51,9 @@
           <ng-container matColumnDef="Action">
             <th mat-header-cell *matHeaderCellDef> Action </th>
             <td mat-cell *matCellDef="let element">
-              <mat-icon class="action-mat-icon" (click)="navigateToEdit(element)">edit</mat-icon>
+              <mat-icon *ngIf="!isProf" class="action-mat-icon" (click)="navigateToEdit(element)">edit</mat-icon>
               <mat-icon class="action-mat-icon"(click)="navigateToView(element)">remove_red_eye</mat-icon>
-              <mat-icon class="action-mat-icon" (click)="handleDeleteCustomer(element.customer_id)"class="delete-icon">delete</mat-icon>
+              <mat-icon *ngIf="!isProf" class="action-mat-icon" (click)="handleDeleteCustomer(element.customer_id)"class="delete-icon">delete</mat-icon>
             </td>
           </ng-container>
 

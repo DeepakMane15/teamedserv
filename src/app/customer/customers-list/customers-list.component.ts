@@ -1,10 +1,12 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { CustomerModel } from 'src/app/common/models/CustomerModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
 
 @Component({
@@ -26,15 +28,22 @@ export class CustomersListComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<any>();
   public filteredDataSource!: any[];
   public searchTerm!: string;
-
+  public isProf: boolean = false;
+  @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private _apiService: ApiService, private router: Router,
-    private filterService: FilterServiceService) {}
+    private filterService: FilterServiceService, private authService: AuthService) {}
+
+    ngOnInit() {
+      let userProfile = this.authService.getUserData();
+      this.isProf = userProfile.user_type === 'professional';
+      this.fetchCustomers();
+    }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.fetchCustomers();
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(): void {
@@ -67,7 +76,7 @@ export class CustomersListComponent implements AfterViewInit {
   }
   navigateToView(customerData: CustomerModel) {
     this.router.navigate(['/customer/view'], {
-      state: { customerData: customerData, tabIndex:0 },
+      state: { customerData: customerData, hideEdit: this.isProf, tabIndex:0 },
     });
   }
   handleDeleteCustomer(customerId: any) {

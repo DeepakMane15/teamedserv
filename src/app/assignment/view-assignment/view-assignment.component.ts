@@ -23,6 +23,7 @@ export class ViewAssignmentComponent implements OnInit {
   columns: Boolean = true;
   defaultTabIndex!: number;
   public appConstants = AppConstants;
+  public hideEdit: boolean = false;
 
   displayedColumns: string[] = [
     'id',
@@ -126,8 +127,8 @@ export class ViewAssignmentComponent implements OnInit {
     if (assignmentId) this.fetchMedicalTeamData(assignmentId);
     this.defaultTabIndex = (history && history.state.tabIndex) || 0;
     if (!assignmentId) this.router.navigate(['medical-team']);
-    console.log(history.state);
 
+    this.hideEdit = history.state?.hideEdit ? true : false;
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (this.isPageRefresh()) {

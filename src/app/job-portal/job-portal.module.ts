@@ -25,8 +25,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AddJobOpeningComponent } from './add-job-opening/add-job-opening.component';
 import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
 import { ViewJobOpeningComponent } from './view-job-opening/view-job-opening.component';
+import { ReadMoreComponent } from './read-more/read-more.component';
 @NgModule({
-  declarations: [JobPortalListComponent, AddJobOpeningComponent, ViewJobOpeningComponent],
+  declarations: [JobPortalListComponent, AddJobOpeningComponent, ViewJobOpeningComponent, ReadMoreComponent],
   imports: [
     CommonModule,
     JobPortalRoutingModule,

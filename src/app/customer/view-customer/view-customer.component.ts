@@ -23,6 +23,7 @@ export class ViewCustomerComponent implements OnInit {
   userData = new MatTableDataSource<any>();
   columns: Boolean = true;
   defaultTabIndex!: number;
+  hideEdit: boolean = false;
 
   displayedColumns: string[] = [
     'id',
@@ -119,7 +120,7 @@ export class ViewCustomerComponent implements OnInit {
     this.customerData = history.state.customerData;
     this.defaultTabIndex = (history && history.state.tabIndex) || 0;
     if (!this.customerData) this.router.navigate(['customer']);
-    console.log(history.state);
+    this.hideEdit = history.state.hideEdit ? true: false;
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {

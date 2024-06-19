@@ -16,6 +16,19 @@ export const NavItemsContant: NavLinksModel[] = [
   //   url: '/',
   // },
   {
+    label: 'User Profile',
+    roles: [
+      // UserTypeConstant.ADMIN,
+      // UserTypeConstant.CUSTOMER,
+      // UserTypeConstant.CUSTOMER_USER,
+      UserTypeConstant.PROFESSIONAL,
+    ],
+    category: '',
+    subItems: [],
+    icon: 'account_circle',
+    url: '/medical-team/view',
+  },
+  {
     label: 'Dashboard',
     roles: [
       UserTypeConstant.ADMIN,
@@ -29,12 +42,25 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '',
   },
   {
+    label: 'Customers/Companies',
+    roles: [
+      // UserTypeConstant.ADMIN,
+      // UserTypeConstant.CUSTOMER,
+      // UserTypeConstant.CUSTOMER_USER,
+      UserTypeConstant.PROFESSIONAL,
+    ],
+    category: '',
+    subItems: [],
+    icon: 'business',
+    url: '/customer',
+  },
+  {
     label: 'Medical Team',
     roles: [
       UserTypeConstant.ADMIN,
       UserTypeConstant.CUSTOMER_USER,
       UserTypeConstant.CUSTOMER,
-      UserTypeConstant.PROFESSIONAL,
+      // UserTypeConstant.PROFESSIONAL,
     ],
     category: '',
     subItems: [
@@ -44,7 +70,7 @@ export const NavItemsContant: NavLinksModel[] = [
           UserTypeConstant.ADMIN,
           UserTypeConstant.CUSTOMER,
           UserTypeConstant.CUSTOMER_USER,
-          UserTypeConstant.PROFESSIONAL,
+          // UserTypeConstant.PROFESSIONAL,
         ],
         icon: '',
         url: 'medical-team',
@@ -130,11 +156,22 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '/',
   },
   {
+    label: 'Assignments',
+    roles: [
+      UserTypeConstant.PROFESSIONAL,
+    ],
+    category: '',
+    subItems: [],
+    icon: 'assignment',
+    url: '/assignments',
+  },
+  {
     label: 'Assignment/Services',
     roles: [
       UserTypeConstant.ADMIN,
       UserTypeConstant.CUSTOMER,
       UserTypeConstant.CUSTOMER_USER,
+      // UserTypeConstant.PROFESSIONAL
     ],
     category: '',
     subItems: [
@@ -192,7 +229,7 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '',
   },
   {
-    label: 'Chat',
+    label: 'Chatting Room',
     roles: [
       UserTypeConstant.ADMIN,
       UserTypeConstant.CUSTOMER,
@@ -202,6 +239,14 @@ export const NavItemsContant: NavLinksModel[] = [
     subItems: [],
     icon: 'chat',
     url: '/chat',
+  },
+  {
+    label: 'Job-Portal',
+    roles: [UserTypeConstant.PROFESSIONAL],
+    category: '',
+    subItems: [],
+    icon: 'work',
+    url: '/job-portal',
   },
   // {
   //   label: 'Manage Activities #',
@@ -284,14 +329,14 @@ export const NavItemsContant: NavLinksModel[] = [
     icon: 'home',
     url: '/living/board',
   },
-  {
-    label: 'Job-Portal',
-    roles: [UserTypeConstant.PROFESSIONAL],
-    category: 'directory',
-    subItems: [],
-    icon: 'directory',
-    url: '/job-portal',
-  },
+  // {
+  //   label: 'Job-Portal',
+  //   roles: [UserTypeConstant.PROFESSIONAL],
+  //   category: 'directory',
+  //   subItems: [],
+  //   icon: 'directory',
+  //   url: '/job-portal',
+  // },
   {
     label: 'Job-Portal',
     roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],

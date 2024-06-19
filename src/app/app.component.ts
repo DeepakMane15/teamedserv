@@ -105,7 +105,14 @@ export class AppComponent implements OnInit {
     return this.userProfile.user_type === UserTypeConstant.PROFESSIONAL;
   }
   public onNodeClicked(node: NavLinksModel) {
-    this.router.navigate([node.url]);
+    if(node.url === '/medical-team/view'){
+    this.userProfile = this.authService.getUserData();
+      this.router.navigate(['/medical-team/view'], {
+        state: { pid: this.userProfile.pid, isSelf: true, tabIndex: 0 },
+      });
+    }
+    else
+      this.router.navigate([node.url]);
   }
 
   public uploadPicture() {

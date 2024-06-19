@@ -21,6 +21,7 @@ export class ViewMedicalComponent implements OnInit {
   columns: Boolean = true;
   defaultTabIndex!: number;
   public appConstants = AppConstants;
+  public isSelf: boolean = false;
 
   displayedColumns: string[] = [
     'id',
@@ -109,6 +110,7 @@ export class ViewMedicalComponent implements OnInit {
 
   ngOnInit() {
     let pid = history.state.pid;
+    this.isSelf = history.state?.isSelf ? true : false;
     if (pid) this.fetchMedicalTeamData(pid);
     this.defaultTabIndex = (history && history.state.tabIndex) || 0;
     if (!pid) this.router.navigate(['medical-team']);
@@ -161,7 +163,11 @@ export class ViewMedicalComponent implements OnInit {
     });
   }
   navigateBack() {
-    this.router.navigate(['medical-team']);
+    if(this.isSelf){
+      this.router.navigate(['']);
+    }
+    else
+      this.router.navigate(['medical-team']);
   }
 
   navigateToEdit() {

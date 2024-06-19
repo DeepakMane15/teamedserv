@@ -8,6 +8,7 @@ import { AssignmentStatus, DELETE_TYPE } from 'src/app/common/constants/AppEnum'
 import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/delete-confirm.component';
 // import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
 
 @Component({
@@ -37,12 +38,13 @@ export class AssignmentListComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   public filteredDataSource!: any[];
   public searchTerm!: string;
-
+  public isProf: boolean = false;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private _apiServices: ApiService, private router: Router, private filterService: FilterServiceService, private dialog: MatDialog) {}
-  ngOnInit(): void {
-    throw new Error('Method not implemented');
+  constructor(private _apiServices: ApiService, private _authServices: AuthService, private router: Router, private filterService: FilterServiceService, private dialog: MatDialog) {}
+  ngOnInit() {
+    let userProfile = this._authServices.getUserData();
+    this.isProf = userProfile.user_type === 'professional';
   }
 
   ngAfterViewInit() {
@@ -81,7 +83,7 @@ export class AssignmentListComponent implements OnInit {
   }
   navigateToView(assignmentData: any) {
     this.router.navigate(['/assignments/view'], {
-      state: { assignmentId: assignmentData.id, tabIndex: 0 },
+      state: { assignmentId: assignmentData.id, hideEdit:this.isProf, tabIndex: 0 },
     });
   }
   handleDeleteAssignment(id: any) {

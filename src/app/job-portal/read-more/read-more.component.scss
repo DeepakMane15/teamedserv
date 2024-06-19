@@ -1,0 +1,22 @@
+.title-container {
+  display: flex;
+  justify-content: space-between;
+
+  .close-btn {
+    height: 24px;
+    width: 24px;
+
+    mat-icon {
+      font-size: 21px;
+    }
+  }
+
+}
+  .content {
+    padding-top: 16px;
+    font-size: 16px;
+  }
+.action {
+  display: flex;
+  justify-content: center;
+}

@@ -10,6 +10,7 @@ import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/del
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
+import { ReadMoreComponent } from '../read-more/read-more.component';
 
 @Component({
   selector: 'app-job-portal-list',
@@ -142,5 +143,14 @@ export class JobPortalListComponent implements OnInit {
 
     if (values?.length > 2) return values?.splice(0, 2)?.join(',');
     return value;
+  }
+
+  public readMore(content: string) {
+    const dialogRef = this.dialog.open(ReadMoreComponent, {
+      width: '60%',
+      maxHeight: '500',
+      autoFocus: false,
+      data: content,
+    });
   }
 }

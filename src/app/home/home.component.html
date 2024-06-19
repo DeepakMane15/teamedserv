@@ -1,4 +1,7 @@
 <div class="grid-container">
+  <div class="spinner-overlay" *ngIf="showSpinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
   <span class="mat-h1">Dashboard</span>
   <mat-divider></mat-divider>
   <mat-grid-list [cols]="columns ? 4 : 2" rowHeight="140px" *ngIf="cards && cards.length">
@@ -31,18 +34,28 @@
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
-          <div class="table-container">
+          <div class="table-container" *ngIf="card.title === 'Companies'">
             <div class="table-row table-header">
-              <div class="table-cell">Username</div>
-              <div class="table-cell">Phone</div>
-              <div class="table-cell">Locaton</div>
-              <div class="table-cell">Date</div>
+              <div class="table-cell">Name</div>
+              <div class="table-cell">Email</div>
+              <div class="table-cell">Category</div>
             </div>
-            <div class="table-row" >
-              <div class="table-cell">John Doe</div>
-              <div class="table-cell">9999888898</div>
-              <div class="table-cell">USA</div>
-              <div class="table-cell">01-01-2023</div>
+            <div class="table-row" *ngFor="let data of cusData">
+              <div class="table-cell">{{data['company_name']}}</div>
+              <div class="table-cell">{{data['company_email']}}</div>
+              <div class="table-cell">{{data['category_names']}}</div>
+            </div>
+          </div>
+          <div class="table-container" *ngIf="card.title === 'Assignments'">
+            <div class="table-row table-header">
+              <div class="table-cell">Patient</div>
+              <div class="table-cell">Amount</div>
+              <div class="table-cell">Status</div>
+            </div>
+            <div class="table-row" *ngFor="let data of assignments">
+              <div class="table-cell">{{data['patient_name']}}</div>
+              <div class="table-cell">{{data['amount']}}</div>
+              <div class="table-cell">{{data['status']}}</div>
             </div>
           </div>
 

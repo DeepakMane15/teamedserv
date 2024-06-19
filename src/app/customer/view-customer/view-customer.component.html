@@ -18,7 +18,7 @@
         <mat-grid-tile [colspan]="columns ? 2: 1" [rowspan]="1">
           <mat-tab-group [selectedIndex]="defaultTabIndex">
             <mat-tab label="Company">
-              <div class="tab-header-label-container bordered">
+              <div class="tab-header-label-container bordered" *ngIf="!hideEdit">
                 <mat-icon class="action-mat-icon colored" aria-label="back" (click)="navigateToEdit()">edit</mat-icon>
                 <span>Edit</span>
               </div>
@@ -37,7 +37,7 @@
                 </div>
               </div>
             </mat-tab>
-            <mat-tab label="Users">
+            <mat-tab label="Users" *ngIf="!hideEdit">
               <div class="users-content">
                 <div class="user-action">
                   <button mat-raised-button color="primary" type="button" (click)="navigateToAddUser()">Add
@@ -88,8 +88,8 @@
                 aria-label="Select page of periodic elements">
               </mat-paginator>
             </mat-tab>
-            <mat-tab label="Payment"> Payment </mat-tab>
-            <mat-tab label="Logo"> Logo </mat-tab>
+            <mat-tab label="Payment" *ngIf="!hideEdit"> Payment </mat-tab>
+            <mat-tab label="Logo" *ngIf="!hideEdit"> Logo </mat-tab>
           </mat-tab-group>
         </mat-grid-tile>
         <mat-grid-tile [colspan]="1" rowHeight="200" [rowspan]="1">
