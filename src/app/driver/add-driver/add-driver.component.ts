@@ -70,7 +70,6 @@ export class AddDriverComponent {
         address: this.driverData.address,
         mobile_no: this.driverData.mobile_no,
       });
-    console.log(this.fromPopup);
   }
 
   onSubmit(): void {

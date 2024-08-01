@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
@@ -34,6 +35,7 @@ export class MedicalListComponent implements OnInit {
   public filteredDataSource!: any[];
   public searchTerm!: string;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort?: MatSort;
 
   constructor(
     private _apiService: ApiService,
@@ -43,13 +45,16 @@ export class MedicalListComponent implements OnInit {
     private authService: AuthService
   ) {}
   ngOnInit(): void {
-    if(this.authService.getUserData().user_type === 'professional') {
+    if (this.authService.getUserData().user_type === 'professional') {
       this.router.navigateByUrl('');
     }
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    if (this.sort) {
+      this.dataSource.sort = this.sort;
+    }
     this.fetchMedicalTeams();
   }
 
@@ -59,8 +64,7 @@ export class MedicalListComponent implements OnInit {
       (res: any) => {
         if (res && res.status) {
           this.dataSource.data = res.data;
-          this.filteredDataSource = this.dataSource.data.slice();
-          console.log(res.data);
+          this.filteredDataSource = this.dataSource.data;
         }
         this.showSpinner = false;
       },
@@ -74,10 +78,14 @@ export class MedicalListComponent implements OnInit {
   }
 
   applyFilter(): void {
-    this.filteredDataSource = this.filterService.applyFilter(
-      this.dataSource.data,
-      this.searchTerm
-    );
+    if (this.searchTerm.length > 0) {
+      this.dataSource.data = this.filterService.applyFilter(
+        this.filteredDataSource,
+        this.searchTerm
+      );
+    } else {
+      this.dataSource.data = this.filteredDataSource;
+    }
   }
 
   navigateToEdit(medicalData: MedicalTeamModel) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
@@ -52,6 +52,8 @@ export class AddMedicalComponent implements OnInit {
     resume: null as File | null,
     internal_notes: '',
   });
+  @Input() fromPopup: boolean = false;
+  @Output() formSubmitted: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -178,7 +180,7 @@ export class AddMedicalComponent implements OnInit {
         }
       }
       let prod = this.medicalForm.get('profession')?.value;
-      console.log(this.medicalForm.value);
+
       formData.append(
         'profession',
         (this.medicalForm.get('profession')?.value || [])
@@ -222,13 +224,17 @@ export class AddMedicalComponent implements OnInit {
           (res: any) => {
             if (res && res.status) {
               this.showSpinner = false;
-              this.router.navigate(['/medical-team']);
+              if (this.fromPopup) this.formSubmitted.emit();
+              else
+                this.router.navigate(['/medical-team']);
             } else {
               this.showSpinner = false;
+              if (this.fromPopup) this.formSubmitted.emit();
             }
           },
           (error) => {
             this.showSpinner = false;
+            if (this.fromPopup) this.formSubmitted.emit();
             console.error('Operation failed', error);
           }
         );
@@ -292,7 +298,9 @@ export class AddMedicalComponent implements OnInit {
   }
 
   public handleCancel() {
-    this.router.navigate(['medical-team']);
+    if (this.fromPopup) this.formSubmitted.emit();
+    else
+      this.router.navigate(['medical-team']);
   }
 
   public async checkUsernameAvailable(event: Event) {
@@ -380,6 +388,11 @@ export class AddMedicalComponent implements OnInit {
     }
   }
   public navigateBack() {
-    this.router.navigate(['/medical-team']);
+    if (this.fromPopup) this.formSubmitted.emit();
+    else
+      this.router.navigate(['/medical-team']);
+  }
+  closeDialog() {
+    this.formSubmitted.emit();
   }
 }

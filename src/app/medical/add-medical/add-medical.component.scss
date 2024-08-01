@@ -51,3 +51,13 @@
     // background: #f6f5f5;
   }
 }
+
+.header-label-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  mat-icon {
+    border: none !important;
+  }
+}

@@ -87,7 +87,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'living',
+    path: 'medical-facility',
     loadChildren: () =>
       import('./living/living.module').then((m) => m.LivingModule),
     canActivate: [AuthGuard],

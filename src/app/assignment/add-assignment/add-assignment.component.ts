@@ -5,7 +5,8 @@ import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
-import { ADD_POPUP_COMPONENT } from 'src/app/common/constants/AppEnum';
+import { AppConstants } from 'src/app/common/constants/AppConstants';
+import { ADD_POPUP_COMPONENT, FileType } from 'src/app/common/constants/AppEnum';
 import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
 import { AssignmentTypeModel } from 'src/app/common/models/AssignmentTypeModel';
 import { MedicalTeamModel } from 'src/app/common/models/MedicalTeamModel';
@@ -27,6 +28,8 @@ export class AddAssignmentComponent implements OnInit {
   public medicalTeams: MedicalTeamModel[] = [];
   public patientsMaster: PatientModel[] = [];
   public assignmentsMaster: AssignmentTypeModel[] = [];
+  public photoError!: string;
+  public fileType = FileType
 
   assignmentForm = this.fb.group({
     customer_id: 0,
@@ -49,6 +52,7 @@ export class AddAssignmentComponent implements OnInit {
     prNotes: [''],
     pNotes: [''],
     iNotes: [''],
+    image: null as File | null,
   });
   public medSettings!: IDropdownSettings;
   public assSettings!: IDropdownSettings;
@@ -297,5 +301,57 @@ export class AddAssignmentComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       this.fetchInitialData();
     });
+  }
+  public openMedicalAddPopUpForm() {
+    const dialogRef = this.dialog.open(AddFormPopupComponent, {
+      width: '900px',
+      height: '550px',
+      data: {
+        component: ADD_POPUP_COMPONENT.PROFESSIONAL,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.fetchInitialData();
+    });
+  }
+  public onFileSelected(event: any, type: FileType) {
+    const file: File = event.target.files[0];
+    const fileSizeInMB = file.size / (1024 * 1024);
+    if (type === FileType.LICENCE || type === FileType.RESUME) {
+      if (file && file.type === 'application/pdf') {
+        if (fileSizeInMB > AppConstants.MAX_PDF_SIZE) {
+          this.setErrorMsg(type, 'size');
+          return;
+        }
+        this.assignmentForm
+          .get('image')
+          ?.patchValue(file);
+        this.removeErrorMsg(type);
+      } else {
+        this.setErrorMsg(type, 'type');
+      }
+    } else {
+      if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
+        if (fileSizeInMB > AppConstants.MAX_JPG_SIZE) {
+          this.photoError = AppConstants.SIZE_ERROR_MSG;
+          return;
+        }
+        this.assignmentForm.get('image')?.patchValue(file);
+        this.removeErrorMsg(type);
+      } else {
+        this.photoError = AppConstants.JPG_TYPE_ERROR_MSG;
+      }
+    }
+  }
+
+  private setErrorMsg(fileType: FileType, errorType: string): void {
+    if (errorType == 'size') {
+      this.photoError = AppConstants.SIZE_ERROR_MSG;
+    }
+  }
+
+  private removeErrorMsg(fileType: FileType): void {
+    this.photoError = '';
   }
 }

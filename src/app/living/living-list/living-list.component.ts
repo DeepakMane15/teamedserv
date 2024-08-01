@@ -76,16 +76,16 @@ export class LivingListComponent implements OnInit {
     );
   }
   navigateToAdd() {
-    this.router.navigate(['/living/add']);
+    this.router.navigate(['/medical-facility/add']);
   }
 
   navigateToEdit(livingData: any) {
-    this.router.navigate(['/living/edit'], {
+    this.router.navigate(['/medical-facility/edit'], {
       state: { livingData: livingData },
     });
   }
   navigateToView(livingData: any) {
-    this.router.navigate(['/living/view'], {
+    this.router.navigate(['/medical-facility/view'], {
       state: { livingId: livingData.id, tabIndex: 0 },
     });
   }

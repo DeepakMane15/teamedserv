@@ -3,9 +3,15 @@
 </div>
 <form [formGroup]="medicalForm" (ngSubmit)="onSubmit()">
   <div class="header-label-container">
-    <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
-    <span class="title">
-      Medical Team</span>
+    <div>
+      <mat-icon *ngIf="!fromPopup" class="action-mat-icon" aria-label="back"
+        (click)="navigateBack()">keyboard_backspace</mat-icon>
+      <span class="title">
+        Medical Team</span>
+    </div>
+    <button *ngIf="fromPopup" class="close-btn" mat-button (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
 
   <mat-divider></mat-divider>

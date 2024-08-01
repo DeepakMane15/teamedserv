@@ -4,4 +4,6 @@
     (formSubmitted)="closeDialog()"></app-add-patient>
   <app-add-driver *ngIf="data.component === addPopupComponent.FLEET" [fromPopup]="true"
     (formSubmitted)="closeDialog()"></app-add-driver>
+    <app-add-medical *ngIf="data.component === addPopupComponent.PROFESSIONAL" [fromPopup]="true"
+    (formSubmitted)="closeDialog()"></app-add-medical>
 </main>

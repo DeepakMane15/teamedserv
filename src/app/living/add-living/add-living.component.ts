@@ -174,7 +174,7 @@ export class AddLivingComponent {
           (res: any) => {
             if (res && res.status) {
               this.showSpinner = false;
-              this.router.navigate(['/living']);
+              this.router.navigate(['/medical-facility']);
             } else {
               this.showSpinner = false;
             }
@@ -195,7 +195,7 @@ export class AddLivingComponent {
     });
   }
   public navigateBack() {
-    this.router.navigate(['/living']);
+    this.router.navigate(['/medical-facility']);
   }
 
   public usernameAvailabilityValidator(control: any) {

@@ -25,6 +25,7 @@ export enum AssignmentStatus {
 export enum ADD_POPUP_COMPONENT {
   PATIENT = 1,
   FLEET = 2,
+  PROFESSIONAL = 3
 }
 
 export enum DELETE_TYPE {

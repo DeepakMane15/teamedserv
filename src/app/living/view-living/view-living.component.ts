@@ -93,7 +93,7 @@ export class ViewLivingComponent {
   ngOnInit() {
     this.showSpinner = true;
     this.livingId = history.state.livingId;
-    this.backUrl = history.state.backUrl || '/living';
+    this.backUrl = history.state.backUrl || '/medical-facility';
     if (this.livingId) this.fetchLivingData(this.livingId);
     if (!this.livingId) this.router.navigate(['living']);
   }

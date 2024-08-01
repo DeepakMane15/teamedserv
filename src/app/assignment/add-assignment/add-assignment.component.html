@@ -30,9 +30,10 @@
               <div class="row">
                 <div class="col">
                   <ng-multiselect-dropdown [placeholder]="'Medical Member'" [settings]="medSettings"
-                  [data]="medicalTeams" formControlName="medicalId" (onSelect)="onItemSelect($event)"
-                  (onSelectAll)="onSelectAll($event)">
-                </ng-multiselect-dropdown>
+                    [data]="medicalTeams" formControlName="medicalId" (onSelect)="onItemSelect($event)"
+                    (onSelectAll)="onSelectAll($event)">
+                  </ng-multiselect-dropdown>
+                  <button mat-button (click)="openMedicalAddPopUpForm()">Add</button>
                 </div>
                 <div class="col">
                   <mat-form-field class="full-width">
@@ -62,9 +63,9 @@
               <div class="row">
                 <div class="col">
                   <ng-multiselect-dropdown [placeholder]="'Assignment'" [settings]="assSettings"
-                  [data]="assignmentsMaster" formControlName="assignment" (onSelect)="onItemSelect($event)"
-                  (onSelectAll)="onSelectAll($event)">
-                </ng-multiselect-dropdown>
+                    [data]="assignmentsMaster" formControlName="assignment" (onSelect)="onItemSelect($event)"
+                    (onSelectAll)="onSelectAll($event)">
+                  </ng-multiselect-dropdown>
                 </div>
                 <div class="col">
                   <mat-form-field class="full-width">
@@ -129,10 +130,10 @@
             <div class="form-body">
               <div class="row">
                 <div class="col">
-                  <ng-multiselect-dropdown [placeholder]="'Patient'" [settings]="patSettings"
-                  [data]="patientsMaster" formControlName="patientId" (onSelect)="handlePatientSelect($event)"
-                  (onSelectAll)="onSelectAll($event)">
-                </ng-multiselect-dropdown>
+                  <ng-multiselect-dropdown [placeholder]="'Patient'" [settings]="patSettings" [data]="patientsMaster"
+                    formControlName="patientId" (onSelect)="handlePatientSelect($event)"
+                    (onSelectAll)="onSelectAll($event)">
+                  </ng-multiselect-dropdown>
                   <mat-error
                     *ngIf="assignmentForm.get('patientId')?.invalid && assignmentForm.get('patientId')?.touched">
                     Patient is invalid
@@ -206,6 +207,24 @@
                       Visit Time is invalid
                     </mat-error>
                   </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div> <span class="text-sb">Attach Patient Image </span>
+                    <span class="help-text">
+                      ( allowed JPG or PNG, max size 1 mb)
+                    </span>
+                  </div>
+                  <input id="fileInput" hidden #photoInput type="file" (change)="onFileSelected($event, fileType.PHOTO)">
+                  <div class="file-input" [ngClass]="{'file-error' : photoError && !this.assignmentForm.get('image')?.value}"
+                    (click)="photoInput.click()">
+                    <div class="label-container">
+                      <div class="label-section">Choose file</div>
+                    </div>
+                    <div class="name-section">{{this.assignmentForm.get('image')?.value?.name || 'No file chosen'}}</div>
+                  </div>
+                  <span class="error-text">{{photoError}}</span>
                 </div>
               </div>
             </div>

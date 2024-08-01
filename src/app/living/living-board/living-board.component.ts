@@ -166,8 +166,8 @@ export class LivingBoardComponent implements OnInit {
   }
 
   public viewMore(marker: any) {
-    this.router.navigate(['/living/board/view'], {
-      state: { livingId: marker.id, tabIndex: 0, backUrl: '/living/board' },
+    this.router.navigate(['/medical-facility/board/view'], {
+      state: { livingId: marker.id, tabIndex: 0, backUrl: '/medical-facility/board' },
     });
   }
 
