@@ -22,7 +22,7 @@
                 <mat-icon class="action-mat-icon colored" aria-label="back" (click)="navigateToEdit()">edit</mat-icon>
                 <span>Edit</span>
               </div>
-              <div class="company-content" *ngIf="medicalData">
+              <div class="company-content" *ngIf="assignmentData">
                 <div fxLayout="row" class="content" fxLayoutAlign="start center" *ngFor="let data of medicalProfile">
                   <div fxFlex="40%" fxFlex.xs="100%">
                     {{data.label}}
@@ -31,14 +31,20 @@
                     :
                   </div>
                   <div fxFlex="60%" fxFlex.xs="100%" class="content-rhs">
-                    {{medicalData[data.key] || ''}}
+                    <span *ngIf="data.type === 'date'">
+                      {{assignmentData[data.key] || '' | date}}
+                      </span>
+                      <span *ngIf="data.key === 'image'">
+                        <!-- {{assignmentData[data.key] || ''}} -->
+                         <a [href]="MEDICAL_DOCUMENTS_URL+''+assignmentData[data.key]" target="_blank">{{assignmentData[data.key] || ''}}</a>
+                        </span>
                   </div>
                 </div>
               </div>
             </mat-tab>
             <mat-tab label="Payout">
               <div class="company-content pd-top" *ngIf="medicalData">
-               Payout (under development)
+                Payout (under development)
               </div>
             </mat-tab>
           </mat-tab-group>

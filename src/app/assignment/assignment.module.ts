@@ -23,6 +23,7 @@ import { ViewAssignmentComponent } from './view-assignment/view-assignment.compo
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [AssignmentListComponent, AddAssignmentComponent, ViewAssignmentComponent],
@@ -46,6 +47,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     MatTableModule,
     MatGridListModule,
     MatTabsModule,
+    FlexLayoutModule,
     NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [provideNativeDateAdapter()],

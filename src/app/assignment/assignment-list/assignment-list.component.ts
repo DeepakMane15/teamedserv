@@ -83,7 +83,7 @@ export class AssignmentListComponent implements OnInit {
   }
   navigateToView(assignmentData: any) {
     this.router.navigate(['/assignments/view'], {
-      state: { assignmentId: assignmentData.id, hideEdit:this.isProf, tabIndex: 0 },
+      state: { assignment: assignmentData, hideEdit:this.isProf, tabIndex: 0 },
     });
   }
   handleDeleteAssignment(id: any) {

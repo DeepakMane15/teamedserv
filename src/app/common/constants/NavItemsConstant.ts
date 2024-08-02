@@ -317,7 +317,7 @@ export const NavItemsContant: NavLinksModel[] = [
         url: '/medical-facility/add',
       },
     ],
-    icon: 'local_car_wash',
+    icon: 'local_hospital',
     url: '/',
   },
   {
@@ -337,12 +337,12 @@ export const NavItemsContant: NavLinksModel[] = [
   //   url: '/job-portal',
   // },
   {
-    label: 'Job-Portal',
+    label: 'Field Openings',
     roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
     category: 'directory',
     subItems: [
       {
-        label: 'All Job Openings',
+        label: 'All Field Openings',
         roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
         category: 'directory',
         subItems: [],
@@ -350,7 +350,7 @@ export const NavItemsContant: NavLinksModel[] = [
         url: '/job-portal',
       },
       {
-        label: 'Add Job Opening',
+        label: 'Add Field Opening',
         roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
         category: 'directory',
         subItems: [],

@@ -292,7 +292,14 @@
                   <mat-error *ngIf="ambulanceForm.get('patient')?.invalid && ambulanceForm.get('patient')?.touched">
                     Patient is invalid
                   </mat-error>
-                  <button mat-button (click)="openAddPopUpForm()">Add</button>
+                  <!-- <button mat-button (click)="openAddPopUpForm()">Add</button> -->
+                  <button mat-raised-button class="center" style="margin-top: 10px;" color="primary"
+                  (click)="openAddPopUpForm()">
+                  <div>
+                    Add
+                  </div>
+                  <mat-icon>add</mat-icon>
+                </button>
                 </div>
                 <div class="col">
                   <mat-form-field class="full-width">
@@ -358,7 +365,14 @@
                   <ng-multiselect-dropdown [placeholder]="'Fleet'" [settings]="drSettings"
                   [data]="driverMaster" formControlName="driver">
                 </ng-multiselect-dropdown>
-                <button mat-button (click)="openAddFleetPopUpForm()">Add</button>
+                <!-- <button mat-button (click)="openAddFleetPopUpForm()">Add</button> -->
+                <button mat-raised-button class="center" style="margin-top: 10px;" color="primary"
+                (click)="openAddFleetPopUpForm()">
+                <div>
+                  Add
+                </div>
+                <mat-icon>add</mat-icon>
+              </button>
                 </div>
               </div>
             </div>

@@ -205,13 +205,21 @@ mat-tree-node {
   // border-radius: 10px;
 }
 
+mat-tree-node:hover {
+  color: #fff !important;
+  text-decoration: none;
+  background-color: #313a46;
+}
+
 .navbar-title {
   display: flex;
   gap: 3px;
 }
+
 .text-title {
   text-transform: capitalize;
 }
+
 .secondary-section {
   border: 1px solid #fff;
   margin: 7px;
@@ -230,6 +238,7 @@ mat-tree-node {
   height: 1px;
   width: 100%;
 }
+
 .color-white {
   color: #fff;
 }

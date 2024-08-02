@@ -18,12 +18,14 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class ViewAssignmentComponent implements OnInit {
   public medicalData!: MedicalTeamModel;
+  public assignmentData!: any;
   public apiKey = environment.googleMapsApiKey;
   public showSpinner: Boolean = false;
   columns: Boolean = true;
   defaultTabIndex!: number;
   public appConstants = AppConstants;
   public hideEdit: boolean = false;
+  public MEDICAL_DOCUMENTS_URL = AppConstants.MEDICAL_DOCUMENTS_URL;
 
   displayedColumns: string[] = [
     'id',
@@ -36,70 +38,66 @@ export class ViewAssignmentComponent implements OnInit {
   public medicalProfile: any = [
     {
       label: 'Transaction',
-      key: 'full_name',
+      key: 'transaction',
     },
     {
       label: 'Date',
-      key: 'email',
+      key: 'date',
+      type:'date'
     },
     {
       label: 'Patient',
-      key: 'phone_no',
+      key: 'patient_name',
     },
     {
       label: 'Medical Team',
-      key: 'discibe',
+      key: 'medical_team_name',
     },
     {
       label: 'Profession',
-      key: 'profession_name',
+      key: 'profession',
     },
     {
       label: 'Amount',
-      key: 'language_names',
+      key: 'amount',
     },
     {
       label: 'Visit Date',
-      key: 'ethnicity_name',
+      key: 'fromdate',
+      type:'date'
     },
     {
       label: 'Time',
-      key: 'service_area_names',
+      key: 'time',
     },
     {
       label: 'Payment Date',
-      key: 'country_names',
+      key: 'paymentdate',
+      type:'date'
     },
     {
       label: 'Contact Person',
-      key: 'address',
+      key: 'cperson1',
     },
     {
       label: 'Contact Person Phone',
-      key: 'internal_notes',
+      key: 'cphone1',
     },
     {
       label: 'Professional Notes',
-      key: 'internal_notes',
+      key: 'pnotes',
     },
     {
       label: 'Patient Notes',
-      key: 'internal_notes',
+      key: 'ptnotes',
     },
     {
       label: 'Internal Notes',
-      key: 'internal_notes',
-    },
-  ];
-
-  public medicalDocuments: any = [
-    {
-      label: 'Resume',
-      key: 'resume',
+      key: 'inotes',
     },
     {
-      label: 'Licence',
-      key: 'licence',
+      label: 'Patient Images',
+      key: 'image',
     },
   ];
 
@@ -123,10 +121,10 @@ export class ViewAssignmentComponent implements OnInit {
   ngAfterViewInit() {}
 
   ngOnInit() {
-    let assignmentId = history.state.assignmentId;
-    if (assignmentId) this.fetchMedicalTeamData(assignmentId);
+    this.assignmentData = history.state.assignment;
+    console.log(this.assignmentData)
     this.defaultTabIndex = (history && history.state.tabIndex) || 0;
-    if (!assignmentId) this.router.navigate(['medical-team']);
+    if (!this.assignmentData) this.router.navigate(['medical-team']);
 
     this.hideEdit = history.state?.hideEdit ? true : false;
     this.router.events.subscribe((event) => {
@@ -138,24 +136,6 @@ export class ViewAssignmentComponent implements OnInit {
     });
   }
 
-  private fetchMedicalTeamData(pid: string) {
-    this.showSpinner = true;
-    const fd = new FormData();
-    fd.append('prof_id', pid);
-    this._apiService.post(APIConstant.GET_MEDICALTEAM_BY_ID, fd).subscribe(
-      (res: any) => {
-        if (res && res.status) {
-          console.log(res.message);
-          this.medicalData = res.data;
-          this.showSpinner = false;
-        }
-      },
-      (error) => {
-        this.showSpinner = false;
-        console.log(error);
-      }
-    );
-  }
 
   isPageRefresh(): boolean {
     return (
@@ -180,8 +160,8 @@ export class ViewAssignmentComponent implements OnInit {
   }
 
   navigateToEdit() {
-    this.router.navigate(['/assignment/edit'], {
-      state: { medicalData: this.medicalData },
+    this.router.navigate(['/assignments/edit'], {
+      state: { assignmentData: this.assignmentData },
     });
   }
 }

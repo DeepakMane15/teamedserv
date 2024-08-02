@@ -33,7 +33,13 @@
                     [data]="medicalTeams" formControlName="medicalId" (onSelect)="onItemSelect($event)"
                     (onSelectAll)="onSelectAll($event)">
                   </ng-multiselect-dropdown>
-                  <button mat-button (click)="openMedicalAddPopUpForm()">Add</button>
+                  <button mat-raised-button class="center" style="margin-top: 10px;" color="primary"
+                    (click)="openMedicalAddPopUpForm()">
+                    <div>
+                      Add
+                    </div>
+                    <mat-icon>add</mat-icon>
+                  </button>
                 </div>
                 <div class="col">
                   <mat-form-field class="full-width">
@@ -138,7 +144,13 @@
                     *ngIf="assignmentForm.get('patientId')?.invalid && assignmentForm.get('patientId')?.touched">
                     Patient is invalid
                   </mat-error>
-                  <button mat-button (click)="openAddPopUpForm()">Add</button>
+                  <button mat-raised-button class="center" style="margin: 10px 0 6px 0" color="primary"
+                  (click)="openAddPopUpForm()">
+                  <div>
+                    Add
+                  </div>
+                  <mat-icon>add</mat-icon>
+                </button>
                 </div>
                 <div class="col">
                   <mat-form-field class="full-width">
@@ -216,13 +228,16 @@
                       ( allowed JPG or PNG, max size 1 mb)
                     </span>
                   </div>
-                  <input id="fileInput" hidden #photoInput type="file" (change)="onFileSelected($event, fileType.PHOTO)">
-                  <div class="file-input" [ngClass]="{'file-error' : photoError && !this.assignmentForm.get('image')?.value}"
+                  <input id="fileInput" hidden #photoInput type="file"
+                    (change)="onFileSelected($event, fileType.PHOTO)">
+                  <div class="file-input"
+                    [ngClass]="{'file-error' : photoError && !this.assignmentForm.get('image')?.value}"
                     (click)="photoInput.click()">
                     <div class="label-container">
                       <div class="label-section">Choose file</div>
                     </div>
-                    <div class="name-section">{{this.assignmentForm.get('image')?.value?.name || 'No file chosen'}}</div>
+                    <div class="name-section">{{this.assignmentForm.get('image')?.value?.name || 'No file chosen'}}
+                    </div>
                   </div>
                   <span class="error-text">{{photoError}}</span>
                 </div>
