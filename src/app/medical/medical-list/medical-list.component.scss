@@ -82,3 +82,8 @@ main {
 //   text-overflow: ellipsis;
 //   white-space: nowrap;
 // }
+.button-cont {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}

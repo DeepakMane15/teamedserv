@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -11,6 +11,7 @@ import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/del
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
+import { MedicalBulkUploadComponent } from '../medical-bulk-upload/medical-bulk-upload.component';
 
 @Component({
   selector: 'app-medical-list',
@@ -73,6 +74,19 @@ export class MedicalListComponent implements OnInit {
       }
     );
   }
+
+  public openBulkUpload() {
+    const dialogRef = this.dialog.open(MedicalBulkUploadComponent, {
+      width: '500px',
+      height: '530px'
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result)
+        this.fetchMedicalTeams();
+    });
+  }
+
   navigateToAdd() {
     this.router.navigate(['/medical-team/add']);
   }

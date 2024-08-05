@@ -1,0 +1,73 @@
+mat-dialog-actions {
+  display: flex;
+  justify-content: end;
+  padding: 24px;
+}
+
+.divider {
+  background-color: #e0dcdc;
+  height: 1px;
+  width: 100%;
+}
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  height: 58px;
+
+  .close-btn {
+    height: 24px;
+    width: 24px;
+
+    mat-icon {
+      font-size: 21px;
+    }
+  }
+}
+
+.action {
+  display: flex;
+  justify-content: center;
+}
+
+mat-dialog-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 24px;
+  width: 100%;
+}
+
+.int {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 58px;
+}
+
+.intb {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  a {
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  a:hover {
+    background-color: #e2e2e2;
+  }
+
+  .note {
+    color: red;
+  }
+}
+
+.download {
+  border: 1px solid #e0dcdc;
+  padding: 6px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}

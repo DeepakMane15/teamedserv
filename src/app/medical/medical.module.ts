@@ -26,6 +26,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MedicalBulkUploadComponent } from './medical-bulk-upload/medical-bulk-upload.component';
+import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 // import { MedicalListComponent } from '../medical-list/medical-list.component';
 
 
@@ -33,7 +35,8 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
   declarations: [
     MedicalListComponent,
     AddMedicalComponent,
-    ViewMedicalComponent
+    ViewMedicalComponent,
+    MedicalBulkUploadComponent
   ],
   imports: [
     CommonModule,
@@ -58,7 +61,15 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
     MatTooltipModule,
     MatDatepickerModule,
     MatSortModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    MatButtonModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose
   ],
   exports:[AddMedicalComponent],
   providers:[provideNativeDateAdapter()]

@@ -1,0 +1,39 @@
+<!-- <main style="padding: 16px;"> -->
+<div class="title-container">
+  <h2 mat-dialog-title>Bulk Upload </h2>
+  <button class="close-btn" mat-button (click)="onNoClick()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+  <div class="int">
+    <div style="padding-bottom: 10px;">
+      Please attach filled data in template format.
+    </div>
+    <button mat-raised-button color="accent" type="button" (click)="bulkUploadInput.click()" >Choose a file</button>
+    <div>{{fileName}}</div>
+    <input type="file" #bulkUploadInput style="display: none;" (change)="onFileChange($event)">
+  </div>
+  <div class="divider"></div>
+  <div class="intb">
+    <div style="padding-bottom: 10px;">
+      Download sample template file.
+    </div>
+    <a tabindex="0" class="download" (click)="downloadTemplate()">Download Template</a>
+    <div class="note">
+      <strong>Note:</strong> <span> Please fill data in template with following instructions.</span>
+      <ol>
+        <li>Do Not Alter Template Headers</li>
+        <li>Do Not Leave Mandatory Fields Blank</li>
+        <li>Do Not Enter/Save Data in Incorrect Formats</li>
+        <li>Do Not Include Extra Rows or Columns</li>
+      </ol>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button color="primary" mat-raised-button (click)="handleBulkUpload" cdkFocusInitial>Upload</button>
+</mat-dialog-actions>
+<!-- </main> -->

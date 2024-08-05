@@ -13,6 +13,7 @@ export enum APIConstant {
   GET_CATEGORY = "customer/get-category-data",
   // medical-teams
   GET_MEDICALTEAMS = 'medical-teams',
+  BULK_UPLOAD_MEDICALTEAMS = 'medical-team/bulk-upload',
   ADD_MEDICALTEAM = 'medical-team/add',
   DELETE_MEDICALTEAM = 'medical-team/delete',
   EDIT_MEDICALTEAM = 'medical-team/edit',

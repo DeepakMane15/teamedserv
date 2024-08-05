@@ -325,7 +325,7 @@ export const NavItemsContant: NavLinksModel[] = [
     roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
     category: 'directory',
     subItems: [],
-    icon: 'home',
+    icon: 'dashboard',
     url: '/medical-facility/board',
   },
   // {
