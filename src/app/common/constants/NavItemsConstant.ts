@@ -42,6 +42,37 @@ export const NavItemsContant: NavLinksModel[] = [
     url: '',
   },
   {
+    label: 'Job Post',
+    roles: [
+      UserTypeConstant.PROFESSIONAL
+    ],
+    category: '',
+    subItems: [
+      {
+        label: 'All Job Posts',
+        roles: [
+          UserTypeConstant.PROFESSIONAL
+        ],
+        icon: '',
+        url: 'job-post',
+        category: '',
+        subItems: [],
+      },
+      {
+        label: 'Add Job Post',
+        roles: [
+          UserTypeConstant.PROFESSIONAL,
+        ],
+        icon: '',
+        url: 'job-post/add',
+        category: '',
+        subItems: [],
+      },
+    ],
+    icon: 'event_note',
+    url: '',
+  },
+  {
     label: 'Customers/Companies',
     roles: [
       // UserTypeConstant.ADMIN,

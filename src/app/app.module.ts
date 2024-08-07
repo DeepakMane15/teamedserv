@@ -63,6 +63,14 @@ import { PatientModule } from './patient/patient.module';
 import { DriverModule } from './driver/driver.module';
 import { DeleteConfirmComponent } from './shared/dialog/delete-confirm/delete-confirm.component';
 import { MedicalModule } from './medical/medical.module';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import * as moment from 'moment';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
+// export function momentAdapterFactory() {
+//   return adapterFactory(moment);
+// };
 @NgModule({
   declarations: [
     AppComponent,
@@ -148,7 +156,10 @@ import { MedicalModule } from './medical/medical.module';
     NgMultiSelectDropDownModule.forRoot(),
     PatientModule,
     DriverModule,
-    MedicalModule
+    MedicalModule,
+    FullCalendarModule,
+    NgxMatTimepickerModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory  })
   ],
   exports: [OverlaySpinnerComponent],
   providers: [

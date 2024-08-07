@@ -93,6 +93,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'job-post',
+    loadChildren: () =>
+      import('./job-post/job-post.module').then((m) => m.JobPostModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'team-invitation',
     component: TeamInvitationComponent,
     pathMatch: 'full',
