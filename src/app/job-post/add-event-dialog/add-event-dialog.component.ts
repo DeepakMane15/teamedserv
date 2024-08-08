@@ -40,7 +40,7 @@ export class AddEventDialogComponent implements OnInit {
         startTime: this.data.startTime,
         end: this.data.end,
         endTime: this.data.endTime,
-        notes: this.data.notes,
+        notes: this.data.notes || "",
       });
       this.isAvailableType = this.data.title === 'Available';
     }
@@ -79,7 +79,7 @@ export class AddEventDialogComponent implements OnInit {
         type: this.isAvailableType ? 'Available' : 'Occupied',
         start: formattedStartDateTime,
         end: formattedEndDateTime,
-        notes: formValue.notes,
+        notes: formValue.notes || "",
       };
 
       let call = await this.addJobPost(eventData);

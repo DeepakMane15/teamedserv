@@ -27,12 +27,16 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
+import { JobPostListComponent } from './job-post-list/job-post-list.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 
 
 @NgModule({
   declarations: [
     AddJobPostComponent,
-    AddEventDialogComponent
+    AddEventDialogComponent,
+    JobPostListComponent
   ],
   imports: [
     CommonModule,
@@ -56,7 +60,9 @@ import { MatRadioModule } from '@angular/material/radio';
     MatDialogModule,
     MatNativeDateModule,
     NgxMatTimepickerModule,
-    MatRadioModule
+    MatRadioModule,
+    MatPaginatorModule,
+    MatTableModule
   ]
 })
 export class JobPostModule { }
