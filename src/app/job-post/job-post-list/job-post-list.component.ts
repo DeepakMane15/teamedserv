@@ -25,7 +25,7 @@ export class JobPostListComponent {
     'start_date',
     'end_date',
     'notes',
-    'action',
+    // 'action',
   ];
 
   showSpinner: any;
@@ -81,7 +81,7 @@ export class JobPostListComponent {
     );
   }
   navigateToAdd() {
-    this.router.navigate(['/job-portal/add']);
+    this.router.navigate(['/job-post/add']);
   }
 
   navigateToEdit(jobData: any) {

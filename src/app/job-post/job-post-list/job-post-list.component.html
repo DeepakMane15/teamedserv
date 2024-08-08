@@ -5,7 +5,8 @@
   <mat-card class="assignment-card">
     <mat-card-header>
       <mat-card-title>All Job Posts</mat-card-title>
-      <button *ngIf="!isMedical" mat-raised-button class="add-assignment" color="primary" type="button" (click)="navigateToAdd()">Add
+
+      <button mat-raised-button class="add-assignment" color="primary" type="button" (click)="navigateToAdd()">Add
         Job Posts</button>
     </mat-card-header>
     <mat-card-content>
@@ -27,14 +28,14 @@
 
           <ng-container matColumnDef="start_date" class="container-tab">
             <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Start Date </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.start | date}}
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.start }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="end_date" class="container-tab">
             <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> End Date </th>
             <td mat-cell *matCellDef="let element" style="max-width: 150px;">
-              {{element.end | date }} </td>
+              {{element.end  }} </td>
           </ng-container>
 
           <ng-container matColumnDef="notes" class="container-tab">
@@ -65,7 +66,7 @@
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-            [ngStyle]="{'background-color': row.status === '0' ? '#e6ffe6' : row.status === 'pending' ? '#fff6e6' : row.status === 'declined' ? '#ffe6e6' : ''}">
+            [ngStyle]="{'color': row.title === 'Available' ? 'green' :  'red'}">
           </tr>
         </table>
 

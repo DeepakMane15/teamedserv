@@ -15,6 +15,7 @@ import { AddEventDialogComponent } from '../add-event-dialog/add-event-dialog.co
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
+import { Router } from '@angular/router';
 // import interactionPlugin from '@fullcalendar/';
 
 @Component({
@@ -29,7 +30,7 @@ export class AddJobPostComponent implements OnInit {
   public showSpinner: boolean = false;
   public calendarEvents: EventInput[] = [];
   public containerHeight: string = '100vh';
-  constructor(public dialog: MatDialog, private _apiService: ApiService) {}
+  constructor(public dialog: MatDialog, private _apiService: ApiService, private router: Router) {}
 
   ngOnInit() {
     this.setContainerHeight();
@@ -136,5 +137,7 @@ export class AddJobPostComponent implements OnInit {
     calendarApi.addEventSource(this.calendarEvents);
   }
 
-  navigateBack() {}
+  navigateBack() {
+    this.router.navigateByUrl('/job-post')
+  }
 }
