@@ -65,6 +65,9 @@ export enum APIConstant {
   GET_JOB_PORTAL_BY_ID = 'job-portal/get-by-id',
   APPLY_JOB_OPENING = 'job-portal/apply',
 
+  // Professional Job Post
+  ADD_OR_EDIT_JOB_POST = 'medical/job-post',
+  GET_JOB_POST = 'medical/job-post/get',
 
   // chat
 

@@ -20,11 +20,21 @@ pre {
 
   .calendar-container {
     width: 80%; /* Set the desired width */
-    height: 600px; /* Set the desired height */
+    // height: 400px; /* Set the desired height */
     margin: 0 auto; /* Center the calendar horizontally */
   }
 }
 
+.fc-daygrid-event {
+  line-height: 1.2em; /* Adjust line height */
+  padding: 2px 4px; /* Control padding for a more compact view */
+  height: 50px;
+}
+
+.full-calendar-container {
+  max-height: 400px; /* Set a specific height */
+  overflow-y: auto; /* Allow scrolling if content exceeds the height */
+}
 .toolbar {
   align-items: center;
   display: flex;

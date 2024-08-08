@@ -25,6 +25,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
 
 
 @NgModule({
@@ -53,7 +55,8 @@ import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
     MatMenuModule,
     MatDialogModule,
     MatNativeDateModule,
-    NgxMatTimepickerModule
+    NgxMatTimepickerModule,
+    MatRadioModule
   ]
 })
 export class JobPostModule { }

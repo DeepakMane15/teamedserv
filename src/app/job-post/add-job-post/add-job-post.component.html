@@ -12,7 +12,7 @@
 
   <mat-divider></mat-divider>
 <div class="page">
-  <div class="calendar-container">
+  <div [style.height]="containerHeight" class="calendar-container">
     <full-calendar #calendar [options]="calendarOptions"></full-calendar>
   </div>
 </div>
