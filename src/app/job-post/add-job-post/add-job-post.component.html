@@ -12,7 +12,10 @@
 
   <mat-divider></mat-divider>
 <div class="page">
+  <!-- <div class="note">
+  </div> -->
   <div [style.height]="containerHeight" class="calendar-container">
+    <strong class="note">Note: Please click on the particular date to block your calendar.</strong>
     <full-calendar #calendar [options]="calendarOptions"></full-calendar>
   </div>
 </div>

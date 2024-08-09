@@ -47,3 +47,23 @@
 .error-text {
 text-align: start;
 }
+
+.custom-dropdown-item {
+  display: flex;
+  align-items: center;
+}
+
+.icon-available::before {
+  background-color: red;
+  height: 3px; /* Replace with your available icon */
+  width: 3px;
+  margin-right: 8px;
+}
+
+.icon-unavailable::before {
+  background-color: red;
+  height: 3px; /* Replace with your available icon */
+  width: 3px;
+  margin-right: 8px;
+}
+

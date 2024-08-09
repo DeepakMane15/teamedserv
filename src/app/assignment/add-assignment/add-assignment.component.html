@@ -16,45 +16,6 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <!-- Company -->
-      <div class="form-panel">
-        <mat-accordion>
-          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Company
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-
-            <div class="form-body">
-              <div class="row">
-                <div class="col">
-                  <ng-multiselect-dropdown [placeholder]="'Medical Member'" [settings]="medSettings"
-                    [data]="medicalTeams" formControlName="medicalId" (onSelect)="onItemSelect($event)"
-                    (onSelectAll)="onSelectAll($event)">
-                  </ng-multiselect-dropdown>
-                  <button mat-raised-button class="center" style="margin-top: 10px;" color="primary"
-                    (click)="openMedicalAddPopUpForm()">
-                    <div>
-                      Add
-                    </div>
-                    <mat-icon>add</mat-icon>
-                  </button>
-                </div>
-                <div class="col">
-                  <mat-form-field class="full-width">
-                    <mat-label>Medical Profession</mat-label>
-                    <div class="uname-input">
-                      <input matInput formControlName="medicalProfession" readonly>
-                    </div>
-                  </mat-form-field>
-                </div>
-              </div>
-            </div>
-          </mat-expansion-panel>
-        </mat-accordion>
-      </div>
-
       <!-- Assignment -->
       <div class="form-panel">
         <mat-accordion>
@@ -240,6 +201,45 @@
                     </div>
                   </div>
                   <span class="error-text">{{photoError}}</span>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+       <!-- Professional -->
+       <div class="form-panel">
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Professional
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="form-body">
+              <div class="row">
+                <div class="col">
+                  <ng-multiselect-dropdown [placeholder]="'Medical Member'" [settings]="medSettings"
+                    [data]="medicalTeams" formControlName="medicalId" (onSelect)="onItemSelect($event)"
+                    (onSelectAll)="onSelectAll($event)">
+                  </ng-multiselect-dropdown>
+                  <button mat-raised-button class="center" style="margin-top: 10px;" color="primary"
+                    (click)="openMedicalAddPopUpForm()">
+                    <div>
+                      Add
+                    </div>
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Medical Profession</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="medicalProfession" readonly>
+                    </div>
+                  </mat-form-field>
                 </div>
               </div>
             </div>

@@ -30,7 +30,11 @@ export class AddJobPostComponent implements OnInit {
   public showSpinner: boolean = false;
   public calendarEvents: EventInput[] = [];
   public containerHeight: string = '100vh';
-  constructor(public dialog: MatDialog, private _apiService: ApiService, private router: Router) {}
+  constructor(
+    public dialog: MatDialog,
+    private _apiService: ApiService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.setContainerHeight();
@@ -115,13 +119,45 @@ export class AddJobPostComponent implements OnInit {
     alert('Clicked on date : ' + res.dateStr);
   }
   handleEventClick(arg: any) {
-    this.handleDateClick(arg.event);
+    console.log(arg);
+    this.handleDateClick(arg.event, true);
   }
 
-  handleDateClick(eventData: EventInput | null = null) {
+  handleDateClick(eventData: any = null, isEdit: boolean = false) {
+    let check = true;
+    if (!isEdit) {
+      const currentDate = new Date();
+      const cellDate = new Date(eventData?.dateStr);
+      // Disable past dates
+      if (cellDate < currentDate) {
+        check = false;
+      }
+      let isEventExists = this.calendarEvents.find((f: any) => f.start.includes(eventData.dateStr));
+      if(isEventExists)
+        return;
+    }
+    if(!check)
+      return;
+    console.log(eventData);
+
+    let copyEventData = { ...eventData };
+    if (isEdit) {
+      let end = this.calendarEvents.find(
+        (f: any) => f.extendedProps['id'] === eventData.extendedProps.id
+      );
+      copyEventData.end = end?.end;
+      copyEventData.start = end?.start;
+      copyEventData = {
+        ...copyEventData,
+        extendedProps: {
+          id: end?.extendedProps!['id'],
+        },
+      };
+    }
+    console.log(copyEventData);
     const dialogRef = this.dialog.open(AddEventDialogComponent, {
       width: '600px',
-      data: eventData,
+      data: copyEventData,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -138,6 +174,6 @@ export class AddJobPostComponent implements OnInit {
   }
 
   navigateBack() {
-    this.router.navigateByUrl('/job-post')
+    this.router.navigateByUrl('/job-post');
   }
 }

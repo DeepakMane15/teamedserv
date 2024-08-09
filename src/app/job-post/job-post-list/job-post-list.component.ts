@@ -11,6 +11,7 @@ import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/del
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
+import { AddEventDialogComponent } from '../add-event-dialog/add-event-dialog.component';
 
 
 @Component({
@@ -22,10 +23,11 @@ export class JobPostListComponent {
   displayedColumns: string[] = [
     'no',
     'type',
-    'start_date',
-    'end_date',
+    'date',
+    'start_time',
+    'end_time',
     'notes',
-    // 'action',
+    'action',
   ];
 
   showSpinner: any;
@@ -54,17 +56,17 @@ export class JobPostListComponent {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.fetchJobs();
+    this.fetchJobPosts();
   }
 
   applyFilter(): void {
-    this.filteredDataSource = this.filterService.applyFilter(
-      this.dataSource.data,
+    this.dataSource.data = this.filterService.applyFilter(
+      this.originalData,
       this.searchTerm
     );
   }
 
-  fetchJobs() {
+  fetchJobPosts() {
     this.showSpinner = true;
     this._apiServices.get(APIConstant.GET_JOB_POST).subscribe(
       (res: any) => {
@@ -84,10 +86,28 @@ export class JobPostListComponent {
     this.router.navigate(['/job-post/add']);
   }
 
-  navigateToEdit(jobData: any) {
-    this.router.navigate(['/job-portal/edit'], {
-      state: { jobData: jobData },
+  navigateToEdit(eventData: any) {
+    // this.router.navigate(['/job-portal/edit'], {
+    //   state: { jobData: jobData },
+    // });
+    console.log(eventData);
+    let data = {...eventData, extendedProps: {id: eventData.id}};
+    const dialogRef = this.dialog.open(AddEventDialogComponent, {
+      width: '600px',
+      data: data,
     });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.fetchJobPosts();
+      }
+    });
+  }
+  public getTime(date: string): string {
+    const startDate = new Date(date);
+        const startHours = String(startDate.getHours()).padStart(2, '0');
+        const startMinutes = String(startDate.getMinutes()).padStart(2, '0');
+        return `${startHours}:${startMinutes}`;
   }
   navigateToView(jobData: any) {
     this.router.navigate(['/job-portal/view'], {
@@ -98,20 +118,20 @@ export class JobPostListComponent {
   handleDelete(id: any) {
     const dialogRef = this.dialog.open(DeleteConfirmComponent, {
       width: '400px',
-      data: { name: 'Job Opening' },
+      data: { name: 'Job Post' },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         let fd = new FormData();
         fd.append('id', id);
-        fd.append('type', DELETE_TYPE.JOB_PORTAL.toString());
+        fd.append('type', DELETE_TYPE.JOB_POST.toString());
         this.showSpinner = true;
         this._apiServices.post(APIConstant.COMMON_DELETE, fd).subscribe(
           (res: any) => {
             if (res && res.status) {
               this.showSpinner = false;
-              this.fetchJobs();
+              this.fetchJobPosts();
             } else {
               this.showSpinner = false;
             }

@@ -70,7 +70,7 @@ export class AddAssignmentComponent implements OnInit {
     this.medSettings = {
       singleSelection: true,
       idField: 'pid',
-      textField: 'first_name',
+      textField: 'name',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       itemsShowLimit: 3,
@@ -121,7 +121,7 @@ export class AddAssignmentComponent implements OnInit {
         iNotes: this.assignmentData.inotes,
       });
     }
-    this.fetchMedicalTeams();
+    // this.fetchMedicalTeams();
     this.fetchInitialData();
   }
   onItemSelect(item: any) {
@@ -136,6 +136,7 @@ export class AddAssignmentComponent implements OnInit {
           this.showSpinner = false;
           this.assignmentsMaster = res.data.assignment;
           this.patientsMaster = res.data.patients;
+          this.medicalTeams = res.data.medicalTeams;
 
           if (this.patientsMaster && this.assignmentData) {
             this.assignmentForm.patchValue({
@@ -144,6 +145,9 @@ export class AddAssignmentComponent implements OnInit {
               ),
               assignment: res.data.assignment.filter(
                 (item: any) => this.assignmentData.assignment === item.id
+              ),
+              medicalId: res.data.medicalTeams.filter(
+                (item: any) => this.assignmentData.medical_team === item.pid
               ),
             });
 

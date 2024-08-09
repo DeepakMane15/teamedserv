@@ -25,7 +25,10 @@ export class AddEventDialogComponent implements OnInit {
     private _apiService: ApiService
   ) {
     this.eventForm = this.fb.group({
-      start: [data.date, Validators.required],
+      start: [
+        { value: this.data.dateStr, disabled: true },
+        Validators.required,
+      ],
       startTime: ['', Validators.required],
       end: [data.date, Validators.required],
       endTime: ['', Validators.required],
@@ -34,15 +37,29 @@ export class AddEventDialogComponent implements OnInit {
   }
   ngOnInit() {
     this.isAvailableType = true;
+    let startTime = '';
+    let endTime = '';
     if (this.data) {
+      if (this.data.start) {
+        const startDate = new Date(this.data.start);
+        const startHours = String(startDate.getHours()).padStart(2, '0');
+        const startMinutes = String(startDate.getMinutes()).padStart(2, '0');
+        startTime = `${startHours}:${startMinutes}`;
+      }
+      if (this.data.end) {
+        const endDate = new Date(this.data.end);
+        const startHours = String(endDate.getHours()).padStart(2, '0');
+        const startMinutes = String(endDate.getMinutes()).padStart(2, '0');
+        endTime = `${startHours}:${startMinutes}`;
+      }
       this.eventForm.patchValue({
-        start: this.data.start,
-        startTime: this.data.startTime,
-        end: this.data.end,
-        endTime: this.data.endTime,
-        notes: this.data.notes || "",
+        start: new Date(this.data?.dateStr || this.data.start),
+        startTime: startTime,
+        end: new Date(this.data?.dateStr || this.data.end),
+        endTime: endTime,
+        notes: this.data.notes || '',
       });
-      this.isAvailableType = this.data.title === 'Available';
+      this.isAvailableType = this.data?.title !== 'Occupied';
     }
   }
 
@@ -56,9 +73,9 @@ export class AddEventDialogComponent implements OnInit {
 
   async onSubmit() {
     if (this.eventForm.valid) {
-      const formValue = this.eventForm.value;
-
-      const startDateTime = new Date(formValue.start);
+      const formValue = this.eventForm.getRawValue();
+      console.log(formValue.start);
+      const startDateTime = formValue.start;
       const [startHours, startMinutes] = formValue.startTime
         .split(':')
         .map(Number);
@@ -72,14 +89,13 @@ export class AddEventDialogComponent implements OnInit {
       const formattedStartDateTime = this.formatDateTime(startDateTime);
       const formattedEndDateTime = this.formatDateTime(endDateTime);
 
-      console.log(this.isAvailableType);
       let eventData = {
-        id: this.data?.extendedProps?.id,
+        id: this.data?.extendedProps?.id || 0,
         title: this.isAvailableType ? 'Available' : 'Occupied',
         type: this.isAvailableType ? 'Available' : 'Occupied',
         start: formattedStartDateTime,
         end: formattedEndDateTime,
-        notes: formValue.notes || "",
+        notes: formValue.notes || '',
       };
 
       let call = await this.addJobPost(eventData);
@@ -90,7 +106,6 @@ export class AddEventDialogComponent implements OnInit {
   }
 
   public addJobPost(formValue: any): Promise<boolean> {
-    console.log(formValue);
     this.showSpinner = true;
     let formData = new FormData();
     for (let key of Object.keys(formValue)) {

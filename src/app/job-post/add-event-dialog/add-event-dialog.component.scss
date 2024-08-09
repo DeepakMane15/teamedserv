@@ -21,6 +21,18 @@ mat-form-field {
 
 }
 
+.full-width .disabled-date-input {
+  // background-color: rgb(247, 247, 209) !important;
+}
+
+::ng-deep .date .mat-mdc-form-field-has-icon-suffix .mat-mdc-text-field-wrapper {
+  background-color: #f8f8e9 !important;
+}
+
+.disabled-date-input {
+  color: #5b5050 !important;
+}
+
 .col:last-child {
   margin-right: 0;
 }
