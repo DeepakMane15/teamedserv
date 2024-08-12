@@ -11,6 +11,8 @@ export enum APIConstant {
   EDIT_CUSTOMER = 'customer/edit',
   GET_TIMEZONE = 'timezones',
   GET_CATEGORY = "customer/get-category-data",
+  SAVE_PERMISSIONS = "permission/save",
+  GET_PERMISSIONS = "permission/get",
   // medical-teams
   GET_MEDICALTEAMS = 'medical-teams',
   BULK_UPLOAD_MEDICALTEAMS = 'medical-team/bulk-upload',

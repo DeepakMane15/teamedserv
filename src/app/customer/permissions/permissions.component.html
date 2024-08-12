@@ -1,0 +1,32 @@
+<main class="permission">
+  <h2>Manage Permissions.</h2>
+  <mat-divider></mat-divider>
+
+  <div class="container">
+    <div>
+      <div class="row flex-end" *ngFor="let permission of permissions">
+        <div class="col">
+          <!-- <mat-checkbox color="primary" (change)="handlePermissionToggle($event,permission)" [(ngModel)]="permission.isEnabled" class="example-margin">{{permission.title}} :</mat-checkbox> -->
+          <p class="title-container"> {{permission.title}} <mat-slide-toggle
+              (change)="handlePermissionToggle($event,permission)" labelPosition="after" color="primary"
+              [(ngModel)]="permission.isEnabled"></mat-slide-toggle></p>
+        </div>
+        <div>
+          <mat-checkbox color="primary" [disabled]="!permission.isEnabled" [(ngModel)]="permission.canView"
+            class="example-margin">View</mat-checkbox>
+        </div>
+        <div>
+          <mat-checkbox color="primary" [disabled]="!permission.isEnabled" [(ngModel)]="permission.canEdit"
+            class="example-margin">Edit</mat-checkbox>
+        </div>
+        <div>
+          <mat-checkbox color="primary" [disabled]="!permission.isEnabled" [(ngModel)]="permission.canDelete"
+            class="example-margin">Delete</mat-checkbox>
+        </div>
+      </div>
+      <div class="action-btns">
+        <button mat-raised-button (click)="handleSave()">Save</button>
+      </div>
+    </div>
+  </div>
+</main>

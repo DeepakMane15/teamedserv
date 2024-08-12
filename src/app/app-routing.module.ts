@@ -7,7 +7,6 @@ import { LoginGuard } from './shared/loginguard/login.guard';
 import { TeamBoardComponent } from './team-board/team-board.component';
 import { ViewMedicalComponent } from './view-medical/view-medical.component';
 import { TeamInvitationComponent } from './team-invitation/team-invitation.component';
-import { Dashboard2Component } from './dashboard2/dashboard2.component';
 //import { DocumentComponent } from './document/document.component';
 const routes: Routes = [
   {

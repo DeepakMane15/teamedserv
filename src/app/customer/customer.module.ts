@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxModule} from '@angular/material/checkbox'
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 import {
   MAT_RADIO_DEFAULT_OPTIONS,
@@ -29,8 +30,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AddUserComponent } from './add-user/add-user.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MatSortModule } from '@angular/material/sort';
+import { PermissionsComponent } from './permissions/permissions.component';
 @NgModule({
-  declarations: [CustomersListComponent, AddCustomerComponent, ViewCustomerComponent, AddUserComponent],
+  declarations: [CustomersListComponent, AddCustomerComponent, ViewCustomerComponent, AddUserComponent, PermissionsComponent],
   imports: [
     CommonModule,
     CustomerRoutingModule,
@@ -52,6 +54,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatTabsModule,
     FlexLayoutModule,
     MatSortModule,
+    MatSlideToggleModule,
     NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [
