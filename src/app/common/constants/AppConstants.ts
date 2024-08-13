@@ -9,5 +9,20 @@ MEDICAL_DOCUMENTS_URL: 'https://app.profmedservices.com/uploads/registration/',
 
 
 // default urls
-DEFAULT_IMG: "https://app.profmedservices.com/assets/admin/file/documents/profile.png"
+DEFAULT_IMG: "https://app.profmedservices.com/assets/admin/file/documents/profile.png",
+
+PERMISSION_TITLES: [
+  {key: 'Medical Team', value: 'Medical Team'},
+  {key: 'Medical Team Board', value: 'Medical Team Board'},
+  {key: 'Patients', value: 'Patient'},
+  {key: 'Assignment', value: 'Assignment'},
+  {key: 'Ambulance', value: 'Ambulance'},
+  {key: 'Driver', value: 'Driver'},
+  {key: 'Chat', value: 'Chatting Room'},
+  {key: 'Medical Facilities', value: 'Medical Facility'},
+  {key: 'Medical Facility Board', value: 'Medical Facility Board'},
+  {key: 'Field Openings', value: 'Field Openings'}
+
+
+]
 }
