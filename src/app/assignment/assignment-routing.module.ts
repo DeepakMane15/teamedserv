@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { AddAssignmentComponent } from './add-assignment/add-assignment.component';
 import { ViewAssignmentComponent } from './view-assignment/view-assignment.component';
+import { PermissionGuard } from '../shared/authguard/permission.guard';
 
 const routes: Routes = [
   {
@@ -24,19 +25,22 @@ const routes: Routes = [
     path: 'add',
     component: AddAssignmentComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { permission: "Assignment", type: 'canEdit' },
   },
   {
     path: 'edit',
     component: AddAssignmentComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { permission: "Assignment", type: 'canEdit' },
   },
   {
     path: 'view',
     component: ViewAssignmentComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { permission: "Assignment", type: 'canView' },
   },
 ];
 

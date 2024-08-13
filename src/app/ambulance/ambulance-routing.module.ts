@@ -4,27 +4,30 @@ import { AmbulanceListComponent } from '../ambulance/ambulance-list/ambulance-li
 import { AuthGuard } from '../shared/authguard/auth.guard';
 import { AddAmbulanceComponent } from './add-ambulance/add-ambulance.component';
 import { ViewAmbulanceComponent } from './view-ambulance/view-ambulance.component';
+import { PermissionGuard } from '../shared/authguard/permission.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: AmbulanceListComponent,
-    canActivate: [AuthGuard],
   },
   {
     path: 'add',
     component: AddAmbulanceComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { permission: 'Ambulance', type: 'canEdit' },
   },
   {
     path: 'edit',
     component: AddAmbulanceComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { permission: 'Ambulance', type: 'canEdit' },
   },
   {
     path: 'view',
     component: ViewAmbulanceComponent,
-    canActivate:[AuthGuard],
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { permission: 'Ambulance', type: 'canView' },
   }
 ];
 

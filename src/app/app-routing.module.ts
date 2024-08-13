@@ -7,6 +7,7 @@ import { LoginGuard } from './shared/loginguard/login.guard';
 import { TeamBoardComponent } from './team-board/team-board.component';
 import { ViewMedicalComponent } from './view-medical/view-medical.component';
 import { TeamInvitationComponent } from './team-invitation/team-invitation.component';
+import { PermissionGuard } from './shared/authguard/permission.guard';
 //import { DocumentComponent } from './document/document.component';
 const routes: Routes = [
   {
@@ -25,18 +26,21 @@ const routes: Routes = [
     path: 'customer',
     loadChildren: () =>
       import('./customer/customer.module').then((m) => m.CustomerModule),
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { permission: 'Customer', type: 'canView' }
   },
   {
     path: 'medical-team',
     loadChildren: () =>
       import('./medical/medical.module').then((m) => m.MedicalModule),
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { permission: 'Medical Team', type: 'canView' }
   },
   {
     path: 'chat',
     loadChildren: () => import('./new-chat/new-chat.module').then((m) => m.NewChatModule),
-    canActivate: [AuthGuard],
+    data: { permission: 'Chat', type: 'canView' },
+    canActivate: [AuthGuard, PermissionGuard],
   },
   // {
   //   path: 'new-chat',
@@ -47,7 +51,8 @@ const routes: Routes = [
     path: 'team-board',
     component: TeamBoardComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuard],
+    data: { permission: 'Medical Team Board', type: 'canView' },
+    canActivate: [AuthGuard, PermissionGuard],
   },
   {
     path: 'team-board/medical-team',
@@ -59,43 +64,50 @@ const routes: Routes = [
     path: 'patients',
     loadChildren: () =>
       import('./patient/patient.module').then((m) => m.PatientModule),
-    canActivate: [AuthGuard],
+    data: { permission: 'Patients', type: 'canView' },
+    canActivate: [AuthGuard, PermissionGuard],
   },
   {
     path: 'assignments',
     loadChildren: () =>
       import('./assignment/assignment.module').then((m) => m.AssignmentModule),
-    canActivate: [AuthGuard],
+    data: { permission: 'Assignment', type: 'canView' },
+    canActivate: [AuthGuard, PermissionGuard],
   },
   {
     path: 'ambulance',
     loadChildren: () =>
       import('./ambulance/ambulance.module').then((m) => m.AmbulanceModule),
-    canActivate: [AuthGuard],
+    data: { permission: 'Ambulance', type: 'canView' },
+    canActivate: [AuthGuard, PermissionGuard],
   },
   {
     path: 'driver',
     loadChildren: () =>
       import('./driver/driver.module').then((m) => m.DriverModule),
-    canActivate: [AuthGuard],
+    data: { permission: 'Driver', type: 'canView' },
+    canActivate: [AuthGuard, PermissionGuard],
   },
   {
     path: 'job-portal',
     loadChildren: () =>
       import('./job-portal/job-portal.module').then((m) => m.JobPortalModule),
-    canActivate: [AuthGuard],
+    data: { permission: 'Medical Facilities', type: 'canView' },
+    canActivate: [AuthGuard, PermissionGuard],
   },
   {
     path: 'medical-facility',
     loadChildren: () =>
       import('./living/living.module').then((m) => m.LivingModule),
-    canActivate: [AuthGuard],
+    data: { permission: 'Medical Facility Board', type: 'canView' },
+    canActivate: [AuthGuard, PermissionGuard],
   },
   {
     path: 'job-post',
     loadChildren: () =>
       import('./job-post/job-post.module').then((m) => m.JobPostModule),
-    canActivate: [AuthGuard],
+    data: { permission: "Field Openings", type: 'canView' },
+    canActivate: [AuthGuard, PermissionGuard],
   },
   {
     path: 'team-invitation',
