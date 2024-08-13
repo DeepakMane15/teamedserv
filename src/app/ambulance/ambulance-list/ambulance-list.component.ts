@@ -8,6 +8,7 @@ import {
   AssignmentStatus,
   DELETE_TYPE,
 } from 'src/app/common/constants/AppEnum';
+import { PermissionsService } from 'src/app/shared/authguard/permissions.service';
 import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/delete-confirm.component';
 // import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
@@ -47,7 +48,8 @@ export class AmbulanceListComponent implements OnInit {
     private _apiServices: ApiService,
     private router: Router,
     private filterService: FilterServiceService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private permissionService: PermissionsService
   ) {}
   ngOnInit(): void {
     throw new Error('Method not implemented');
@@ -56,6 +58,10 @@ export class AmbulanceListComponent implements OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.fetchMedtransBookings();
+  }
+
+  checkAccess(type: 'isEnabled' | 'canView' | 'canEdit' | 'canDelete'): boolean {
+    return this.permissionService.hasAccess('Ambulance', type);
   }
 
   applyFilter(): void {

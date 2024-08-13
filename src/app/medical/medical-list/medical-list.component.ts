@@ -12,6 +12,8 @@ import { ApiService } from 'src/app/shared/services/api/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
 import { MedicalBulkUploadComponent } from '../medical-bulk-upload/medical-bulk-upload.component';
+import { PermissionsService } from 'src/app/shared/authguard/permissions.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-medical-list',
@@ -27,8 +29,8 @@ export class MedicalListComponent implements OnInit {
     'Languages',
     // 'Ethnicity',
     'Service_area',
+    'Action'
     // 'Address',
-    'Action',
   ];
   public deleteType = DELETE_TYPE;
   public showSpinner: Boolean = false;
@@ -43,12 +45,17 @@ export class MedicalListComponent implements OnInit {
     private router: Router,
     private filterService: FilterServiceService,
     private dialog: MatDialog,
-    private authService: AuthService
+    private authService: AuthService,
+    private permissionService: PermissionsService
   ) {}
   ngOnInit(): void {
     if (this.authService.getUserData().user_type === 'professional') {
       this.router.navigateByUrl('');
     }
+  }
+
+  checkAccess(type: 'isEnabled' | 'canView' | 'canEdit' | 'canDelete'): boolean {
+    return this.permissionService.hasAccess('Medical Team', type);
   }
 
   ngAfterViewInit() {

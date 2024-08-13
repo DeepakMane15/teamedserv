@@ -8,6 +8,7 @@ import {
   AssignmentStatus,
   DELETE_TYPE,
 } from 'src/app/common/constants/AppEnum';
+import { PermissionsService } from 'src/app/shared/authguard/permissions.service';
 import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/delete-confirm.component';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
@@ -41,10 +42,15 @@ export class LivingListComponent implements OnInit {
     private _apiServices: ApiService,
     private filterService: FilterServiceService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private permissionService: PermissionsService
   ) {}
   ngOnInit(): void {
     throw new Error('Method not implemented');
+  }
+
+  checkAccess(type: 'isEnabled' | 'canView' | 'canEdit' | 'canDelete'): boolean {
+    return this.permissionService.hasAccess('Medical Facilities', type);
   }
 
   ngAfterViewInit() {

@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { AssignmentStatus, DELETE_TYPE } from 'src/app/common/constants/AppEnum';
+import { PermissionsService } from 'src/app/shared/authguard/permissions.service';
 import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/delete-confirm.component';
 // import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
@@ -41,7 +42,7 @@ export class AssignmentListComponent implements OnInit {
   public isProf: boolean = false;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private _apiServices: ApiService, private _authServices: AuthService, private router: Router, private filterService: FilterServiceService, private dialog: MatDialog) {}
+  constructor(private _apiServices: ApiService, private _authServices: AuthService, private router: Router, private filterService: FilterServiceService, private dialog: MatDialog, private permissionService: PermissionsService) {}
   ngOnInit() {
     let userProfile = this._authServices.getUserData();
     this.isProf = userProfile.user_type === 'professional';
@@ -71,6 +72,10 @@ export class AssignmentListComponent implements OnInit {
         this.showSpinner = false;
       }
     );
+  }
+
+  checkAccess(type: 'isEnabled' | 'canView' | 'canEdit' | 'canDelete'): boolean {
+    return this.permissionService.hasAccess('Assignment', type);
   }
   navigateToAdd() {
     this.router.navigate(['/assignments/add']);

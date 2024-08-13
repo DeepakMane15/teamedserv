@@ -6,8 +6,8 @@
     <mat-card-header>
       <mat-card-title>All Medical Teams</mat-card-title>
       <div class="button-cont">
-      <button mat-raised-button color="primary" type="button" (click)="navigateToAdd()">Add Medical Teams</button>
-      <button mat-raised-button color="accent" type="button" (click)="openBulkUpload()">Bulk Upload</button>
+      <button mat-raised-button *ngIf="checkAccess('canEdit')" color="primary" type="button" (click)="navigateToAdd()">Add Medical Teams</button>
+      <button mat-raised-button *ngIf="checkAccess('canEdit')" color="accent" type="button" (click)="openBulkUpload()">Bulk Upload</button>
     </div>
     </mat-card-header>
     <mat-card-content>
@@ -63,10 +63,10 @@
             <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Action </th>
             <td mat-cell *matCellDef="let element" style="max-width: 150px;">
               <div class="icon-container">
-                <mat-icon class="action-mat-icon" (click)="navigateToEdit(element)">edit</mat-icon>
-                <mat-icon class="action-mat-icon" (click)="navigateToView(element)">remove_red_eye</mat-icon>
-                <mat-icon class="action-mat-icon delete-icon" (click)="handleDelete(element.pid)">delete</mat-icon>
-                <mat-icon *ngIf="element.approved === '0'" (click)="approveMedicalTeam(element.pid)"
+                <mat-icon class="action-mat-icon" *ngIf="checkAccess('canEdit')" (click)="navigateToEdit(element)">edit</mat-icon>
+                <mat-icon class="action-mat-icon" *ngIf="checkAccess('canView')" (click)="navigateToView(element)">remove_red_eye</mat-icon>
+                <mat-icon class="action-mat-icon delete-icon" *ngIf="checkAccess('canDelete')" (click)="handleDelete(element.pid)">delete</mat-icon>
+                <mat-icon *ngIf="element.approved === '0' && checkAccess('canEdit')"  (click)="approveMedicalTeam(element.pid)"
                   class="action-mat-icon check" matTooltip="Approve">check</mat-icon>
               </div>
             </td>

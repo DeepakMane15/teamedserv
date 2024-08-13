@@ -115,7 +115,7 @@ export class PermissionsComponent implements OnInit {
             p.canEdit = p.canEdit === "1",
             p.canDelete = p.canDelete === "1"
           });
-          this.permissions = res.data;
+          this.permissions = [...res.data.splice(0,1), ...res.data.splice(res.data.length-1,1), ...res.data.splice(0, 8)];
         }
       },
       (error) => {

@@ -11,6 +11,7 @@ import { ApiService } from 'src/app/shared/services/api/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
 import { ReadMoreComponent } from '../read-more/read-more.component';
+import { PermissionsService } from 'src/app/shared/authguard/permissions.service';
 
 @Component({
   selector: 'app-job-portal-list',
@@ -43,13 +44,18 @@ export class JobPortalListComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private filterService: FilterServiceService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private permissionService: PermissionsService
   ) {}
   ngOnInit() {
     this.isMedical =
       this.authService.getUserData()?.user_type ===
       UserTypeConstant.PROFESSIONAL;
     console.log(this.authService.getUserData());
+  }
+
+  checkAccess(type: 'isEnabled' | 'canView' | 'canEdit' | 'canDelete'): boolean {
+    return this.permissionService.hasAccess('Medical Team', type);
   }
 
   ngAfterViewInit() {

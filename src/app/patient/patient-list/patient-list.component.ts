@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { DELETE_TYPE } from 'src/app/common/constants/AppEnum';
 import { PatientModel } from 'src/app/common/models/PatientModel';
+import { PermissionsService } from 'src/app/shared/authguard/permissions.service';
 import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/delete-confirm.component';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
@@ -27,10 +28,14 @@ export class PatientListComponent {
     private _apiService: ApiService,
     private filterService: FilterServiceService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private permissionService: PermissionsService
   ) {}
   ngOnInit(): void {
     throw new Error('Method not implemented.');
+  }
+  checkAccess(type: 'isEnabled' | 'canView' | 'canEdit' | 'canDelete'): boolean {
+    return this.permissionService.hasAccess('Patients', type);
   }
 
   ngAfterViewInit() {
