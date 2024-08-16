@@ -8,6 +8,7 @@ import { TeamBoardComponent } from './team-board/team-board.component';
 import { ViewMedicalComponent } from './view-medical/view-medical.component';
 import { TeamInvitationComponent } from './team-invitation/team-invitation.component';
 import { PermissionGuard } from './shared/authguard/permission.guard';
+import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
 //import { DocumentComponent } from './document/document.component';
 const routes: Routes = [
   {
@@ -113,6 +114,12 @@ const routes: Routes = [
     path: 'team-invitation',
     component: TeamInvitationComponent,
     pathMatch: 'full',
+  },
+  {
+    path: 'manage-permissions',
+    component: ManagePermissionsComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard]
   },
   // {
   //   path: 'dashboard2',

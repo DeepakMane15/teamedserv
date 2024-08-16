@@ -68,6 +68,9 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import * as moment from 'moment';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
+import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 // export function momentAdapterFactory() {
 //   return adapterFactory(moment);
 // };
@@ -96,7 +99,8 @@ import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
     ResetPasswordComponent,
     UploadProfileComponent,
     AddFormPopupComponent,
-    DeleteConfirmComponent
+    DeleteConfirmComponent,
+    ManagePermissionsComponent
   ],
   imports: [
     BrowserModule,
@@ -118,7 +122,6 @@ import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
     MatTreeModule,
     MatButtonModule,
     MatIconModule,
-    MatCardModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
@@ -159,6 +162,8 @@ import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
     MedicalModule,
     FullCalendarModule,
     NgxMatTimepickerModule,
+    MatExpansionModule,
+    MatSlideToggleModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory  })
   ],
   exports: [OverlaySpinnerComponent],

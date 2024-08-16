@@ -392,4 +392,14 @@ export const NavItemsContant: NavLinksModel[] = [
     icon: 'work',
     url: '',
   },
+  {
+    label: 'Manage Company Category',
+    roles: [
+      UserTypeConstant.ADMIN,
+    ],
+    category: 'directory',
+    subItems: [],
+    icon: 'next_week',
+    url: '/manage-permissions',
+  },
 ];

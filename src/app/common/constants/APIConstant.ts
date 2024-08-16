@@ -13,6 +13,12 @@ export enum APIConstant {
   GET_CATEGORY = "customer/get-category-data",
   SAVE_PERMISSIONS = "permission/save",
   GET_PERMISSIONS = "permission/get",
+  SAVE_CATEGORY_PERMISSIONS = "category/permission/save",
+  GET_CATEGORY_PERMISSIONS = "category/permission/get",
+  SAVE_NEW_CATEGORY_PERMISSIONS = "category/new",
+
+
+
   // medical-teams
   GET_MEDICALTEAMS = 'medical-teams',
   BULK_UPLOAD_MEDICALTEAMS = 'medical-team/bulk-upload',

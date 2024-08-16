@@ -1,9 +1,16 @@
 <main class="permission">
-  <h2>Manage Permissions</h2>
+  <div class="spinner-overlay" *ngIf="showSpinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+  <h2>{{data.isNewCategory ? 'Add New Category' : 'Manage Permissions'}}</h2>
   <mat-divider></mat-divider>
 
   <div class="container">
     <div>
+      <mat-form-field class="full-width" *ngIf="data.isNewCategory">
+        <mat-label>Category Name</mat-label>
+        <input matInput type="text" [(ngModel)]="categoryName" />
+      </mat-form-field>
       <div class="row flex-end" *ngFor="let permission of permissions">
         <div class="col">
           <!-- <mat-checkbox color="primary" (change)="handlePermissionToggle($event,permission)" [(ngModel)]="permission.isEnabled" class="example-margin">{{permission.title}} :</mat-checkbox> -->
@@ -25,7 +32,7 @@
         </div>
       </div>
       <div class="action-btns">
-        <button mat-raised-button (click)="handleSave()">Save</button>
+        <button mat-raised-button (click)="handleSave()" [disabled]="isDisabled()">Save</button>
       </div>
     </div>
   </div>

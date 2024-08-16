@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { ApiService } from 'src/app/shared/services/api/api.service';
@@ -13,7 +14,7 @@ export class PermissionsComponent implements OnInit {
   public category: any;
 
   @Input() customerId!: number;
-
+  // @Input() isNewCategory: boolean = false
   public permissions = [
     {
       title: 'Medical Team',
@@ -79,22 +80,36 @@ export class PermissionsComponent implements OnInit {
       canDelete: true,
     },
   ];
-  constructor(private _apiService: ApiService) {}
+  public categoryName: string = '';
+  constructor(
+    private _apiService: ApiService,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<PermissionsComponent>
+  ) {}
   ngOnInit() {
-    this.fetchPermissions()
+    if (this.data.isNewCategory) this.fetchPermissions();
   }
 
   public handleSave() {
     // console.log(this.permissions);
+    let apiUrl = APIConstant.SAVE_PERMISSIONS;
     const fd = new FormData();
-    fd.append('customer_id', this.customerId.toString());
     fd.append('permissions', JSON.stringify(this.permissions));
-
-    this._apiService.post(APIConstant.SAVE_PERMISSIONS, fd).subscribe(
+    if (this.data.isNewCategory) {
+      fd.append('categoryName', this.categoryName);
+      apiUrl = APIConstant.SAVE_NEW_CATEGORY_PERMISSIONS;
+    } else {
+      fd.append('customer_id', this.customerId?.toString());
+    }
+    this._apiService.post(apiUrl, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
-          this.fetchPermissions();
           this.showSpinner = false;
+          if (this.data.isNewCategory) {
+            this.dialogRef.close(1);
+          } else {
+            this.fetchPermissions();
+          }
         }
       },
       (error) => {
@@ -110,12 +125,16 @@ export class PermissionsComponent implements OnInit {
       (res: any) => {
         if (res && res.status && res.data.length) {
           res.data.forEach((p: any) => {
-            p.isEnabled = p.isEnabled === "1",
-            p.canView = p.canView === "1",
-            p.canEdit = p.canEdit === "1",
-            p.canDelete = p.canDelete === "1"
+            (p.isEnabled = p.isEnabled === '1'),
+              (p.canView = p.canView === '1'),
+              (p.canEdit = p.canEdit === '1'),
+              (p.canDelete = p.canDelete === '1');
           });
-          this.permissions = [...res.data.splice(0,1), ...res.data.splice(res.data.length-1,1), ...res.data.splice(0, 8)];
+          this.permissions = [
+            ...res.data.splice(0, 1),
+            ...res.data.splice(res.data.length - 1, 1),
+            ...res.data.splice(0, 8),
+          ];
         }
       },
       (error) => {
@@ -152,4 +171,11 @@ export class PermissionsComponent implements OnInit {
   //     }
   //   );
   // }
+
+  public isDisabled(): boolean {
+    if (this.data.isNewCategory) {
+      return !this.categoryName || this.categoryName.trim().length === 0;
+    }
+    return false;
+  }
 }
