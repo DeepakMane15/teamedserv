@@ -16,6 +16,10 @@ export enum APIConstant {
   SAVE_CATEGORY_PERMISSIONS = "category/permission/save",
   GET_CATEGORY_PERMISSIONS = "category/permission/get",
   SAVE_NEW_CATEGORY_PERMISSIONS = "category/new",
+  EDIT_CATEGORY_NAME = "category/edit",
+
+  ADV_POST = 'adv',
+
 
 
 

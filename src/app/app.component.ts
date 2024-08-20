@@ -96,7 +96,6 @@ export class AppComponent implements OnInit {
   public canAccessCompany() {
     if (!this.userProfile) this.userProfile = this.authService.getUserData();
     return (
-      this.userProfile.user_type === UserTypeConstant.ADMIN ||
       this.userProfile.user_type === UserTypeConstant.CUSTOMER
     );
   }
@@ -115,7 +114,10 @@ export class AppComponent implements OnInit {
       this.router.navigate([node.url]);
   }
 
-  public uploadPicture() {
+  public redirectToHome() {
+    this.router.navigateByUrl('company/home');
+  }
+   public uploadPicture() {
     const dialogRef = this.dialog.open(UploadProfileComponent, {
       width: '400px',
     });

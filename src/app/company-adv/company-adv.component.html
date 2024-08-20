@@ -1,0 +1,81 @@
+<main>
+  <div class="company-adv">
+    <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+      <mat-card class="shipping-card">
+        <mat-card-header>
+          <mat-card-title>Advertisement Details</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Company Name</mat-label>
+                <div class="uname-input">
+                  <input matInput formControlName="name">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width description">
+                <mat-label>Description</mat-label>
+                <!-- <input matInput formControlName="description"> -->
+                <textarea matInput formControlName="description"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width description">
+                <mat-label>Services</mat-label>
+                <!-- <input matInput formControlName="description"> -->
+                <textarea matInput formControlName="services"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div> <span class="text-sb">Attach Logo </span>
+                <span class="help-text">
+                  ( allowed jpg,png, max size 1 mb)
+                </span>
+              </div>
+              <input id="fileInput" hidden #licenceInput type="file" (change)="onFileSelected($event, true)">
+              <div class="file-input" [ngClass]="{'file-error' : fileError && !this.companyForm.get('logo')?.value}"
+                (click)="licenceInput.click()">
+                <div class="label-container">
+                  <div class="label-section">Choose file</div>
+                </div>
+                <div class="name-section">{{this.companyForm.get('logo')?.value?.name || 'No file chosen'}}</div>
+              </div>
+              <span class="error-text">{{logoError}}</span>
+            </div>
+            <div class="col">
+              <div> <span class="text-sb">Attach Banner </span>
+                <span class="help-text">
+                  ( allowed jpg,png, max size 1 mb)
+                </span>
+              </div>
+              <input id="fileInput" hidden #licenceInput1 type="file" (change)="onFileSelected($event)">
+              <div class="file-input" [ngClass]="{'file-error' : fileError && !this.companyForm.get('banner')?.value}"
+                (click)="licenceInput1.click()">
+                <div class="label-container">
+                  <div class="label-section">Choose file</div>
+                </div>
+                <div class="name-section">{{this.companyForm.get('banner')?.value?.name || 'No file chosen'}}</div>
+              </div>
+              <span class="error-text">{{bannerError}}</span>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 10px;">
+            <p><mat-slide-toggle labelPosition="before" formControlName="publish">Ready to Publish</mat-slide-toggle></p>
+          </div>
+          <mat-card-actions class="action-btns">
+            <button mat-raised-button color="primary" type="submit">Submit</button>
+          </mat-card-actions>
+        </mat-card-content>
+      </mat-card>
+    </form>
+  </div>
+</main>

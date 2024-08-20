@@ -102,7 +102,7 @@ export class AddCustomerComponent implements OnInit {
 
   ngOnInit(): void {
     this.categorySettings = {
-      singleSelection: false,
+      singleSelection: true,
       idField: 'id',
       textField: 'title',
       selectAllText: 'Select All',
@@ -111,7 +111,7 @@ export class AddCustomerComponent implements OnInit {
       allowSearchFilter: true,
     };
     this.subCategorySettings = {
-      singleSelection: false,
+      singleSelection: true,
       idField: 'id',
       textField: 'title',
       selectAllText: 'Select All',

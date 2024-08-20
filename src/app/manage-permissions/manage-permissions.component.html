@@ -6,19 +6,33 @@
     <mat-card-header style="display: flex; flex-direction: column;">
       <mat-card-title>Manage Company Categories</mat-card-title>
       <div>
-      <p class="note-section">Note: The permissions updates in existing/below mentioned categories shall not affect existing customer's permissions. It will always be applicable for the new customers. <br/>If you want to change existing customer's permissions kindly navigate to customer's section -> view -> permission tab and change permissions for individual company.</p>
-    </div>
+        <p class="note-section">Note: The permissions updates in existing/below mentioned categories shall not affect
+          existing customer's permissions. It will always be applicable for the new customers. <br />If you want to
+          change existing customer's permissions kindly navigate to customer's section -> view -> permission tab and
+          change permissions for individual company.</p>
+      </div>
       <div class="button-cont">
         <button mat-raised-button color="primary" type="button" (click)="addNewCategory()">Add Category</button>
       </div>
     </mat-card-header>
     <mat-card-content>
       <div class="category-container expansion-panel" *ngFor="let cat of category; let i = index">
-        <mat-accordion >
+        <mat-accordion>
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
-                {{i+1}}. {{cat.category_title}}
+                <div class="title-container">
+                  <p>{{i+1}}. {{cat.category_title}}
+                  </p>
+                  <button class="icon-button" matTooltip="Rename">
+                    <mat-icon class="action-mat-icon" (click)="renameCategory(cat, $event)">edit</mat-icon>
+                  </button>
+                  <!-- <button mat-button color="secondary">
+                    <mat-icon>
+
+                    </mat-icon>
+                  </button> -->
+                </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="permissions">
@@ -32,16 +46,16 @@
                           [(ngModel)]="permission.permissions.isEnabled"></mat-slide-toggle></p>
                     </div>
                     <div>
-                      <mat-checkbox color="primary" [disabled]="!permission.permissions.isEnabled" [(ngModel)]="permission.permissions.canView"
-                        class="example-margin">View</mat-checkbox>
+                      <mat-checkbox color="primary" [disabled]="!permission.permissions.isEnabled"
+                        [(ngModel)]="permission.permissions.canView" class="example-margin">View</mat-checkbox>
                     </div>
                     <div>
-                      <mat-checkbox color="primary" [disabled]="!permission.permissions.isEnabled" [(ngModel)]="permission.permissions.canEdit"
-                        class="example-margin">Add/Edit</mat-checkbox>
+                      <mat-checkbox color="primary" [disabled]="!permission.permissions.isEnabled"
+                        [(ngModel)]="permission.permissions.canEdit" class="example-margin">Add/Edit</mat-checkbox>
                     </div>
                     <div>
-                      <mat-checkbox color="primary" [disabled]="!permission.permissions.isEnabled" [(ngModel)]="permission.permissions.canDelete"
-                        class="example-margin">Delete</mat-checkbox>
+                      <mat-checkbox color="primary" [disabled]="!permission.permissions.isEnabled"
+                        [(ngModel)]="permission.permissions.canDelete" class="example-margin">Delete</mat-checkbox>
                     </div>
                   </div>
                   <div class="action-btns">

@@ -71,6 +71,8 @@ import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
 import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { CategoryRenameComponent } from './shared/dialog/category-rename/category-rename.component';
+import { CompanyAdvComponent } from './company-adv/company-adv.component';
 // export function momentAdapterFactory() {
 //   return adapterFactory(moment);
 // };
@@ -100,7 +102,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     UploadProfileComponent,
     AddFormPopupComponent,
     DeleteConfirmComponent,
-    ManagePermissionsComponent
+    ManagePermissionsComponent,
+    CategoryRenameComponent,
+    CompanyAdvComponent
   ],
   imports: [
     BrowserModule,

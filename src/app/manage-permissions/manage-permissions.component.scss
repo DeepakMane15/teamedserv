@@ -97,6 +97,37 @@ main {
   gap: 16px;
 }
 
+.title-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+
+  p {
+    font-size: 13px;
+    margin-bottom: 0px;
+  }
+
+  mat-icon {
+    margin-top: 9px;
+    font-size: 16px;
+    color: #797979;
+  }
+
+  // button {
+  //   border: 1px solid #bbbaba;
+  //   background: #dfdfdf;
+  //   font-size: 13px;
+  //   height: 20px;
+  //   margin-top: 11px;
+  // }
+}
+
+mat-expansion-panel-header {
+  height: 35px;
+}
+
 .expansion-panel {
   margin-bottom: 10px;
 

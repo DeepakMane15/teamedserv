@@ -5,6 +5,7 @@ import { ApiService } from '../shared/services/api/api.service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatDialog } from '@angular/material/dialog';
 import { PermissionsComponent } from '../customer/permissions/permissions.component';
+import { CategoryRenameComponent } from '../shared/dialog/category-rename/category-rename.component';
 
 @Component({
   selector: 'app-manage-permissions',
@@ -179,6 +180,18 @@ export class ManagePermissionsComponent implements OnInit {
   public addNewCategory() {
     const dialogRef = this.dialog.open(PermissionsComponent, {
       data: {isNewCategory: true}
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getCategories();
+      }
+    });
+  }
+
+  public renameCategory(category: any, event: MouseEvent) {
+    const dialogRef = this.dialog.open(CategoryRenameComponent, {
+      data: {category: category},
+      width: '400px'
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
