@@ -73,6 +73,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CategoryRenameComponent } from './shared/dialog/category-rename/category-rename.component';
 import { CompanyAdvComponent } from './company-adv/company-adv.component';
+import { AdvFormPopupComponent } from './shared/dialog/adv-form-popup/adv-form-popup.component';
 // export function momentAdapterFactory() {
 //   return adapterFactory(moment);
 // };
@@ -104,7 +105,8 @@ import { CompanyAdvComponent } from './company-adv/company-adv.component';
     DeleteConfirmComponent,
     ManagePermissionsComponent,
     CategoryRenameComponent,
-    CompanyAdvComponent
+    CompanyAdvComponent,
+    AdvFormPopupComponent
   ],
   imports: [
     BrowserModule,

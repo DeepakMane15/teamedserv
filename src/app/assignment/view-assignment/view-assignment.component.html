@@ -31,6 +31,9 @@
                     :
                   </div>
                   <div fxFlex="60%" fxFlex.xs="100%" class="content-rhs">
+                    <span *ngIf="!data.type">
+                      {{assignmentData[data.key]}}
+                      </span>
                     <span *ngIf="data.type === 'date'">
                       {{assignmentData[data.key] || '' | date}}
                       </span>

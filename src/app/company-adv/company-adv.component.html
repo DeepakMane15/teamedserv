@@ -1,81 +1,144 @@
-<main>
-  <div class="company-adv">
-    <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
-      <mat-card class="shipping-card">
+<main class="adv">
+  <div class="spinner-overlay" *ngIf="showSpinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+  <mat-card>
+    <div class="banner" [ngStyle]="{
+      'background-image': 'url(' + bannerImage + ')',
+    'background-size': 'cover',
+    'background-position': 'center'
+  }">
+
+      <div class="logo">
+        <div class="logo-img">
+          <div style="display: flex; align-items: end;">
+            <img [src]="logoImage" height="100%" />
+            <button style="margin-left:-10px; width: 24px; height: 24px; padding: 0;" mat-button
+              (click)="licenceInput2.click()">
+              <mat-icon class="action-mat-icon">edit</mat-icon>
+            </button>
+          </div>
+          <h3>{{userProfile.company_name}}</h3>
+        </div>
+        <div>
+          <input id="fileInput" hidden #licenceInput2 type="file" (change)="onFileSelected($event,true)">
+          <input id="fileInput" hidden #licenceInput1 type="file" (change)="onFileSelected($event)">
+          <button mat-raised-button color="primary" class="upload" (click)="licenceInput1.click()">
+            Upload Banner
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row content-row">
+      <div class="col desc">
+        <div class="description-box">
+          <div class="title-top">
+            <h2>Description</h2>
+            <button mat-button (click)="openFormPopup(1)">
+              <mat-icon class="action-mat-icon">edit</mat-icon>
+            </button>
+          </div>
+          <div>
+            {{userProfile.description}}
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="services-box">
+          <div class="title-top">
+            <h2>Services</h2>
+            <button mat-button (click)="openFormPopup(2)">
+              <mat-icon class="action-mat-icon">edit</mat-icon>
+            </button>
+          </div>
+          <div>
+            <ul>
+              <li *ngFor="let service of servicesArray">
+                {{service}}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row ">
+      <mat-card style="width: 100%; margin: 24px; padding: 24px;">
         <mat-card-header>
-          <mat-card-title>Advertisement Details</mat-card-title>
+          <mat-card-title class="d-flex-sb">
+            <div style="display: flex; gap: 6px; align-items: center;">
+              Overall Ratings : 3.5/5
+            </div>
+          </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <div class="row">
-            <div class="col">
-              <mat-form-field class="full-width">
-                <mat-label>Company Name</mat-label>
-                <div class="uname-input">
-                  <input matInput formControlName="name">
-                </div>
-              </mat-form-field>
+          <div>
+            <div class="row">
+              <mat-icon style="font-size: 20px;margin-top: 2px;color: #ffb42d;" *ngFor="let star of  getOverallStarsRating(3.5)">{{star}}</mat-icon>
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-              <mat-form-field class="full-width description">
-                <mat-label>Description</mat-label>
-                <!-- <input matInput formControlName="description"> -->
-                <textarea matInput formControlName="description"></textarea>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <mat-form-field class="full-width description">
-                <mat-label>Services</mat-label>
-                <!-- <input matInput formControlName="description"> -->
-                <textarea matInput formControlName="services"></textarea>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div> <span class="text-sb">Attach Logo </span>
-                <span class="help-text">
-                  ( allowed jpg,png, max size 1 mb)
-                </span>
-              </div>
-              <input id="fileInput" hidden #licenceInput type="file" (change)="onFileSelected($event, true)">
-              <div class="file-input" [ngClass]="{'file-error' : fileError && !this.companyForm.get('logo')?.value}"
-                (click)="licenceInput.click()">
-                <div class="label-container">
-                  <div class="label-section">Choose file</div>
-                </div>
-                <div class="name-section">{{this.companyForm.get('logo')?.value?.name || 'No file chosen'}}</div>
-              </div>
-              <span class="error-text">{{logoError}}</span>
-            </div>
-            <div class="col">
-              <div> <span class="text-sb">Attach Banner </span>
-                <span class="help-text">
-                  ( allowed jpg,png, max size 1 mb)
-                </span>
-              </div>
-              <input id="fileInput" hidden #licenceInput1 type="file" (change)="onFileSelected($event)">
-              <div class="file-input" [ngClass]="{'file-error' : fileError && !this.companyForm.get('banner')?.value}"
-                (click)="licenceInput1.click()">
-                <div class="label-container">
-                  <div class="label-section">Choose file</div>
-                </div>
-                <div class="name-section">{{this.companyForm.get('banner')?.value?.name || 'No file chosen'}}</div>
-              </div>
-              <span class="error-text">{{bannerError}}</span>
-            </div>
-          </div>
-          <div class="row" style="margin-top: 10px;">
-            <p><mat-slide-toggle labelPosition="before" formControlName="publish">Ready to Publish</mat-slide-toggle></p>
-          </div>
-          <mat-card-actions class="action-btns">
-            <button mat-raised-button color="primary" type="submit">Submit</button>
-          </mat-card-actions>
         </mat-card-content>
       </mat-card>
-    </form>
-  </div>
+    </div>
+    <div class="row ">
+      <mat-card style="width: 100%; margin: 24px; padding: 24px;">
+        <mat-card-header>
+          <mat-card-title class="d-flex-sb">
+            <div>
+              Contact
+            </div>
+            <button mat-button (click)="openFormPopup(3)">
+              <mat-icon class="action-mat-icon">edit</mat-icon>
+            </button>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div>
+            <div class="row">
+              <div class="col">
+                Email Id: {{userProfile.email}}
+              </div>
+              <div class="col">
+                Contact: {{userProfile.cellphone}}
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="comments-container">
+      <mat-card class="comments-card">
+        <mat-card-header>
+          <mat-card-title>
+            <div>
+              Comments
+            </div>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content style="max-height: 250px;overflow-y: auto;">
+          <div class="comments-grid">
+            <div class="comment-card" *ngFor="let comment of comments">
+              <div style="display: flex; align-items: center;">
+                <img style="margin: 0;" mat-card-avatar [src]="comment.userLogo" alt="User Logo">
+                <span>{{ comment.userName }}</span>
+                <span style="margin-left: 16px;">{{comment.date | date: 'MMM dd, YYYY: HH:mm'}}</span>
+                <span style="display: flex; margin-left: 16px;">
+                  <mat-icon style="font-size: 20px;margin-top: 2px; color: #ffb42d;" *ngFor="let s of [1,2,3,4,5]">star_border</mat-icon>
+                </span>
+              </div>
+              <div style="margin-left: 40px;">
+                {{comment.commentText }}
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+
+    <!-- <mat-card-actions class="action-btns">
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions> -->
+  </mat-card>
 </main>

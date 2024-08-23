@@ -130,7 +130,6 @@ export class ViewAssignmentComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (this.isPageRefresh()) {
-          console.log('refreshed');
         }
       }
     });
