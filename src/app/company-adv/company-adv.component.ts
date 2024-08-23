@@ -184,7 +184,7 @@ export class CompanyAdvComponent implements OnInit {
         : 'Edit Contact';
     const dialogRef = this.dialog.open(AdvFormPopupComponent, {
       width: '500px',
-      height: '500px',
+      height: type === 2 ? '500px':'300px',
       data: {
         title: title,
         placeholder: placeholder,
