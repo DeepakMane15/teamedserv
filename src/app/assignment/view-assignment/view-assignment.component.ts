@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { AppConstants } from 'src/app/common/constants/AppConstants';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-view-assignment',
@@ -26,6 +27,10 @@ export class ViewAssignmentComponent implements OnInit {
   public appConstants = AppConstants;
   public hideEdit: boolean = false;
   public MEDICAL_DOCUMENTS_URL = AppConstants.MEDICAL_DOCUMENTS_URL;
+  public DEFAULT_IMG = AppConstants.DEFAULT_IMG;
+  public comment: string = '';
+  public stars: string[] = [];
+  public isProf: boolean = false;
 
   displayedColumns: string[] = [
     'id',
@@ -43,7 +48,7 @@ export class ViewAssignmentComponent implements OnInit {
     {
       label: 'Date',
       key: 'date',
-      type:'date'
+      type: 'date',
     },
     {
       label: 'Patient',
@@ -64,7 +69,7 @@ export class ViewAssignmentComponent implements OnInit {
     {
       label: 'Visit Date',
       key: 'fromdate',
-      type:'date'
+      type: 'date',
     },
     {
       label: 'Time',
@@ -73,7 +78,7 @@ export class ViewAssignmentComponent implements OnInit {
     {
       label: 'Payment Date',
       key: 'paymentdate',
-      type:'date'
+      type: 'date',
     },
     {
       label: 'Contact Person',
@@ -105,7 +110,8 @@ export class ViewAssignmentComponent implements OnInit {
     private responsiveObserver: ResponsiveService,
     private _apiService: ApiService,
     private sanitizer: DomSanitizer,
-    private router: Router
+    private router: Router,
+    private _authServices: AuthService
   ) {
     this.responsiveObserver.observeResolution().subscribe((columns) => {
       this.columns = columns;
@@ -121,8 +127,10 @@ export class ViewAssignmentComponent implements OnInit {
   ngAfterViewInit() {}
 
   ngOnInit() {
+    let userProfile = this._authServices.getUserData();
+    this.isProf = userProfile.user_type === 'professional';
     this.assignmentData = history.state.assignment;
-    console.log(this.assignmentData)
+    console.log(this.assignmentData);
     this.defaultTabIndex = (history && history.state.tabIndex) || 0;
     if (!this.assignmentData) this.router.navigate(['medical-team']);
 
@@ -133,8 +141,8 @@ export class ViewAssignmentComponent implements OnInit {
         }
       }
     });
+    this.getOverallStarsRating(0);
   }
-
 
   isPageRefresh(): boolean {
     return (
@@ -162,5 +170,60 @@ export class ViewAssignmentComponent implements OnInit {
     this.router.navigate(['/assignments/edit'], {
       state: { assignmentData: this.assignmentData },
     });
+  }
+  onModelChange(value: string) {
+    if (value.length > 50) {
+      this.comment = value.slice(0, 50);
+    }
+  }
+
+  public getOverallStarsRating(number: number) {
+    let k = 0;
+    let decimalStar = number % 1;
+    let realStar = number - decimalStar;
+    while (k < realStar) {
+      this.stars.push('star');
+      k++;
+    }
+    if (decimalStar > 0) {
+      this.stars.push('star_half');
+    }
+    while (this.stars.length < 5) {
+      this.stars.push('star_border');
+    }
+  }
+  public markRating(index: number) {
+    let k = 0;
+    while (k <= index) {
+      this.stars[k] = 'star';
+      k++;
+    }
+    while (k < 5) {
+      this.stars[k] = 'star_border';
+      k++;
+    }
+  }
+  public submitComment() {
+    this.showSpinner = true;
+    const fd = new FormData();
+    fd.append('customer_id', this.assignmentData.company_id);
+    fd.append('assignment_id', this.assignmentData.id);
+    fd.append('rating', this.stars.filter((s: string) => s === 'star')?.length?.toString());
+    fd.append('comment', this.comment);
+
+    this._apiService.post(APIConstant.POST_RATING, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.showSpinner = false;
+          this.assignmentData.rating = this.stars.filter((s: string) => s === 'star')?.length?.toString();
+          this.assignmentData.comment = this.comment;
+          this.router.navigateByUrl('/assignments/view', { state: { assignment: this.assignmentData } });
+        }
+      },
+      (error) => {
+        this.showSpinner = false;
+        console.error('Initial Data fetch failed', error);
+      }
+    );
   }
 }

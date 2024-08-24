@@ -22,6 +22,9 @@ export class ViewMedicalComponent implements OnInit {
   defaultTabIndex!: number;
   public appConstants = AppConstants;
   public isSelf: boolean = false;
+  public comment: string = '';
+  public stars: string[] = [];
+  public DEFAULT_IMG =AppConstants.DEFAULT_IMG;
 
   displayedColumns: string[] = [
     'id',
@@ -134,6 +137,7 @@ export class ViewMedicalComponent implements OnInit {
         if (res && res.status) {
           console.log(res.message);
           this.medicalData = res.data;
+          this.getOverallStarsRating(this.medicalData.rating);
           this.showSpinner = false;
         }
       },
@@ -163,16 +167,69 @@ export class ViewMedicalComponent implements OnInit {
     });
   }
   navigateBack() {
-    if(this.isSelf){
+    if (this.isSelf) {
       this.router.navigate(['']);
-    }
-    else
-      this.router.navigate(['medical-team']);
+    } else this.router.navigate(['medical-team']);
   }
 
   navigateToEdit() {
     this.router.navigate(['/medical-team/edit'], {
       state: { medicalData: this.medicalData },
     });
+  }
+
+  onModelChange(value: string) {
+    if (value.length > 50) {
+      this.comment = value.slice(0, 50);
+    }
+  }
+
+  public getOverallStarsRating(number: number) {
+    let k = 0;
+    let decimalStar = number % 1;
+    let realStar = number - decimalStar;
+    this.stars=[];
+    while (k < realStar) {
+      this.stars.push('star');
+      k++;
+    }
+    if (decimalStar > 0) {
+      this.stars.push('star_half');
+    }
+    while (this.stars.length < 5) {
+      this.stars.push('star_border');
+    }
+  }
+  public markRating(index: number) {
+    let k = 0;
+    while (k <= index) {
+      this.stars[k] = 'star';
+      k++;
+    }
+    while (k < 5) {
+      this.stars[k] = 'star_border';
+      k++;
+    }
+  }
+  public submitComment() {
+    this.showSpinner = true;
+    const fd = new FormData();
+    // fd.append('customer_id', this.medicalData.company_id);
+    fd.append('user_id',this.medicalData['user_id'].toString())
+    fd.append('rating', this.stars.filter((s: string) => s === 'star')?.length?.toString());
+    fd.append('comment', this.comment);
+
+    this._apiService.post(APIConstant.POST_MEDICAL_RATING, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.showSpinner = false;
+          this.fetchMedicalTeamData(history.state.pid);
+        }
+      },
+      (error) => {
+        this.showSpinner = false;
+        console.error('Initial Data fetch failed', error);
+      }
+    );
   }
 }

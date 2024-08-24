@@ -128,6 +128,12 @@ const routes: Routes = [
     pathMatch: 'full',
     canActivate: [AuthGuard]
   },
+  {
+    path: 'profile',
+    component: CompanyAdvComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard]
+  },
   // {
   //   path: 'dashboard2',
   //   component: Dashboard2Component,

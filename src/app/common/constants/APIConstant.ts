@@ -19,8 +19,13 @@ export enum APIConstant {
   EDIT_CATEGORY_NAME = "category/edit",
 
   ADV_POST = 'adv',
+  POST_MEDICAL_BANNER = 'medical/banner',
 
-
+  POST_RATING = 'rating/save',
+  GET_RATING = 'rating/get',
+  POST_MEDICAL_RATING = 'rating/medical/save',
+  GET_MEDICAL_RATING = 'rating/medical/get',
+  GET_MEDICAL_RATING_BY_ID = 'rating/medical/get-by-id',
 
 
   // medical-teams

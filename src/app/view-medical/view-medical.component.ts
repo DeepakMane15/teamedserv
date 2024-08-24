@@ -48,6 +48,7 @@ export class ViewMedicalComponent {
   stripe = injectStripe(environment.publishableKey);
   paying = signal(false);
   public mapUrl!: SafeResourceUrl;
+  public medicalId!:string;
 
   public displayedColumns: string[] = [
     'id',
@@ -128,9 +129,9 @@ export class ViewMedicalComponent {
 
   ngOnInit() {
     this.showSpinner = true;
-    let medicalId = history.state.medicalId;
-    if (medicalId) this.fetchMedicalTeamData(medicalId);
-    if (!medicalId) this.router.navigate(['team-board']);
+    this.medicalId = history.state.medicalId;
+    if (this.medicalId) this.fetchMedicalTeamData(this.medicalId);
+    if (!this.medicalId) this.router.navigate(['team-board']);
   }
 
   private fetchMedicalTeamData(pid: string) {

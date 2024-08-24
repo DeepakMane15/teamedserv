@@ -58,4 +58,37 @@
 .pd-top{
   margin-top: 20px;
 }
+
+.company-content {
+  margin: 0px;
+  border: 1px solid #d6d6d6;
+  border-radius: 6px;
+  border-top: 2px solid rgb(42, 42, 207);
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #d6d6d6;
+    font-size: 15px;
+    font-weight: 500;
+
+    .content-rhs {
+      padding-left: 30px;
+    }
+  }
+
+  .comment {
+    margin-left: 120px;
+    display: flex;
+    flex-direction: column;
+
+    .icon-cont {
+      margin-bottom: 10px;
+      gap: 10px;
+      display: flex;
+    }
+  }
+}
+
 }

@@ -33,14 +33,54 @@
                   <div fxFlex="60%" fxFlex.xs="100%" class="content-rhs">
                     <span *ngIf="!data.type">
                       {{assignmentData[data.key]}}
-                      </span>
+                    </span>
                     <span *ngIf="data.type === 'date'">
                       {{assignmentData[data.key] || '' | date}}
-                      </span>
-                      <span *ngIf="data.key === 'image'">
-                        <!-- {{assignmentData[data.key] || ''}} -->
-                         <a [href]="MEDICAL_DOCUMENTS_URL+''+assignmentData[data.key]" target="_blank">{{assignmentData[data.key] || ''}}</a>
-                        </span>
+                    </span>
+                    <span *ngIf="data.key === 'image'">
+                      <!-- {{assignmentData[data.key] || ''}} -->
+                      <a [href]="MEDICAL_DOCUMENTS_URL+''+assignmentData[data.key]"
+                        target="_blank">{{assignmentData[data.key] || ''}}</a>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab *ngIf="isProf" label="Ratings">
+              <div class="company-content pd-top">
+                <div class="company-card">
+                  <div style="display: flex; align-items: center; gap: 16px; padding: 20px;">
+                    <img style="height: 100px;border-radius: 50%;" [src]="DEFAULT_IMG" class="com-logo" />
+                    <div style="display: flex; flex-direction: column;">
+                      <h2>Company</h2>
+                      <h3>Description</h3>
+                    </div>
+                  </div>
+                  <div class="comment" *ngIf="!assignmentData.comment">
+                    <div class="icon-cont">
+                      <mat-icon style="cursor: pointer; width: 30px;height: 32px;font-size: 30px;color: #ffb42d;"
+                        *ngFor="let star of stars; let i=index" (click)="markRating(i)">{{star}}</mat-icon>
+                    </div>
+                    <textarea matInput name="model" placeholder="Enter Comment" [(ngModel)]="comment" rows="4"
+                      style="resize: vertical; overflow: auto;" (ngModelChange)="onModelChange($event)">
+                    </textarea>
+                    <mat-hint>
+                      {{comment.length}}/50 words
+                    </mat-hint>
+                    <button mat-raised-button (click)="submitComment()" [disabled]="!comment.length"> Submit</button>
+                  </div>
+                  <div class="comment" *ngIf="assignmentData.comment">
+                    <div class="icon-cont" style="display: flex;">
+                      <span style="font-size: 16px;">Rating: </span>
+                      <mat-icon style="width: 30px;height: 32px;font-size: 26px;color: #ffb42d;"
+                        *ngFor="let star of stars; let i=index">{{star}}</mat-icon>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                      <span>Comment: </span>
+                      <p>
+                        {{assignmentData.comment}}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>

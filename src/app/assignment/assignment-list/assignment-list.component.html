@@ -86,7 +86,7 @@
                   <mat-icon class="action-mat-icon" (click)="navigateToEdit(element)">edit</mat-icon>
                 </button>
                 <button class="icon-button">
-                  <mat-icon class="action-mat-icon" *ngIf="checkAccess('canView')" (click)="navigateToView(element)">remove_red_eye</mat-icon>
+                  <mat-icon class="action-mat-icon" *ngIf="isProf || checkAccess('canView')" (click)="navigateToView(element)">remove_red_eye</mat-icon>
                 </button>
                 <button *ngIf="!isProf && checkAccess('canDelete')" class="icon-button" [disabled]="element.status !== assignmentStatus.PENDING">
                   <mat-icon class="action-mat-icon"

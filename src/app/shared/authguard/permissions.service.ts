@@ -55,7 +55,7 @@ export class PermissionsService {
     title: string,
     action: 'isEnabled' | 'canView' | 'canEdit' | 'canDelete'
   ): Observable<boolean> {
-    if (this._authService.getUserData()?.type === UserTypeConstant.ADMIN)
+    if (this._authService.getUserData()?.type === UserTypeConstant.ADMIN || this._authService.getUserData()?.type === UserTypeConstant.PROFESSIONAL)
       return of(true);
     if (!this.permissions) {
       this.setUserPermissions();

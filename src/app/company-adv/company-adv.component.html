@@ -13,19 +13,28 @@
         <div class="logo-img">
           <div style="display: flex; align-items: end;">
             <img [src]="logoImage" height="100%" />
-            <button style="margin-left:-10px; width: 24px; height: 24px; padding: 0;" mat-button
+            <button *ngIf="!onlyView" style="margin-left:-10px; width: 24px; height: 24px; padding: 0;" mat-button
               (click)="licenceInput2.click()">
               <mat-icon class="action-mat-icon">edit</mat-icon>
             </button>
           </div>
-          <h3>{{userProfile.company_name}}</h3>
+          <h3 *ngIf="!pid">{{userProfile.company_name}}</h3>
+          <h3 *ngIf="pid" style="margin-left: 10px;">{{medicalData.full_name}}</h3>
         </div>
         <div>
           <input id="fileInput" hidden #licenceInput2 type="file" (change)="onFileSelected($event,true)">
           <input id="fileInput" hidden #licenceInput1 type="file" (change)="onFileSelected($event)">
-          <button mat-raised-button color="primary" class="upload" (click)="licenceInput1.click()">
+          <button *ngIf="!onlyView" mat-raised-button color="primary" class="upload" (click)="licenceInput1.click()">
             Upload Banner
           </button>
+          <div class="invite upload" *ngIf="pid && onlyView">
+            <a *ngIf=" medicalData['is_paid'] === '0'" (click)="openDialog()" class="button">Pay</a>
+            <a *ngIf=" medicalData['is_paid'] === '1' && medicalData['request_exists'] === '0'"
+              (click)="sendInvitation()" class="button">Send Invite</a>
+            <span *ngIf="medicalData['request_exists'] === '1' && medicalData['is_own_team'] === '0'">Invitation
+              Sent</span>
+            <span *ngIf="medicalData['is_own_team'] === '1'">Owned</span>
+          </div>
         </div>
       </div>
     </div>
@@ -35,29 +44,46 @@
         <div class="description-box">
           <div class="title-top">
             <h2>Description</h2>
-            <button mat-button (click)="openFormPopup(1)">
+            <button *ngIf="!onlyView" mat-button (click)="isProf ? navigateToEdit() : openFormPopup(1)">
               <mat-icon class="action-mat-icon">edit</mat-icon>
             </button>
           </div>
           <div>
-            {{userProfile.description}}
+            {{pid ? medicalData.discibe : userProfile.description}}
           </div>
         </div>
       </div>
       <div class="col">
         <div class="services-box">
           <div class="title-top">
-            <h2>Services</h2>
-            <button mat-button (click)="openFormPopup(2)">
+            <h2>{{(isProf || pid) ? 'Details' : 'Services'}}</h2>
+            <button *ngIf="!onlyView" mat-button (click)="isProf ? navigateToEdit() : openFormPopup(2)">
               <mat-icon class="action-mat-icon">edit</mat-icon>
             </button>
           </div>
-          <div>
+          <div *ngIf="!isProf">
             <ul>
               <li *ngFor="let service of servicesArray">
                 {{service}}
               </li>
             </ul>
+          </div>
+          <div *ngIf="(isProf || pid) && medicalData">
+            <div *ngFor="let data of detailsData" style="display: flex;
+            flex-direction: row;
+            gap: 6px;
+            font-size: 16px;
+            line-height: 19px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #dadeef;
+            padding-bottom: 6px;">
+              <div>
+                {{data.label}}:
+              </div>
+              <div>
+                {{(data.label === 'Status' && !medicalData[data.key]) ? 'Available' : medicalData[data.key]}}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -67,14 +93,16 @@
         <mat-card-header>
           <mat-card-title class="d-flex-sb">
             <div style="display: flex; gap: 6px; align-items: center;">
-              Overall Ratings : 3.5/5
+              Overall Ratings : <span *ngIf="comments.length">{{totalRating}}/5</span>
+              <span *ngIf="!comments.length">No ratings found.</span>
             </div>
           </mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <div>
-            <div class="row">
-              <mat-icon style="font-size: 20px;margin-top: 2px;color: #ffb42d;" *ngFor="let star of  getOverallStarsRating(3.5)">{{star}}</mat-icon>
+            <div class="row" *ngIf="comments.length">
+              <mat-icon style="font-size: 20px;margin-top: 2px;color: #ffb42d;"
+                *ngFor="let star of  getOverallStarsRating(totalRating)">{{star}}</mat-icon>
             </div>
           </div>
         </mat-card-content>
@@ -87,7 +115,7 @@
             <div>
               Contact
             </div>
-            <button mat-button (click)="openFormPopup(3)">
+            <button *ngIf="!onlyView" mat-button (click)="isProf ? navigateToEdit() : openFormPopup(3)">
               <mat-icon class="action-mat-icon">edit</mat-icon>
             </button>
           </mat-card-title>
@@ -96,10 +124,10 @@
           <div>
             <div class="row">
               <div class="col">
-                Email Id: {{userProfile.email}}
+                Email Id: {{ pid ? getValue(medicalData.email) : userProfile.email}}
               </div>
               <div class="col">
-                Contact: {{userProfile.cellphone}}
+                Contact: {{pid ? getValue(medicalData.phone_no) : userProfile.cellphone}}
               </div>
             </div>
           </div>
@@ -118,17 +146,19 @@
         </mat-card-header>
         <mat-card-content style="max-height: 250px;overflow-y: auto;">
           <div class="comments-grid">
+            <h2 *ngIf="!comments.length">No Comments found.</h2>
             <div class="comment-card" *ngFor="let comment of comments">
               <div style="display: flex; align-items: center;">
-                <img style="margin: 0;" mat-card-avatar [src]="comment.userLogo" alt="User Logo">
-                <span>{{ comment.userName }}</span>
-                <span style="margin-left: 16px;">{{comment.date | date: 'MMM dd, YYYY: HH:mm'}}</span>
+                <img style="margin: 0;" mat-card-avatar [src]="MEDICAL_DOCUMENTS_URL + comment.avatar" alt="User Logo">
+                <span style="margin-left: 10px;">{{ comment.first_name + ' ' + comment.last_name }}</span>
+                <span style="margin-left: 16px;">{{comment.created_at | date: 'MMM dd, YYYY: HH:mm'}}</span>
                 <span style="display: flex; margin-left: 16px;">
-                  <mat-icon style="font-size: 20px;margin-top: 2px; color: #ffb42d;" *ngFor="let s of [1,2,3,4,5]">star_border</mat-icon>
+                  <mat-icon style="font-size: 20px;margin-top: 2px; color: #ffb42d;"
+                    *ngFor="let star of getOverallStarsRating(comment.rating)">{{star}}</mat-icon>
                 </span>
               </div>
-              <div style="margin-left: 40px;">
-                {{comment.commentText }}
+              <div style="margin-left: 50px;">
+                {{comment.comment }}
               </div>
             </div>
           </div>

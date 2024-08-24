@@ -4,6 +4,7 @@ export class MedicalTeamModel {
   [key: string]: any;
   public pid!: number;
   public customer_id: number;
+  public user_id: number;
   public first_name: string;
   public last_name: string;
   public describe: string;
@@ -23,9 +24,12 @@ export class MedicalTeamModel {
   public phone: string;
   public address: string;
   public internal_notes: string;
+  public rating: number;
+  public comment: string;
 
   constructor() {
     this.customer_id = 0;
+    this.user_id = 0;
     this.first_name = '';
     this.last_name = '';
     this.describe = '';
@@ -44,5 +48,7 @@ export class MedicalTeamModel {
     this.phone = '';
     this.address = '';
     this.internal_notes = '';
+    this.rating =0;
+    this.comment = "";
   }
 }

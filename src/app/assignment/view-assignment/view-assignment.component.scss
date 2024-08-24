@@ -38,9 +38,27 @@
     color: #33749b;
   }
 
+  ::ng-deep .mat-mdc-tab-body-content {
+    overflow: hidden;
+  }
+
+  .comment {
+    margin-left: 120px;
+    display: flex;
+    flex-direction: column;
+
+    .icon-cont {
+      margin-bottom: 10px;
+      gap: 10px;
+      display: flex;
+    }
+  }
+
   .company-content {
     margin: 0px;
     border: 1px solid #d6d6d6;
+    border-radius: 6px;
+    border-top: 2px solid rgb(42, 42, 207);
 
     .content {
       display: flex;
@@ -55,7 +73,8 @@
       }
     }
   }
-.pd-top{
-  margin-top: 20px;
-}
+
+  .pd-top {
+    margin-top: 20px;
+  }
 }
