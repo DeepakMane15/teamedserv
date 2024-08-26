@@ -49,11 +49,10 @@
             <mat-tab *ngIf="isProf" label="Ratings">
               <div class="company-content pd-top">
                 <div class="company-card">
-                  <div style="display: flex; align-items: center; gap: 16px; padding: 20px;">
-                    <img style="height: 100px;border-radius: 50%;" [src]="DEFAULT_IMG" class="com-logo" />
+                  <div style="display: flex; align-items: center; gap: 16px; padding: 20px 0 0 20px;">
+                    <img style="height: 100px;border-radius: 50%;" [src]="MEDICAL_DOCUMENTS_URL + assignmentData.logo" class="com-logo" />
                     <div style="display: flex; flex-direction: column;">
-                      <h2>Company</h2>
-                      <h3>Description</h3>
+                      <h2>{{assignmentData.company_name}}</h2>
                     </div>
                   </div>
                   <div class="comment" *ngIf="!assignmentData.comment">

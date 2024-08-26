@@ -84,18 +84,7 @@
                       Customer is invalid
                     </mat-error>
                   </mat-form-field>
-                </div>
-                <div class="col">
-                  <mat-form-field class="full-width">
-                    <mat-label>Medical Team</mat-label>
-                    <mat-select formControlName="medical">
-                      <mat-option *ngFor="let medical of medicalMaster"
-                        [value]="medical.id">{{medical.name}}</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="ambulanceForm.get('medical')?.invalid && ambulanceForm.get('medical')?.touched">
-                      Medical is invalid
-                    </mat-error>
-                  </mat-form-field>
+
                 </div>
               </div>
             </div>
@@ -218,9 +207,9 @@
                     </mat-error>
                   </mat-form-field> -->
                   <ng-multiselect-dropdown [placeholder]="'Assignment'" [settings]="assSettings"
-                  [data]="assignmentsMaster" formControlName="assignment" (onSelect)="onItemSelect($event)"
-                  (onSelectAll)="onSelectAll($event)">
-                </ng-multiselect-dropdown>
+                    [data]="assignmentsMaster" formControlName="assignment" (onSelect)="onItemSelect($event)"
+                    (onSelectAll)="onSelectAll($event)">
+                  </ng-multiselect-dropdown>
                 </div>
                 <div class="col">
                   <mat-form-field class="full-width">
@@ -285,21 +274,21 @@
             <div class="form-body">
               <div class="row">
                 <div class="col">
-                  <ng-multiselect-dropdown [placeholder]="'Patient'" [settings]="patSettings"
-                  [data]="patientsMaster" formControlName="patient" (onSelect)="handlePatientSelect($event)"
-                  (onSelectAll)="onSelectAll($event)">
-                </ng-multiselect-dropdown>
+                  <ng-multiselect-dropdown [placeholder]="'Patient'" [settings]="patSettings" [data]="patientsMaster"
+                    formControlName="patient" (onSelect)="handlePatientSelect($event)"
+                    (onSelectAll)="onSelectAll($event)">
+                  </ng-multiselect-dropdown>
                   <mat-error *ngIf="ambulanceForm.get('patient')?.invalid && ambulanceForm.get('patient')?.touched">
                     Patient is invalid
                   </mat-error>
                   <!-- <button mat-button (click)="openAddPopUpForm()">Add</button> -->
                   <button mat-raised-button class="center" style="margin-top: 10px;" color="primary"
-                  (click)="openAddPopUpForm()">
-                  <div>
-                    Add
-                  </div>
-                  <mat-icon>add</mat-icon>
-                </button>
+                    (click)="openAddPopUpForm()">
+                    <div>
+                      Add
+                    </div>
+                    <mat-icon>add</mat-icon>
+                  </button>
                 </div>
                 <div class="col">
                   <mat-form-field class="full-width">
@@ -360,19 +349,26 @@
             </mat-expansion-panel-header>
 
             <div class="form-body">
+              <!-- <div class="row">
+              </div> -->
               <div class="row">
                 <div class="col">
-                  <ng-multiselect-dropdown [placeholder]="'Fleet'" [settings]="drSettings"
-                  [data]="driverMaster" formControlName="driver">
-                </ng-multiselect-dropdown>
-                <!-- <button mat-button (click)="openAddFleetPopUpForm()">Add</button> -->
-                <button mat-raised-button class="center" style="margin-top: 10px;" color="primary"
-                (click)="openAddFleetPopUpForm()">
-                <div>
-                  Add
+                  <ng-multiselect-dropdown [placeholder]="'Customer'" [settings]="cusSettings" [data]="customerMaster"
+                    formControlName="customer" (onSelect)="onCustomerSelect($event)" (onSelectAll)="onSelectAll($event)">
+                  </ng-multiselect-dropdown>
                 </div>
-                <mat-icon>add</mat-icon>
-              </button>
+                <div class="col">
+                  <ng-multiselect-dropdown [placeholder]="'Fleet'" [settings]="drSettings" [data]="driverMaster"
+                    formControlName="driver">
+                  </ng-multiselect-dropdown>
+                  <!-- <button mat-button (click)="openAddFleetPopUpForm()">Add</button> -->
+                  <button mat-raised-button class="center" style="margin-top: 10px;" color="primary"
+                    (click)="openAddFleetPopUpForm()">
+                    <div>
+                      Add
+                    </div>
+                    <mat-icon>add</mat-icon>
+                  </button>
                 </div>
               </div>
             </div>

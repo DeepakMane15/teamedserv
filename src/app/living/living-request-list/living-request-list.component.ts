@@ -10,58 +10,55 @@ import {
 } from 'src/app/common/constants/AppEnum';
 import { PermissionsService } from 'src/app/shared/authguard/permissions.service';
 import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/delete-confirm.component';
-// import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
 
+
 @Component({
-  selector: 'app-ambulance-list',
-  templateUrl: './ambulance-list.component.html',
-  styleUrl: './ambulance-list.component.scss',
+  selector: 'app-living-request-list',
+  templateUrl: './living-request-list.component.html',
+  styleUrl: './living-request-list.component.scss'
 })
-export class AmbulanceListComponent implements OnInit {
+export class LivingRequestListComponent {
   displayedColumns: string[] = [
     'no',
-    'transaction',
-    'patient',
-    'medicalTeam',
-    'entryDate',
-    'visitDate',
-    'amount',
-    // 'paymentDate',
-    'status',
+    'name',
+    'description',
+    'address',
+    'rooms',
     'action',
   ];
 
   showSpinner: any;
-  public assignmentStatus = AssignmentStatus;
-  public statusFilter: string = 'all';
   public showSpinnner: Boolean = false;
-  public originalData: any = [];
+  public livingData: any = [];
+  public roomsMaster = [];
+  dataSource = new MatTableDataSource<any>();
   public filteredDataSource!: any[];
   public searchTerm!: string;
-  dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private _apiServices: ApiService,
-    private router: Router,
     private filterService: FilterServiceService,
+    private router: Router,
     private dialog: MatDialog,
     private permissionService: PermissionsService
   ) {}
-  ngOnInit() {
+  ngOnInit(): void {
+    throw new Error('Method not implemented');
+  }
 
+  checkAccess(
+    type: 'isEnabled' | 'canView' | 'canEdit' | 'canDelete'
+  ): boolean {
+    return this.permissionService.hasAccess('Medical Facilities', type);
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.fetchMedtransBookings();
-  }
-
-  checkAccess(type: 'isEnabled' | 'canView' | 'canEdit' | 'canDelete'): boolean {
-    return this.permissionService.hasAccess('Ambulance', type);
+    this.fetchLivings();
   }
 
   applyFilter(): void {
@@ -71,13 +68,13 @@ export class AmbulanceListComponent implements OnInit {
     );
   }
 
-  fetchMedtransBookings() {
+  fetchLivings() {
     this.showSpinner = true;
-    this._apiServices.get(APIConstant.GET_MEDTRANS).subscribe(
+    this._apiServices.get(APIConstant.GET_LIVINGS).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.dataSource.data = res.data;
-          this.originalData = res.data;
+          this.livingData = res.data;
           this.filteredDataSource = this.dataSource.data.slice();
         }
         this.showSpinner = false;
@@ -88,38 +85,40 @@ export class AmbulanceListComponent implements OnInit {
     );
   }
   navigateToAdd() {
-    this.router.navigate(['/ambulance/add']);
+    this.router.navigate(['/medical-facility/add']);
   }
 
-  navigateToEdit(ambulanceData: any) {
-    this.router.navigate(['/ambulance/edit'], {
-      state: { ambulanceData: ambulanceData },
+  navigateToEdit(livingData: any) {
+    this.router.navigate(['/medical-facility/edit'], {
+      state: { livingData: livingData },
     });
   }
-  navigateToView(ambulanceData: any) {
-    this.router.navigate(['/ambulance/view'], {
-      state: { ambulanceId: ambulanceData.id, tabIndex: 0 },
+  navigateToView(livingData: any) {
+    this.router.navigate(['/medical-facility/view'], {
+      state: { livingId: livingData.id, tabIndex: 0 },
     });
+  }
+  navigateToRequest() {
+    this.router.navigate(['/medical-facility/request/add']);
   }
 
-  handleDelete(id: any) {
+  handleDelete(type: any) {
     const dialogRef = this.dialog.open(DeleteConfirmComponent, {
       width: '400px',
-      data: { name: 'Booking' },
+      data: { name: 'Living' },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         let fd = new FormData();
-        fd.append('id', id);
-        fd.append('type', DELETE_TYPE.AMBULANCE.toString());
+        fd.append('type', DELETE_TYPE.LIVING.toString());
+        fd.append('id', type);
         this.showSpinner = true;
         this._apiServices.post(APIConstant.COMMON_DELETE, fd).subscribe(
           (res: any) => {
             if (res && res.status) {
               this.showSpinner = false;
-              console.log(res.message);
-              this.fetchMedtransBookings();
+              this.fetchLivings();
             } else {
               this.showSpinner = false;
             }
@@ -132,19 +131,6 @@ export class AmbulanceListComponent implements OnInit {
       }
     });
   }
-  public filterByStatus() {
-    this.showSpinner = true;
-    if (this.statusFilter === 'all') {
-      this.dataSource.data = this.originalData;
-      this.showSpinner = false;
-      return;
-    }
-    let filteredData = this.originalData.filter(
-      (data: any) => data.status === this.statusFilter
-    );
-    this.dataSource.data = filteredData;
-    this.showSpinner = false;
-  }
 
   public refineLongText(value: string): string {
     let values = value?.split(',');
@@ -153,3 +139,4 @@ export class AmbulanceListComponent implements OnInit {
     return value;
   }
 }
+

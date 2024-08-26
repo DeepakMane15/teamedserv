@@ -10,6 +10,7 @@ import { TeamInvitationComponent } from './team-invitation/team-invitation.compo
 import { PermissionGuard } from './shared/authguard/permission.guard';
 import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
 import { CompanyAdvComponent } from './company-adv/company-adv.component';
+import { PrfilePreviewPopupComponent } from './company-adv/prfile-preview-popup/prfile-preview-popup.component';
 //import { DocumentComponent } from './document/document.component';
 const routes: Routes = [
   {
@@ -131,6 +132,12 @@ const routes: Routes = [
   {
     path: 'profile',
     component: CompanyAdvComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'profile/preview',
+    component: PrfilePreviewPopupComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard]
   },

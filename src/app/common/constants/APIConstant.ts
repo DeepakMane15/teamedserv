@@ -6,6 +6,7 @@ export enum APIConstant {
   COMMON_DELETE = 'common-delete',
   // customers
   GET_CUSTOMERS = 'customers',
+  GET_CUSTOMERS_BY_CATEGORY = 'customers-by-category',
   ADD_CUSTOMER = 'customer/add',
   DELETE_CUSTOMER = 'customer/delete',
   EDIT_CUSTOMER = 'customer/edit',
@@ -73,6 +74,7 @@ export enum APIConstant {
   ADD_DRIVER = 'driver/add',
   EDIT_DRIVER = 'driver/edit',
   GET_DRIVERS = 'driver/get',
+  GET_DRIVERS_BY_CUSTOMER = 'driver/get-by-customer',
   GET_DRIVER_BY_ID = 'driver/get-by-id',
 
   // Job Portal

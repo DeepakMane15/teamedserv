@@ -67,6 +67,38 @@
                 </div>
               </div>
             </mat-tab>
+            <mat-tab label="Grading/Reviews">
+              <div class="company-rating-content pd-top">
+                <div class="company-card">
+                  <div class="comment" *ngIf="!ambulanceData.comment">
+                    <div class="icon-cont">
+                      <mat-icon style="cursor: pointer; width: 30px;height: 32px;font-size: 30px;color: #ffb42d;"
+                        *ngFor="let star of stars; let i=index" (click)="markRating(i)">{{star}}</mat-icon>
+                    </div>
+                    <textarea matInput name="model" placeholder="Enter Comment" [(ngModel)]="comment" rows="4"
+                      style="resize: vertical; overflow: auto;" (ngModelChange)="onModelChange($event)">
+                    </textarea>
+                    <mat-hint>
+                      {{comment.length}}/50 words
+                    </mat-hint>
+                    <button mat-raised-button (click)="submitComment()" [disabled]="!comment.length"> Submit</button>
+                  </div>
+                  <div class="comment" *ngIf="ambulanceData?.comment">
+                    <div class="icon-cont" style="display: flex;">
+                      <span style="font-size: 16px;">Rating: </span>
+                      <mat-icon style="width: 30px;height: 32px;font-size: 26px;color: #ffb42d;"
+                        *ngFor="let star of stars; let i=index">{{star}}</mat-icon>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                      <span>Comment: </span>
+                      <p>
+                        {{ambulanceData?.comment}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
 
           </mat-tab-group>
         </mat-grid-tile>

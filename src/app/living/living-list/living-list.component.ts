@@ -49,7 +49,9 @@ export class LivingListComponent implements OnInit {
     throw new Error('Method not implemented');
   }
 
-  checkAccess(type: 'isEnabled' | 'canView' | 'canEdit' | 'canDelete'): boolean {
+  checkAccess(
+    type: 'isEnabled' | 'canView' | 'canEdit' | 'canDelete'
+  ): boolean {
     return this.permissionService.hasAccess('Medical Facilities', type);
   }
 
@@ -94,6 +96,9 @@ export class LivingListComponent implements OnInit {
     this.router.navigate(['/medical-facility/view'], {
       state: { livingId: livingData.id, tabIndex: 0 },
     });
+  }
+  navigateToRequest() {
+    this.router.navigate(['/medical-facility/request/add']);
   }
 
   handleDelete(type: any) {

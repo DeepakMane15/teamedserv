@@ -26,13 +26,17 @@ import { AddLivingComponent } from './add-living/add-living.component';
 import { LivingBoardComponent } from './living-board/living-board.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ViewLivingComponent } from './view-living/view-living.component';
+import { LivingRequestComponent } from './living-request/living-request.component';
+import { LivingRequestListComponent } from './living-request-list/living-request-list.component';
 
 @NgModule({
   declarations: [
     LivingListComponent,
     AddLivingComponent,
     LivingBoardComponent,
-    ViewLivingComponent
+    ViewLivingComponent,
+    LivingRequestComponent,
+    LivingRequestListComponent
   ],
   imports: [
     CommonModule,

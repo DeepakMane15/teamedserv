@@ -1,0 +1,124 @@
+<div class="spinner-overlay" *ngIf="showSpinner">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+<form [formGroup]="livingForm" (ngSubmit)="onSubmit()">
+  <div class="header-label-container">
+    <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+    <span class="title">
+      {{livingData ? 'Edit' : 'Add'}} Facility Request</span>
+  </div>
+  <mat-divider></mat-divider>
+
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Basic</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Name</mat-label>
+            <div class="uname-input">
+              <input matInput formControlName="name">
+            </div>
+            <mat-error *ngIf="livingForm.get('name')?.invalid && livingForm.get('name')?.touched">
+              Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address">
+            <mat-error *ngIf="livingForm.get('address')?.invalid && livingForm.get('address')?.touched">
+              Address is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description">
+            <mat-error *ngIf="livingForm.get('description')?.invalid && livingForm.get('description')?.touched">
+              Description is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Rooms</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- <form [formGroup]="myForm"> -->
+      <div formArrayName="items">
+        <div class="row" *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
+          <div class="col">
+            <ng-multiselect-dropdown class="rooms-dropdown" [placeholder]="'Room Type'" [settings]="roomSettings"
+              [data]="roomsMaster" formControlName="roomType" (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)">
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>From Date</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="date">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="livingForm.get('fromDate')?.invalid && livingForm.get('fromDate')?.touched">
+                From Date is invalid
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label> To Date</mat-label>
+              <input matInput [matDatepicker]="picker1" formControlName="date">
+              <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+              <mat-error *ngIf="livingForm.get('toDate')?.invalid && livingForm.get('toDate')?.touched">
+                To Date is invalid
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <!-- </form> -->
+
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Patient</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="col">
+        <ng-multiselect-dropdown [placeholder]="'Patient'" [settings]="patSettings" [data]="patientMaster"
+          formControlName="patientId" >
+        </ng-multiselect-dropdown>
+        <mat-error *ngIf="livingForm.get('patientId')?.invalid && livingForm.get('patientId')?.touched">
+          Patient is invalid
+        </mat-error>
+        <button mat-raised-button class="center" style="margin: 10px 0 6px 0" color="primary"
+          (click)="openAddPopUpForm()">
+          <div>
+            Add
+          </div>
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions class="action-btns">
+      <button mat-raised-button class="cancel-btn" type="button" (click)="navigateBack()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+
+</form>

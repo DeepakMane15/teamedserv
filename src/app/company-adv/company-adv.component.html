@@ -18,8 +18,8 @@
               <mat-icon class="action-mat-icon">edit</mat-icon>
             </button>
           </div>
-          <h3 *ngIf="!pid">{{userProfile.company_name}}</h3>
-          <h3 *ngIf="pid" style="margin-left: 10px;">{{medicalData.full_name}}</h3>
+          <h3 *ngIf="!pid && !isProf">{{userProfile.company_name}}</h3>
+          <h3 *ngIf="pid || isProf" [ngClass]="onlyView ? 'ml' : ''">{{medicalData.full_name}}</h3>
         </div>
         <div>
           <input id="fileInput" hidden #licenceInput2 type="file" (change)="onFileSelected($event,true)">
@@ -27,6 +27,9 @@
           <button *ngIf="!onlyView" mat-raised-button color="primary" class="upload" (click)="licenceInput1.click()">
             Upload Banner
           </button>
+          <!-- <button *ngIf="!onlyView" mat-raised-button color="primary" class="upload" (click)="navigateToPreview()">
+            Preview
+          </button> -->
           <div class="invite upload" *ngIf="pid && onlyView">
             <a *ngIf=" medicalData['is_paid'] === '0'" (click)="openDialog()" class="button">Pay</a>
             <a *ngIf=" medicalData['is_paid'] === '1' && medicalData['request_exists'] === '0'"
@@ -37,13 +40,19 @@
           </div>
         </div>
       </div>
+      <button class="preview-btn" mat-button (click)="navigateToPreview(isPreview)">
+        {{isPreview ? 'Edit Mode' : 'Preview'}}
+        <mat-icon>
+          {{isPreview ? 'edit' : 'open_in_new'}}
+        </mat-icon>
+      </button>
     </div>
 
     <div class="row content-row">
       <div class="col desc">
         <div class="description-box">
           <div class="title-top">
-            <h2>Description</h2>
+            <h2 style="font-size: 20px; color: #000000DE;">Description</h2>
             <button *ngIf="!onlyView" mat-button (click)="isProf ? navigateToEdit() : openFormPopup(1)">
               <mat-icon class="action-mat-icon">edit</mat-icon>
             </button>
@@ -56,7 +65,7 @@
       <div class="col">
         <div class="services-box">
           <div class="title-top">
-            <h2>{{(isProf || pid) ? 'Details' : 'Services'}}</h2>
+            <h2 style="font-size: 20px; color: #000000DE;">{{(isProf || pid) ? 'Details' : 'Services'}}</h2>
             <button *ngIf="!onlyView" mat-button (click)="isProf ? navigateToEdit() : openFormPopup(2)">
               <mat-icon class="action-mat-icon">edit</mat-icon>
             </button>

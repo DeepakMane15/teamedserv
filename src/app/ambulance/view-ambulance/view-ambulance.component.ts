@@ -23,6 +23,8 @@ export class ViewAmbulanceComponent implements OnInit {
   defaultTabIndex!: number;
   public appConstants = AppConstants;
   public address!: string;
+  public comment: string = "";
+  public stars: string[] = [];
 
   public ambulanceProfile: any = [
     {
@@ -92,6 +94,14 @@ export class ViewAmbulanceComponent implements OnInit {
     {
       label : 'First name',
       key : 'first_name',
+    },
+    {
+      label : 'Last name',
+      key : 'last_name',
+    },
+    {
+      label : 'Company',
+      key : 'company_name',
     },
     {
       label : 'Last name',
@@ -205,5 +215,65 @@ export class ViewAmbulanceComponent implements OnInit {
     this.router.navigate(['/ambulance/edit'], {
       state: { ambulanceData: this.ambulanceData },
     });
+  }
+
+  onModelChange(value: string) {
+    if (value.length > 50) {
+      this.comment = value.slice(0, 50);
+    }
+  }
+
+  public getOverallStarsRating(number: number) {
+    let k = 0;
+    let decimalStar = number % 1;
+    let realStar = number - decimalStar;
+    this.stars=[];
+    while (k < realStar) {
+      this.stars.push('star');
+      k++;
+    }
+    if (decimalStar > 0) {
+      this.stars.push('star_half');
+    }
+    while (this.stars.length < 5) {
+      this.stars.push('star_border');
+    }
+  }
+  public markRating(index: number) {
+    let k = 0;
+    while (k <= index) {
+      this.stars[k] = 'star';
+      k++;
+    }
+    while (k < 5) {
+      this.stars[k] = 'star_border';
+      k++;
+    }
+  }
+  public submitComment() {
+    this.showSpinner = true;
+    const fd = new FormData();
+    // fd.append('customer_id', this.ambulanceData.company_id);
+    // fd.append('user_id',this.ambulanceData['user_id'].toString())
+    // fd.append('rating', this.stars.filter((s: string) => s === 'star')?.length?.toString());
+    // fd.append('comment', this.comment);
+    fd.append('customer_id', this.ambulanceData.company_id);
+    fd.append('assignment_id', this.ambulanceData.id);
+    fd.append('rating', this.stars.filter((s: string) => s === 'star')?.length?.toString());
+    fd.append('comment', this.comment);
+
+    this._apiService.post(APIConstant.POST_RATING, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.showSpinner = false;
+          let ambulanceId = history.state.ambulanceId;
+          this.fetchAmbulanceData(ambulanceId)
+        }
+      },
+      (error) => {
+        this.showSpinner = false;
+        console.error('Initial Data fetch failed', error);
+      }
+    );
   }
 }

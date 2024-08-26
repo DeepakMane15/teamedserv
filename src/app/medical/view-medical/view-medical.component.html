@@ -56,13 +56,6 @@
             <mat-tab *ngIf="!isSelf" label="Grading/Reviews">
               <div class="company-content pd-top">
                 <div class="company-card">
-                  <div style="display: flex; align-items: center; gap: 16px; padding: 20px;">
-                    <img style="height: 100px;border-radius: 50%;" [src]="DEFAULT_IMG" class="com-logo" />
-                    <div style="display: flex; flex-direction: column;">
-                      <h2 style="margin: 0;">Company</h2>
-                      <!-- <h3>Description</h3> -->
-                    </div>
-                  </div>
                   <div class="comment" *ngIf="!medicalData?.comment">
                     <div class="icon-cont">
                       <mat-icon style="cursor: pointer; width: 30px;height: 32px;font-size: 30px;color: #ffb42d;"

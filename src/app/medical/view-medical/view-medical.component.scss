@@ -60,7 +60,7 @@
 }
 
 .company-content {
-  margin: 0px;
+  margin: 20px 0px;
   border: 1px solid #d6d6d6;
   border-radius: 6px;
   border-top: 2px solid rgb(42, 42, 207);
@@ -79,9 +79,10 @@
   }
 
   .comment {
-    margin-left: 120px;
+    // margin-left: 120px;
     display: flex;
     flex-direction: column;
+    padding: 20px;
 
     .icon-cont {
       margin-bottom: 10px;

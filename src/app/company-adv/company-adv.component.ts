@@ -1,15 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AppConstants } from '../common/constants/AppConstants';
 import { FileType } from '../common/constants/AppEnum';
 import { AuthService } from '../shared/services/auth.service';
 import { ApiService } from '../shared/services/api/api.service';
 import { APIConstant } from '../common/constants/APIConstant';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AdvFormPopupComponent } from '../shared/dialog/adv-form-popup/adv-form-popup.component';
 import { UserTypeConstant } from '../common/constants/UserTypeConstant';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentModalComponent } from '../payment-modal/payment-modal.component';
+import { PrfilePreviewPopupComponent } from './prfile-preview-popup/prfile-preview-popup.component';
 
 interface MedicalProfileData {
   label: string;
@@ -48,10 +49,13 @@ export class CompanyAdvComponent implements OnInit {
   public comments: any = [];
   public isProf: boolean = false;
   public medicalData!: any;
-  private toProtect:boolean = false
+  private toProtect: boolean = false;
 
   @Input() public pid!: string;
   @Input() public onlyView: boolean = false;
+  @Input() public isPreview: boolean = false;
+  @Output() closeDialog: EventEmitter<null> = new EventEmitter<null>();
+  // public isPreview: boolean = false;
 
   public detailsData = [
     { label: 'Profession', key: 'profession_name' },
@@ -67,12 +71,12 @@ export class CompanyAdvComponent implements OnInit {
     private authService: AuthService,
     private _apiService: ApiService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit() {
     this.userProfile = this.authService.getUserData();
-    console.log(this.userProfile);
+
     this.isProf = this.userProfile.user_type === UserTypeConstant.PROFESSIONAL;
     if (!this.pid) this.fetchRatings();
 
@@ -91,7 +95,7 @@ export class CompanyAdvComponent implements OnInit {
       ) {
         this.logoImage = this.MEDICAL_DOCUMENTS_URL + this.userProfile.logo;
       } else if (this.isProf) {
-        this.logoImage = this.MEDICAL_DOCUMENTS_URL + this.userProfile.avatar;
+        this.logoImage = this.userProfile.avatar;
         this.fetchMedicalTeamData(this.userProfile.pid);
       }
     }
@@ -130,8 +134,9 @@ export class CompanyAdvComponent implements OnInit {
               this.fetchMedicalRatingById();
               this.logoImage = res.data.avatar;
               this.toProtect = res.data?.is_paid === '0';
-            } else
-              this.logoImage = this.MEDICAL_DOCUMENTS_URL + res.data.avatar;
+            } else if (this.isProf) this.logoImage = res.data.avatar;
+            else this.logoImage = this.MEDICAL_DOCUMENTS_URL + res.data.avatar;
+
           this.getOverallStarsRating(this.medicalData.rating);
           this.showSpinner = false;
         }
@@ -141,6 +146,11 @@ export class CompanyAdvComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  navigateToPreview(toClose: boolean = false) {
+    this.onlyView = !toClose;
+    this.isPreview = !toClose;
   }
 
   navigateToEdit() {
@@ -360,17 +370,17 @@ export class CompanyAdvComponent implements OnInit {
   }
   openDialog(): void {
     // const userProfile = this.authService.getUserData();
-    const dialogRef = this.dialog.open(PaymentModalComponent, {
-      data: { ...this.medicalData, customerId: this.userProfile.customer_id },
-      width: '600px', // Set width to 600 pixels
-      autoFocus: false,
-      // height: '800px', // Set height to 400 pixels
-    });
+    // const dialogRef = this.dialog.open(PaymentModalComponent, {
+    //   data: { ...this.medicalData, customerId: this.userProfile.customer_id },
+    //   width: '600px', // Set width to 600 pixels
+    //   autoFocus: false,
+    //   // height: '800px', // Set height to 400 pixels
+    // });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) this.savePayment(result);
-      else alert('Error: unexpected error occured');
-    });
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   if (result) this.savePayment(result);
+    //   else alert('Error: unexpected error occured');
+    // });
   }
 
   public sendInvitation() {

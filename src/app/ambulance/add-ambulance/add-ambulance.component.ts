@@ -35,6 +35,7 @@ export class AddAmbulanceComponent implements OnInit {
   ambulanceForm = this.fb.group({
     id: 0,
     customer_id: 0,
+    customer: [[], Validators.required],
     assignment: [[], Validators.required],
     date: ['', Validators.required],
     transaction: ['', Validators.required],
@@ -65,6 +66,7 @@ export class AddAmbulanceComponent implements OnInit {
   public drSettings!: IDropdownSettings;
   public assSettings!: IDropdownSettings;
   public patSettings!: IDropdownSettings;
+  public cusSettings!: IDropdownSettings;
 
   constructor(
     private fb: FormBuilder,
@@ -103,9 +105,17 @@ export class AddAmbulanceComponent implements OnInit {
       allowSearchFilter: true,
     };
     this.ambulanceData = history.state.ambulanceData;
+    this.cusSettings = {
+      singleSelection: true,
+      idField: 'customer_id',
+      textField: 'company_name',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+    };
     console.log(this.ambulanceData);
     if (this.ambulanceData) {
-      console.log(this.ambulanceData);
       this.ambulanceForm.patchValue({
         id: this.ambulanceData.id,
         customer_id: this.ambulanceData.company_id,
@@ -134,7 +144,8 @@ export class AddAmbulanceComponent implements OnInit {
     }
     this.fetchMedicalTeams();
     this.fetchInitialData();
-    this.fetchDrivers();
+    // this.fetchDrivers();
+    this.fetchCustomers();
   }
 
   public fetchInitialData() {
@@ -189,10 +200,15 @@ export class AddAmbulanceComponent implements OnInit {
   onItemSelect(item: any) {
     // this.handleMedicalSelect(item);
   }
+  onCustomerSelect(item: any) {
+    this.fetchDrivers(item.customer_id);
+  }
   onSelectAll(items: any) {}
-  private fetchDrivers() {
+  private fetchDrivers(id: string) {
     this.showSpinner = true;
-    this._apiService.get(APIConstant.GET_DRIVERS).subscribe(
+    const fd = new FormData();
+    fd.append('customer_id', id);
+    this._apiService.post(APIConstant.GET_DRIVERS_BY_CUSTOMER, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.driverMaster = res.data;
@@ -213,9 +229,39 @@ export class AddAmbulanceComponent implements OnInit {
     );
   }
 
+  public fetchCustomers() {
+    this.showSpinner = true;
+    const fd = new FormData();
+    fd.append('category', '6');
+    this._apiService.post(APIConstant.GET_CUSTOMERS_BY_CATEGORY, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.showSpinner = false;
+          this.customerMaster = res.data;
+
+          if (this.ambulanceData) {
+            let customer = this.customerMaster.filter(
+              (cus: any) => cus.customer_id === this.ambulanceData.customer_id
+            );
+            this.ambulanceForm.patchValue({
+              customer: customer,
+            });
+            this.fetchDrivers(customer[0].customer_id);
+          }
+        } else {
+          console.error('Customers fetch failed');
+        }
+      },
+      (error) => {
+        this.showSpinner = false;
+        console.error('Customers fetch failed', error);
+      }
+    );
+  }
+
   public fetchMedicalTeams() {
     this.showSpinner = true;
-    this._apiService.get(APIConstant.GET_MEDICALTEAMS).subscribe(
+    this._apiService.get(APIConstant.GET_DRIVERS_BY_CUSTOMER).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.showSpinner = false;
@@ -331,7 +377,7 @@ export class AddAmbulanceComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.fetchDrivers();
+      // this.fetchDrivers();
     });
   }
 }
