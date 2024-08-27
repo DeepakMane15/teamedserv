@@ -25,7 +25,10 @@ export class LivingRequestListComponent {
     'name',
     'description',
     'address',
-    'rooms',
+    'room',
+    'patient',
+    'fromDate',
+    'toDate',
     'action',
   ];
 
@@ -70,7 +73,7 @@ export class LivingRequestListComponent {
 
   fetchLivings() {
     this.showSpinner = true;
-    this._apiServices.get(APIConstant.GET_LIVINGS).subscribe(
+    this._apiServices.get(APIConstant.GET_LIVING_REQUEST).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.dataSource.data = res.data;
@@ -89,12 +92,12 @@ export class LivingRequestListComponent {
   }
 
   navigateToEdit(livingData: any) {
-    this.router.navigate(['/medical-facility/edit'], {
+    this.router.navigate(['/medical-facility/request/add'], {
       state: { livingData: livingData },
     });
   }
   navigateToView(livingData: any) {
-    this.router.navigate(['/medical-facility/view'], {
+    this.router.navigate(['/medical-facility/request/view'], {
       state: { livingId: livingData.id, tabIndex: 0 },
     });
   }
@@ -105,13 +108,13 @@ export class LivingRequestListComponent {
   handleDelete(type: any) {
     const dialogRef = this.dialog.open(DeleteConfirmComponent, {
       width: '400px',
-      data: { name: 'Living' },
+      data: { name: 'Living Request' },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         let fd = new FormData();
-        fd.append('type', DELETE_TYPE.LIVING.toString());
+        fd.append('type', DELETE_TYPE.LIVING_REQUEST.toString());
         fd.append('id', type);
         this.showSpinner = true;
         this._apiServices.post(APIConstant.COMMON_DELETE, fd).subscribe(

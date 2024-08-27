@@ -36,5 +36,6 @@ export enum DELETE_TYPE {
   AMBULANCE = 5,
   LIVING = 6,
   JOB_PORTAL = 7,
-  JOB_POST = 8
+  JOB_POST = 8,
+  LIVING_REQUEST = 9
 }

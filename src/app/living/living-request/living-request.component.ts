@@ -6,7 +6,10 @@ import { Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { AppConstants } from 'src/app/common/constants/AppConstants';
-import { ADD_POPUP_COMPONENT, FileType } from 'src/app/common/constants/AppEnum';
+import {
+  ADD_POPUP_COMPONENT,
+  FileType,
+} from 'src/app/common/constants/AppEnum';
 import { AddFormPopupComponent } from 'src/app/shared/dialog/add-form-popup/add-form-popup.component';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -14,7 +17,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 @Component({
   selector: 'app-living-request',
   templateUrl: './living-request.component.html',
-  styleUrl: './living-request.component.scss'
+  styleUrl: './living-request.component.scss',
 })
 export class LivingRequestComponent {
   public showSpinner: Boolean = false;
@@ -36,36 +39,18 @@ export class LivingRequestComponent {
     id: 0,
     customer_id: 0,
     name: ['', Validators.required],
-    // rooms: this.fb.array([this.createRoom()]),
-    items: this.fb.array([
-      this.fb.group({
-        roomType: ['', Validators.required]
-      }),
-    ]),
+    room: [[]],
     description: ['', Validators.required],
     address: ['', Validators.required],
-    fromDate: ['', Validators.required],
-    toDate: ['', Validators.required],
-    patientId: [[]]
-  });
-
-  selectedFiles: File[] = [];
-
-  myForm = this.fb.group({
-    items: this.fb.array([
-      this.fb.group({
-        roomType: ['', Validators.required],
-        amenities: [[], [Validators.required]],
-        price: ['', Validators.required], // Nested FormArray
-      }),
-    ]),
+    fromDate: [new Date, Validators.required],
+    toDate: [new Date(), Validators.required],
+    patientId: [[]],
   });
 
   public roomSettings!: IDropdownSettings;
   public amenitySettings!: IDropdownSettings;
   public patSettings!: IDropdownSettings;
   public patientMaster: any;
-
 
   constructor(
     private fb: FormBuilder,
@@ -115,50 +100,24 @@ export class LivingRequestComponent {
       customer_id: this.livingData.customer_id,
       name: this.livingData.name,
       description: this.livingData.description,
-      // items: this.livingData.rooms,
+      toDate: new Date(this.livingData.to_date),
+      fromDate: new Date(this.livingData.from_date),
       address: this.livingData.address,
     });
   }
 
-  addItem() {
-    const item = this.fb.group({
-      roomType: ['', Validators.required],
-      amenities: [[], [Validators.required]],
-      price: ['', Validators.required],
-      // Add more form controls as needed
-    });
-
-    this.items.push(item);
-  }
-
-  // Helper method to get the 'items' FormArray
-  get items() {
-    return this.livingForm.get('items') as FormArray;
-  }
-
-  public openAddPopUpForm() {
-    const dialogRef = this.dialog.open(AddFormPopupComponent, {
-      width: '900px',
-      height: '550px',
-      data: {
-        component: ADD_POPUP_COMPONENT.PATIENT,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      this.fetchPatients();
-    });
-  }
-
-  deleteItem(itemIndex: number) {
-    this.items.removeAt(itemIndex);
-  }
   fetchPatients() {
     this.showSpinner = true;
     this._apiService.get(APIConstant.GET_PATIENTS).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.patientMaster = res.data;
+          if (history.state.livingData.patient)
+            this.livingForm.patchValue({
+              patientId: this.patientMaster.filter(
+                (p: any) => p.id === history.state.livingData.patient
+              ),
+            });
         }
         this.showSpinner = false;
       },
@@ -175,6 +134,12 @@ export class LivingRequestComponent {
         if (res && res.status) {
           this.roomsMaster = res.data.rooms;
           this.amenitiesMaster = res.data.amenities;
+          if (history.state.livingData.room_id)
+            this.livingForm.patchValue({
+              room: this.roomsMaster.find(
+                (p: any) => p.id === history.state.livingData.room_id
+              ),
+            });
         }
         this.showSpinner = false;
       },
@@ -184,32 +149,47 @@ export class LivingRequestComponent {
     );
   }
 
+  public openAddPopUpForm() {
+    const dialogRef = this.dialog.open(AddFormPopupComponent, {
+      width: '900px',
+      height: '550px',
+      data: {
+        component: ADD_POPUP_COMPONENT.PATIENT,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.fetchPatients();
+    });
+  }
+
   onSubmit(): void {
-    console.log(this.livingForm.value);
-    console.log(this.items.value);
     if (this.livingForm.valid) {
       const formModel: any = this.livingForm.value;
       const formData = new FormData();
 
       // Convert JSON object to FormData
       for (const key of Object.keys(formModel)) {
-        if (key !== 'items') {
+        if (key !== 'patientId' && key !== 'room') {
           const value = formModel[key];
           formData.append(key, value);
+        } else {
+          formData.append(key, formModel[key][0].id);
         }
       }
-      formData.append('items', JSON.stringify(this.livingForm.get('items')?.value))
       this.showSpinner = true;
       this._apiService
         .post(
-          this.livingData ? APIConstant.EDIT_LIVING : APIConstant.ADD_LIVING,
+          this.livingData
+            ? APIConstant.UPADTE_LIVING_REQUEST
+            : APIConstant.ADD_LIVING_REQUEST,
           formData
         )
         .subscribe(
           (res: any) => {
             if (res && res.status) {
               this.showSpinner = false;
-              this.router.navigate(['/medical-facility']);
+              this.router.navigate(['/medical-facility/requests']);
             } else {
               this.showSpinner = false;
             }
@@ -223,81 +203,19 @@ export class LivingRequestComponent {
     return;
   }
 
-
   public handleCancel() {
-    this.router.navigate(['living'], {
+    this.router.navigate(['/medical-facility/requests'], {
       state: { livingData: this.livingData },
     });
   }
   public navigateBack() {
-    this.router.navigate(['/medical-facility']);
+    this.router.navigate(['/medical-facility/requests']);
   }
 
-  public usernameAvailabilityValidator(control: any) {
-    if (this.isUnameAvailable === false) {
-      return { notAvailable: true };
-    }
-    return null;
+  onItemSelect(item: any) {
+    // this.livingForm.patchValue({
+    //   patientId: item.id
+    // })
   }
-
-  onItemSelect(item: any) {}
   onSelectAll(items: any) {}
-
-  public onFileSelected(event: any, type: FileType) {
-    const file: File = event.target.files[0];
-    const fileSizeInMB = file.size / (1024 * 1024);
-    if (type === FileType.LICENCE) {
-      if (file && file.type === 'application/pdf') {
-        if (fileSizeInMB > AppConstants.MAX_PDF_SIZE) {
-          this.setErrorMsg(type, 'size');
-          return;
-        }
-        const files: FileList = event.target.files;
-        this.selectedFiles = [];
-        for (let i = 0; i < files.length; i++) {
-          this.selectedFiles.push(files[i]);
-        }
-
-        this.removeErrorMsg(type);
-      } else {
-        this.setErrorMsg(type, 'type');
-      }
-    }
-  }
-
-  private setErrorMsg(fileType: FileType, errorType: string): void {
-    if (errorType == 'size') {
-      if (fileType === FileType.LICENCE) {
-        this.licenceError = AppConstants.SIZE_ERROR_MSG;
-      } else {
-        this.photoError = AppConstants.SIZE_ERROR_MSG;
-      }
-    } else if ((errorType = 'type')) {
-      if (fileType === FileType.LICENCE) {
-        this.licenceError = AppConstants.PDF_TYPE_ERROR_MSG;
-      } else {
-        this.resumeError = AppConstants.PDF_TYPE_ERROR_MSG;
-      }
-    }
-  }
-
-  private removeErrorMsg(fileType: FileType): void {
-    switch (fileType) {
-      case FileType.LICENCE: {
-        this.licenceError = '';
-        break;
-      }
-      case FileType.PHOTO: {
-        this.photoError = '';
-        break;
-      }
-      case FileType.RESUME: {
-        this.resumeError = '';
-        break;
-      }
-      default:
-        break;
-    }
-  }
 }
-

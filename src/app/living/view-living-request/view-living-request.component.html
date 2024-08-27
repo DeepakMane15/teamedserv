@@ -1,0 +1,40 @@
+<main class="view">
+  <div class="spinner-overlay" *ngIf="showSpinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+  <mat-card class="medical-card">
+    <mat-card-header>
+      <mat-card-title>
+        <div class="tab-header-label-container">
+          <div class="title">Facility Request Details</div>
+          <button mat-raised-button (click)="navigateBack()">
+            <mat-icon class="action-mat-icon" aria-label="back">keyboard_backspace</mat-icon>
+            Back
+          </button>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-grid-list [cols]="columns ? 3 : 1" rowHeight="550" gutterSize="10">
+        <mat-grid-tile [colspan]="columns ? 2: 1" [rowspan]="1">
+          <div class="company-content" *ngIf="livingData">
+            <div fxLayout="row" class="content" fxLayoutAlign="start center"
+              *ngFor="let data of medicalProfile; let i=index" [ngClass]="i % 2 === 0 ? '' : 'colored-cell'">
+              <div fxFlex="40%" fxFlex.xs="100%">
+                {{data.label}}
+              </div>
+              <div style="width: 40px; text-align: center;">
+                :
+              </div>
+              <div fxFlex="60%" fxFlex.xs="100%" class="content-rhs">
+                <div class="multiline" *ngIf="data.label !== 'From Date' && data.label !== 'To Date'">{{ getValue(data)
+                  }}</div>
+                <div class="multiline" *ngIf="data.label === 'From Date' || data.label === 'To Date'">{{ getValue(data)
+                  | date}}</div>
+              </div>
+            </div>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>

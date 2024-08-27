@@ -28,6 +28,10 @@ export enum APIConstant {
   GET_MEDICAL_RATING = 'rating/medical/get',
   GET_MEDICAL_RATING_BY_ID = 'rating/medical/get-by-id',
 
+  ADD_LIVING_REQUEST = 'living-request/add',
+  UPADTE_LIVING_REQUEST = 'living-request/update',
+  GET_LIVING_REQUEST = 'living-request/get',
+
 
   // medical-teams
   GET_MEDICALTEAMS = 'medical-teams',

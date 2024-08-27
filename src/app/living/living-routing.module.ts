@@ -7,6 +7,7 @@ import { ViewLivingComponent } from './view-living/view-living.component';
 import { PermissionGuard } from '../shared/authguard/permission.guard';
 import { LivingRequestComponent } from './living-request/living-request.component';
 import { LivingRequestListComponent } from './living-request-list/living-request-list.component';
+import { ViewLivingRequestComponent } from './view-living-request/view-living-request.component';
 
 const routes: Routes = [
   { path: '', component: LivingListComponent, pathMatch: 'full' },
@@ -51,6 +52,13 @@ const routes: Routes = [
     pathMatch: 'full',
     canActivate: [PermissionGuard],
     data: { permission: 'Medical Facilities', type: 'canEdit' },
+  },
+  {
+    path: 'request/view',
+    component: ViewLivingRequestComponent,
+    pathMatch: 'full',
+    canActivate: [PermissionGuard],
+    data: { permission: 'Medical Facilities', type: 'canView' },
   },
   {
     path: 'requests',

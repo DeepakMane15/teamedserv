@@ -56,18 +56,18 @@
     </mat-card-header>
     <mat-card-content>
       <!-- <form [formGroup]="myForm"> -->
-      <div formArrayName="items">
-        <div class="row" *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
+      <div>
+        <div class="row">
           <div class="col">
             <ng-multiselect-dropdown class="rooms-dropdown" [placeholder]="'Room Type'" [settings]="roomSettings"
-              [data]="roomsMaster" formControlName="roomType" (onSelect)="onItemSelect($event)"
+              [data]="roomsMaster" (onSelect)="onItemSelect($event)" formControlName="room"
               (onSelectAll)="onSelectAll($event)">
             </ng-multiselect-dropdown>
           </div>
           <div class="col">
             <mat-form-field class="full-width">
               <mat-label>From Date</mat-label>
-              <input matInput [matDatepicker]="picker" formControlName="date">
+              <input matInput [matDatepicker]="picker" formControlName="fromDate">
               <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
               <mat-error *ngIf="livingForm.get('fromDate')?.invalid && livingForm.get('fromDate')?.touched">
@@ -78,7 +78,7 @@
           <div class="col">
             <mat-form-field class="full-width">
               <mat-label> To Date</mat-label>
-              <input matInput [matDatepicker]="picker1" formControlName="date">
+              <input matInput [matDatepicker]="picker1" formControlName="toDate">
               <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
               <mat-datepicker #picker1></mat-datepicker>
               <mat-error *ngIf="livingForm.get('toDate')?.invalid && livingForm.get('toDate')?.touched">

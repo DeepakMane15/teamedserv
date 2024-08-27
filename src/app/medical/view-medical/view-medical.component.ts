@@ -215,7 +215,7 @@ export class ViewMedicalComponent implements OnInit {
     this.showSpinner = true;
     const fd = new FormData();
     // fd.append('customer_id', this.medicalData.company_id);
-    fd.append('user_id',this.medicalData['user_id'].toString())
+    fd.append('user_id',this.medicalData['user_id'].toString());
     fd.append('rating', this.stars.filter((s: string) => s === 'star')?.length?.toString());
     fd.append('comment', this.comment);
 

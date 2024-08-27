@@ -165,6 +165,7 @@ export class ViewAmbulanceComponent implements OnInit {
           this.fetchDriverData(res.data.driver);
           this.ambulanceData = res.data;
           this.address = res.data.address;
+          this.getOverallStarsRating(this.ambulanceData.rating);
           this.showSpinner = false;
         }
       },
@@ -257,8 +258,9 @@ export class ViewAmbulanceComponent implements OnInit {
     // fd.append('user_id',this.ambulanceData['user_id'].toString())
     // fd.append('rating', this.stars.filter((s: string) => s === 'star')?.length?.toString());
     // fd.append('comment', this.comment);
-    fd.append('customer_id', this.ambulanceData.company_id);
-    fd.append('assignment_id', this.ambulanceData.id);
+    fd.append('customer_id', this.ambulanceData.customer_id);
+    fd.append('booking_id', history.state.ambulanceId);
+    fd.append('from','medtrans');
     fd.append('rating', this.stars.filter((s: string) => s === 'star')?.length?.toString());
     fd.append('comment', this.comment);
 
