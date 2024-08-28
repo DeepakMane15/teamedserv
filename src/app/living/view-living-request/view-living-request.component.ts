@@ -165,6 +165,24 @@ export class ViewLivingRequestComponent {
     return this.livingData['name'];
   }
 
+  public applyRequest(){
+    this.showSpinner = true;
+    const fd = new FormData();
+    fd.append('id', this.livingId);
+    this._apiService.post(APIConstant.APPLY_LIVING_REQUEST, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.fetchLivingData(this.livingId);
+          this.showSpinner = false;
+        }
+      },
+      (error) => {
+        this.showSpinner = false;
+        console.log(error);
+      }
+    );
+  }
+
   openDialog(): void {
     const userProfile = this._authService.getUserData();
     const dialogRef = this.dialog.open(PaymentModalComponent, {

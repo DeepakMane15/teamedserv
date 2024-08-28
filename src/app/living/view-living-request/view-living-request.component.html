@@ -33,6 +33,17 @@
                   | date}}</div>
               </div>
             </div>
+            <div *ngIf="livingData['status'] === '1'" fxLayout="row" class="content colored-cell" fxLayoutAlign="start center">
+              <div fxFlex="40%" fxFlex.xs="100%">
+                Action
+              </div>
+              <div style="width: 40px; text-align: center;">
+                :
+              </div>
+              <div fxFlex="60%" fxFlex.xs="100%" class="content-rhs">
+                <button mat-raised-button (click)="applyRequest()">Apply</button>
+              </div>
+            </div>
           </div>
         </mat-grid-tile>
       </mat-grid-list>

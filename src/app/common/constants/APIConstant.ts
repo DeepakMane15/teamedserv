@@ -31,6 +31,7 @@ export enum APIConstant {
   ADD_LIVING_REQUEST = 'living-request/add',
   UPADTE_LIVING_REQUEST = 'living-request/update',
   GET_LIVING_REQUEST = 'living-request/get',
+  APPLY_LIVING_REQUEST= 'living-request/apply',
 
 
   // medical-teams
