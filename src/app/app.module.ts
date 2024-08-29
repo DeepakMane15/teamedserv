@@ -75,6 +75,10 @@ import { CategoryRenameComponent } from './shared/dialog/category-rename/categor
 import { CompanyAdvComponent } from './company-adv/company-adv.component';
 import { AdvFormPopupComponent } from './shared/dialog/adv-form-popup/adv-form-popup.component';
 import { PrfilePreviewPopupComponent } from './company-adv/prfile-preview-popup/prfile-preview-popup.component';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { AddUserComponent } from './add-user/add-user.component';
+import { ViewUserComponent } from './view-user/view-user.component';
+import { CustomerModule } from './customer/customer.module';
 // export function momentAdapterFactory() {
 //   return adapterFactory(moment);
 // };
@@ -108,7 +112,10 @@ import { PrfilePreviewPopupComponent } from './company-adv/prfile-preview-popup/
     CategoryRenameComponent,
     CompanyAdvComponent,
     AdvFormPopupComponent,
-    PrfilePreviewPopupComponent
+    PrfilePreviewPopupComponent,
+    ManageUsersComponent,
+    AddUserComponent,
+    ViewUserComponent
   ],
   imports: [
     BrowserModule,
@@ -172,6 +179,7 @@ import { PrfilePreviewPopupComponent } from './company-adv/prfile-preview-popup/
     NgxMatTimepickerModule,
     MatExpansionModule,
     MatSlideToggleModule,
+    CustomerModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory  })
   ],
   exports: [OverlaySpinnerComponent],

@@ -248,12 +248,12 @@ export const NavItemsContant: NavLinksModel[] = [
   },
   {
     label: 'Driver',
-    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER, UserTypeConstant.CUSTOMER_USER,],
     category: '',
     subItems: [
       {
         label: 'All Drivers',
-        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER,UserTypeConstant.CUSTOMER_USER,],
         category: '',
         subItems: [],
         icon: '',
@@ -261,7 +261,7 @@ export const NavItemsContant: NavLinksModel[] = [
       },
       {
         label: 'Add Driver',
-        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER, UserTypeConstant.CUSTOMER_USER,],
         category: '',
         subItems: [],
         icon: '',
@@ -276,6 +276,7 @@ export const NavItemsContant: NavLinksModel[] = [
     roles: [
       UserTypeConstant.ADMIN,
       UserTypeConstant.CUSTOMER,
+      UserTypeConstant.CUSTOMER_USER,
       UserTypeConstant.PROFESSIONAL,
     ],
     category: '',
@@ -303,12 +304,12 @@ export const NavItemsContant: NavLinksModel[] = [
   // },
   {
     label: 'Ambulance',
-    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER,UserTypeConstant.CUSTOMER_USER,],
     category: 'directory',
     subItems: [
       {
         label: 'All Medtrans Bookings',
-        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER,UserTypeConstant.CUSTOMER_USER,],
         category: 'directory',
         subItems: [],
         icon: '',
@@ -316,7 +317,7 @@ export const NavItemsContant: NavLinksModel[] = [
       },
       {
         label: 'Add Medtrans Booking',
-        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER,UserTypeConstant.CUSTOMER_USER,],
         category: 'directory',
         subItems: [],
         icon: '',
@@ -328,12 +329,12 @@ export const NavItemsContant: NavLinksModel[] = [
   },
   {
     label: 'Medical Facility',
-    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER,UserTypeConstant.CUSTOMER_USER,],
     category: 'directory',
     subItems: [
       {
         label: 'All Medical Facility',
-        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER,UserTypeConstant.CUSTOMER_USER,],
         category: 'directory',
         subItems: [],
         icon: '',
@@ -341,7 +342,7 @@ export const NavItemsContant: NavLinksModel[] = [
       },
       {
         label: 'Add Medical Facility',
-        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER, UserTypeConstant.CUSTOMER_USER,],
         category: 'directory',
         subItems: [],
         icon: '',
@@ -349,7 +350,7 @@ export const NavItemsContant: NavLinksModel[] = [
       },
       {
         label: 'All Facility Requests',
-        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER, UserTypeConstant.CUSTOMER_USER,],
         category: 'directory',
         subItems: [],
         icon: '',
@@ -357,7 +358,7 @@ export const NavItemsContant: NavLinksModel[] = [
       },
       {
         label: 'Add Facility Request',
-        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER, UserTypeConstant.CUSTOMER_USER,],
         category: 'directory',
         subItems: [],
         icon: '',
@@ -369,7 +370,7 @@ export const NavItemsContant: NavLinksModel[] = [
   },
   {
     label: 'Medical Facility Board',
-    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER,UserTypeConstant.CUSTOMER_USER,],
     category: 'directory',
     subItems: [],
     icon: 'dashboard',
@@ -385,12 +386,12 @@ export const NavItemsContant: NavLinksModel[] = [
   // },
   {
     label: 'Field Openings',
-    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+    roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER,UserTypeConstant.CUSTOMER_USER,],
     category: 'directory',
     subItems: [
       {
         label: 'All Field Openings',
-        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER,UserTypeConstant.CUSTOMER_USER,],
         category: 'directory',
         subItems: [],
         icon: '',
@@ -398,7 +399,7 @@ export const NavItemsContant: NavLinksModel[] = [
       },
       {
         label: 'Add Field Opening',
-        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER],
+        roles: [UserTypeConstant.ADMIN, UserTypeConstant.CUSTOMER,UserTypeConstant.CUSTOMER_USER,],
         category: 'directory',
         subItems: [],
         icon: '',
@@ -417,5 +418,15 @@ export const NavItemsContant: NavLinksModel[] = [
     subItems: [],
     icon: 'next_week',
     url: '/manage-permissions',
+  },
+  {
+    label: 'Manage Users',
+    roles: [
+      UserTypeConstant.CUSTOMER
+    ],
+    category: 'directory',
+    subItems: [],
+    icon: 'supervisor_account',
+    url: '/manage-users',
   },
 ];

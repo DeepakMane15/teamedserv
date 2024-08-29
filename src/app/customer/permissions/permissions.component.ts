@@ -1,5 +1,4 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
@@ -13,7 +12,11 @@ export class PermissionsComponent implements OnInit {
   public showSpinner: boolean = false;
   public category: any;
 
+  public data = {
+    isNewCategory: false,
+  };
   @Input() customerId!: number;
+  @Input() ofUser: boolean = false;
   // @Input() isNewCategory: boolean = false
   public permissions = [
     {
@@ -83,11 +86,12 @@ export class PermissionsComponent implements OnInit {
   public categoryName: string = '';
   constructor(
     private _apiService: ApiService,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<PermissionsComponent>
-  ) {}
+  ) // @Inject(MAT_DIALOG_DATA) public data?: any,
+  // public dialogRef?: MatDialogRef<PermissionsComponent>
+  {}
   ngOnInit() {
-    if (this.data.isNewCategory) this.fetchPermissions();
+    this.fetchPermissions();
+    // if (this.data.isNewCategory) this.fetchPermissions();
   }
 
   public handleSave() {
@@ -95,21 +99,23 @@ export class PermissionsComponent implements OnInit {
     let apiUrl = APIConstant.SAVE_PERMISSIONS;
     const fd = new FormData();
     fd.append('permissions', JSON.stringify(this.permissions));
-    if (this.data.isNewCategory) {
-      fd.append('categoryName', this.categoryName);
-      apiUrl = APIConstant.SAVE_NEW_CATEGORY_PERMISSIONS;
-    } else {
-      fd.append('customer_id', this.customerId?.toString());
-    }
+    // if (this.data.isNewCategory) {
+    //   fd.append('categoryName', this.categoryName);
+    //   apiUrl = APIConstant.SAVE_NEW_CATEGORY_PERMISSIONS;
+    // } else {
+      if (this.ofUser) fd.append('user_id', this.customerId.toString());
+      else fd.append('customer_id', this.customerId.toString());
+    // fd.append('customer_id', this.customerId?.toString());
+    // }
     this._apiService.post(apiUrl, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.showSpinner = false;
-          if (this.data.isNewCategory) {
-            this.dialogRef.close(1);
-          } else {
-            this.fetchPermissions();
-          }
+          // if (this.data.isNewCategory && this.dialogRef) {
+          //   this.dialogRef?.close(1);
+          // } else {
+          this.fetchPermissions();
+          // }
         }
       },
       (error) => {
@@ -120,7 +126,8 @@ export class PermissionsComponent implements OnInit {
 
   fetchPermissions() {
     const fd = new FormData();
-    fd.append('customer_id', this.customerId.toString());
+    if (this.ofUser) fd.append('user_id', this.customerId.toString());
+    else fd.append('customer_id', this.customerId.toString());
     this._apiService.post(APIConstant.GET_PERMISSIONS, fd).subscribe(
       (res: any) => {
         if (res && res.status && res.data.length) {
@@ -173,9 +180,9 @@ export class PermissionsComponent implements OnInit {
   // }
 
   public isDisabled(): boolean {
-    if (this.data.isNewCategory) {
-      return !this.categoryName || this.categoryName.trim().length === 0;
-    }
+    // if (this.data.isNewCategory) {
+    //   return !this.categoryName || this.categoryName.trim().length === 0;
+    // }
     return false;
   }
 }

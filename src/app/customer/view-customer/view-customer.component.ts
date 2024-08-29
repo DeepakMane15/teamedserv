@@ -120,7 +120,7 @@ export class ViewCustomerComponent implements OnInit {
     this.customerData = history.state.customerData;
     this.defaultTabIndex = (history && history.state.tabIndex) || 0;
     if (!this.customerData) this.router.navigate(['customer']);
-    this.hideEdit = history.state.hideEdit ? true: false;
+    this.hideEdit = history.state.hideEdit;
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {

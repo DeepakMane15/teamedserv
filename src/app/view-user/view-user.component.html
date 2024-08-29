@@ -1,0 +1,46 @@
+<main class="view">
+  <div class="spinner-overlay" *ngIf="showSpinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+  <mat-card class="customer-card">
+    <mat-card-header>
+      <mat-card-title>
+        <!-- <mat-icon class="action-mat-icon"> keyboard_backspace </mat-icon> Customer/Company Details -->
+        <div class="tab-header-label-container">
+          <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+          <span>User Details</span>
+        </div>
+      </mat-card-title>
+      <!-- <button mat-raised-button color="primary" type="button" (click)="navigateToAdd()">Add Customer/Company</button> -->
+    </mat-card-header>
+    <mat-card-content>
+      <mat-grid-list [cols]="columns ? 3 : 1" rowHeight="700" gutterSize="10">
+        <mat-grid-tile [colspan]="columns ? 2: 1" [rowspan]="1">
+          <mat-tab-group [selectedIndex]="defaultTabIndex">
+            <mat-tab label="General">
+              <div (click)="editUser()" class="tab-header-label-container bordered" *ngIf="!hideEdit">
+                <mat-icon class="action-mat-icon colored" aria-label="back" >edit</mat-icon>
+                <span>Edit</span>
+              </div>
+              <div class="company-content">
+                <div fxLayout="row" class="content" fxLayoutAlign="start center" *ngFor="let data of companyData">
+                  <div fxFlex="40%" fxFlex.xs="100%">
+                    {{data.label}}
+                  </div>
+                  <div style="width: 40px; text-align: center;">
+                    :
+                  </div>
+                  <div fxFlex="60%" fxFlex.xs="100%" class="content-rhs">
+                    {{userData[data.key]}}
+
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="Permissions" >
+              <app-permissions [ofUser]="true" [customerId]="userData['id']"> </app-permissions> </mat-tab>
+          </mat-tab-group>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>

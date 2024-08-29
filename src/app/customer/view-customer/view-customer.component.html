@@ -90,7 +90,7 @@
             </mat-tab>
             <mat-tab label="Payment" *ngIf="!hideEdit"> Payment </mat-tab>
             <mat-tab label="Logo" *ngIf="!hideEdit"> Logo </mat-tab>
-            <mat-tab label="Permissions" *ngIf="!hideEdit">
+            <mat-tab label="Permissions" >
               <app-permissions [customerId]="customerData.customer_id"> </app-permissions> </mat-tab>
           </mat-tab-group>
         </mat-grid-tile>

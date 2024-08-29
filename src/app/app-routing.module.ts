@@ -11,6 +11,9 @@ import { PermissionGuard } from './shared/authguard/permission.guard';
 import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
 import { CompanyAdvComponent } from './company-adv/company-adv.component';
 import { PrfilePreviewPopupComponent } from './company-adv/prfile-preview-popup/prfile-preview-popup.component';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { AddUserComponent } from './add-user/add-user.component';
+import { ViewUserComponent } from './view-user/view-user.component';
 //import { DocumentComponent } from './document/document.component';
 const routes: Routes = [
   {
@@ -138,6 +141,30 @@ const routes: Routes = [
   {
     path: 'profile/preview',
     component: PrfilePreviewPopupComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'manage-users',
+    component: ManageUsersComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'manage-user/add',
+    component: AddUserComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'manage-user/edit',
+    component: AddUserComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'manage-user/view',
+    component: ViewUserComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard]
   },

@@ -67,5 +67,6 @@ import { PermissionsComponent } from './permissions/permissions.component';
       useValue: { color: 'primary' }, // Change 'primary' to 'accent' or 'warn' as desired
     },
   ],
+  exports: [PermissionsComponent]
 })
 export class CustomerModule {}

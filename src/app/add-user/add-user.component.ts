@@ -38,7 +38,7 @@ export class AddUserComponent implements OnInit {
     user_type: UserTypeConstant.CUSTOMER_USER,
     user_role: [0, Validators.required],
     user_id: 0,
-    force_password_change: true,
+    force_password_change: false,
   });
 
   constructor(
@@ -48,12 +48,8 @@ export class AddUserComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit(): void {
-    this.customerData = history.state.customerData;
     this.userData = history.state.userData;
 
-    if (!this.customerData && !this.userData) {
-      this.router.navigate(['/customer/view']);
-    }
     if (this.userData) {
       this.userForm.patchValue({
         customer_id: this.userData[0].customer_id,
@@ -83,7 +79,6 @@ export class AddUserComponent implements OnInit {
       let username = inputElement.value;
       try {
         this.isChecking = true;
-        console.log(this.isChecking);
         const isAvailable: boolean =
           await this._authService.checkUsernameAvailable(username);
         this.isUnameAvailable = isAvailable;
@@ -116,7 +111,8 @@ export class AddUserComponent implements OnInit {
   }
   onSubmit() {
     if (this.userForm.valid) {
-      this.userForm.patchValue({ customer_id: this.customerData?.customer_id || this.userData.customer_id  });
+      let userProfile = this._authService.getUserData();
+      this.userForm.patchValue({ customer_id: userProfile.id });
       const formModel: UserModel = this.userForm.value as UserModel;
       const formData = new FormData();
 
@@ -137,9 +133,7 @@ export class AddUserComponent implements OnInit {
             if (res && res.status) {
               console.log(res.message);
               this.showSpinner = false;
-              this.router.navigate(['/customer/view'], {
-                state: { customerData: this.customerData, tabIndex: 1 },
-              });
+              this.router.navigate(['/manage-users']);
             } else {
               this.showSpinner = false;
               console.log(res.message);
@@ -156,8 +150,6 @@ export class AddUserComponent implements OnInit {
     this.userForm.patchValue({ force_password_change: value });
   }
   public handleCancel() {
-    this.router.navigate(['customer/view'], {
-      state: { customerData: this.customerData, tabIndex: 1 },
-    });
+    this.router.navigate(['manage-users']);
   }
 }
