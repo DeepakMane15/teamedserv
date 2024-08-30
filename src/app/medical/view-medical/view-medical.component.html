@@ -6,8 +6,8 @@
     <mat-card-header>
       <mat-card-title>
         <!-- <mat-icon class="action-mat-icon"> keyboard_backspace </mat-icon> Customer/Company Details -->
-        <div class="tab-header-label-container">
-          <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+        <div class="tab-header-label-container" (click)="navigateBack()">
+          <mat-icon class="action-mat-icon" aria-label="back" >keyboard_backspace</mat-icon>
           <span>{{!isSelf ? 'Medical-Team Details' : 'My Profile' }}</span>
         </div>
       </mat-card-title>

@@ -24,6 +24,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 
 @NgModule({
   declarations: [AssignmentListComponent, AddAssignmentComponent, ViewAssignmentComponent],
@@ -48,6 +49,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatGridListModule,
     MatTabsModule,
     FlexLayoutModule,
+    NgxMatTimepickerModule,
     NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [provideNativeDateAdapter()],

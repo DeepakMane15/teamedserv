@@ -450,14 +450,28 @@
                   </mat-form-field>
                 </div>
                 <div class="col">
-                  <mat-form-field class="full-width">
+                  <!-- <mat-form-field class="full-width">
                     <mat-label>Pick-Up Time</mat-label>
                     <input matInput formControlName="pickupTime" />
                     <mat-error
                       *ngIf="ambulanceForm.get('pickupTime')?.invalid && ambulanceForm.get('pickupTime')?.touched">
                       Pick-Up Time is invalid
                     </mat-error>
+                  </mat-form-field> -->
+                  <mat-form-field>
+                    <input matInput [format]="24" formControlName="pickupTime" [ngxMatTimepicker]="pickerS"
+                      placeholder="Pick-Up Time" readonly />
+                    <mat-icon matSuffix (click)="pickerS.open()">
+                      watch_later
+                    </mat-icon>
+                    <mat-error
+                    *ngIf="ambulanceForm.get('pickupTime')?.invalid && ambulanceForm.get('pickupTime')?.touched">
+                    Pick-Up Time is invalid
+                  </mat-error>
                   </mat-form-field>
+                  <ngx-mat-timepicker color="accent" #pickerS></ngx-mat-timepicker>
+
+                  <ngx-mat-timepicker #pickerA dottedMinutesInGap enableKeyboardInput></ngx-mat-timepicker>
                 </div>
               </div>
               <div class="row">
@@ -520,13 +534,27 @@
                   </mat-form-field>
                 </div>
                 <div class="col">
-                  <mat-form-field class="full-width">
+                  <!-- <mat-form-field class="full-width">
                     <mat-label>Destination Time</mat-label>
                     <input matInput formControlName="destTime" />
                     <mat-error *ngIf="ambulanceForm.get('destTime')?.invalid && ambulanceForm.get('destTime')?.touched">
                       Destination Time is invalid
                     </mat-error>
+                  </mat-form-field> -->
+                  <mat-form-field>
+                    <input matInput [format]="24" formControlName="destTime" [ngxMatTimepicker]="pickerS1"
+                      placeholder="Destination Time" readonly />
+                    <mat-icon matSuffix (click)="pickerS1.open()">
+                      watch_later
+                    </mat-icon>
+                    <mat-error
+                    *ngIf="ambulanceForm.get('destTime')?.invalid && ambulanceForm.get('destTime')?.touched">
+                    Destination Time is invalid
+                  </mat-error>
                   </mat-form-field>
+                  <ngx-mat-timepicker color="accent" #pickerS1></ngx-mat-timepicker>
+
+                  <ngx-mat-timepicker #pickerB dottedMinutesInGap enableKeyboardInput></ngx-mat-timepicker>
                 </div>
               </div>
               <div class="row">

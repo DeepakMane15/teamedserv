@@ -52,13 +52,13 @@ export class AddUserComponent implements OnInit {
 
     if (this.userData) {
       this.userForm.patchValue({
-        customer_id: this.userData[0].customer_id,
-        user_id: this.userData[0].id,
-        username: this.userData[0].username,
-        first_name: this.userData[0].first_name,
-        last_name: this.userData[0].last_name,
-        user_type: this.userData[0].user_type,
-        user_role: parseInt(this.userData[0].role),
+        customer_id: this.userData.customer_id,
+        user_id: this.userData.id,
+        username: this.userData.username,
+        first_name: this.userData.first_name,
+        last_name: this.userData.last_name,
+        user_type: this.userData.user_type,
+        user_role: parseInt(this.userData.role),
         force_password_change: false,
       });
       this.userForm.get('username')?.disable();

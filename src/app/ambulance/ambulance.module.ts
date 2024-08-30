@@ -22,6 +22,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     MatTableModule,
     MatTabsModule,
     FlexLayoutModule,
+    NgxMatTimepickerModule,
     NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [provideNativeDateAdapter()],

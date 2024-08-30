@@ -1,0 +1,39 @@
+<main class="permission">
+  <div class="spinner-overlay" *ngIf="showSpinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+  <h2>Add New Category'</h2>
+  <mat-divider></mat-divider>
+
+  <div class="container">
+    <div>
+      <mat-form-field class="full-width">
+        <mat-label>Category Name</mat-label>
+        <input matInput type="text" [(ngModel)]="categoryName" />
+      </mat-form-field>
+      <div class="row flex-end" *ngFor="let permission of permissions">
+        <div class="col">
+          <!-- <mat-checkbox color="primary" (change)="handlePermissionToggle($event,permission)" [(ngModel)]="permission.isEnabled" class="example-margin">{{permission.title}} :</mat-checkbox> -->
+          <p class="title-container"> {{permission.title}} <mat-slide-toggle
+              (change)="handlePermissionToggle($event,permission)" labelPosition="after" color="primary"
+              [(ngModel)]="permission.isEnabled"></mat-slide-toggle></p>
+        </div>
+        <div>
+          <mat-checkbox color="primary" [disabled]="!permission.isEnabled" [(ngModel)]="permission.canView"
+            class="example-margin">View</mat-checkbox>
+        </div>
+        <div>
+          <mat-checkbox color="primary" [disabled]="!permission.isEnabled" [(ngModel)]="permission.canEdit"
+            class="example-margin">Add/Edit</mat-checkbox>
+        </div>
+        <div>
+          <mat-checkbox color="primary" [disabled]="!permission.isEnabled" [(ngModel)]="permission.canDelete"
+            class="example-margin">Delete</mat-checkbox>
+        </div>
+      </div>
+      <div class="action-btns">
+        <button mat-raised-button (click)="handleSave()" [disabled]="isDisabled()">Save</button>
+      </div>
+    </div>
+  </div>
+</main>

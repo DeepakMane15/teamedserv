@@ -6,6 +6,7 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatDialog } from '@angular/material/dialog';
 import { PermissionsComponent } from '../customer/permissions/permissions.component';
 import { CategoryRenameComponent } from '../shared/dialog/category-rename/category-rename.component';
+import { PermissionsPopupComponent } from './permissions-popup/permissions-popup.component';
 
 @Component({
   selector: 'app-manage-permissions',
@@ -178,7 +179,8 @@ export class ManagePermissionsComponent implements OnInit {
   }
 
   public addNewCategory() {
-    const dialogRef = this.dialog.open(PermissionsComponent, {
+    const dialogRef = this.dialog.open(PermissionsPopupComponent, {
+      width: '600px',
       data: {isNewCategory: true}
     });
     dialogRef.afterClosed().subscribe((result) => {

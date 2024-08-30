@@ -79,6 +79,7 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { ViewUserComponent } from './view-user/view-user.component';
 import { CustomerModule } from './customer/customer.module';
+import { PermissionsPopupComponent } from './manage-permissions/permissions-popup/permissions-popup.component';
 // export function momentAdapterFactory() {
 //   return adapterFactory(moment);
 // };
@@ -115,7 +116,8 @@ import { CustomerModule } from './customer/customer.module';
     PrfilePreviewPopupComponent,
     ManageUsersComponent,
     AddUserComponent,
-    ViewUserComponent
+    ViewUserComponent,
+    PermissionsPopupComponent
   ],
   imports: [
     BrowserModule,

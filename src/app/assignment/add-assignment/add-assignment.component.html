@@ -170,7 +170,7 @@
                   </mat-form-field>
                 </div>
                 <div class="col">
-                  <mat-form-field class="full-width">
+                  <!-- <mat-form-field class="full-width">
                     <mat-label>Visit Time</mat-label>
                     <div class="uname-input">
                       <input matInput formControlName="visitTime">
@@ -179,7 +179,21 @@
                       *ngIf="assignmentForm.get('visitTime')?.invalid && assignmentForm.get('visitTime')?.touched">
                       Visit Time is invalid
                     </mat-error>
+                  </mat-form-field> -->
+                  <mat-form-field>
+                    <input matInput [format]="24" formControlName="visitTime" [ngxMatTimepicker]="pickerS"
+                      placeholder="Visit Time" readonly />
+                    <mat-icon matSuffix (click)="pickerS.open()">
+                      watch_later
+                    </mat-icon>
+                    <mat-error
+                    *ngIf="assignmentForm.get('visitTime')?.invalid && assignmentForm.get('visitTime')?.touched">
+                    Visit Time is invalid
+                  </mat-error>
                   </mat-form-field>
+                  <ngx-mat-timepicker color="accent" #pickerS></ngx-mat-timepicker>
+
+                  <ngx-mat-timepicker #pickerA dottedMinutesInGap enableKeyboardInput></ngx-mat-timepicker>
                 </div>
               </div>
               <div class="row">

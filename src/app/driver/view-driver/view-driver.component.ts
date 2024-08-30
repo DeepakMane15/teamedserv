@@ -91,11 +91,11 @@ export class ViewDriverComponent implements OnInit {
   }
 
   navigateBack() {
-    this.router.navigate(['ambulance']);
+    this.router.navigate(['driver']);
   }
 
   navigateToEdit() {
-    this.router.navigate(['/ambulance/edit'], {
+    this.router.navigate(['driver/edit'], {
       state: { driverData: this.driverData },
     });
   }

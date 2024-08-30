@@ -313,6 +313,41 @@ export class AddAmbulanceComponent implements OnInit {
           .join(',')
       );
 
+      let date = this.ambulanceForm.get('paymentDate')?.value;
+
+      if (date) {
+        // Convert the date to the desired format
+        let formattedDate = new Date(date).toISOString().slice(0, 10);
+        formData.delete('paymentDate');
+        formData.append('paymentDate', formattedDate);
+      }
+
+      let date1 = this.ambulanceForm.get('date')?.value;
+
+      if (date1) {
+        // Convert the date to the desired format
+        let formattedDate = new Date(date1).toISOString().slice(0, 10);
+        formData.delete('date');
+        formData.append('date', formattedDate);
+      }
+
+      let pickupDate = this.ambulanceForm.get('pickupDate')?.value;
+
+      if (pickupDate) {
+        // Convert the date to the desired format
+        let formattedDate = new Date(pickupDate).toISOString().slice(0, 10);
+        formData.delete('pickupDate');
+        formData.append('pickupDate', formattedDate);
+      }
+
+      let destDate = this.ambulanceForm.get('destDate')?.value;
+
+      if (destDate) {
+        // Convert the date to the desired format
+        let formattedDate = new Date(destDate).toISOString().slice(0, 10);
+        formData.delete('destDate');
+        formData.append('destDate', formattedDate);
+      }
       this.showSpinner = true;
       this._apiService
         .post(

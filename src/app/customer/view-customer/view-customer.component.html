@@ -6,8 +6,8 @@
     <mat-card-header>
       <mat-card-title>
         <!-- <mat-icon class="action-mat-icon"> keyboard_backspace </mat-icon> Customer/Company Details -->
-        <div class="tab-header-label-container">
-          <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+        <div class="tab-header-label-container" (click)="navigateBack()">
+          <mat-icon class="action-mat-icon" aria-label="back" >keyboard_backspace</mat-icon>
           <span>Customer/Company Details</span>
         </div>
       </mat-card-title>
@@ -18,8 +18,8 @@
         <mat-grid-tile [colspan]="columns ? 2: 1" [rowspan]="1">
           <mat-tab-group [selectedIndex]="defaultTabIndex">
             <mat-tab label="Company">
-              <div class="tab-header-label-container bordered" *ngIf="!hideEdit">
-                <mat-icon class="action-mat-icon colored" aria-label="back" (click)="navigateToEdit()">edit</mat-icon>
+              <div class="tab-header-label-container bordered" (click)="navigateToEdit()" *ngIf="!hideEdit">
+                <mat-icon class="action-mat-icon colored" aria-label="back" >edit</mat-icon>
                 <span>Edit</span>
               </div>
               <div class="company-content">

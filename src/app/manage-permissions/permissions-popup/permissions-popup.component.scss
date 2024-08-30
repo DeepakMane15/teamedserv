@@ -1,0 +1,28 @@
+.permission {
+  margin: 24px;
+
+  h2 {
+    margin-bottom: 0;
+  }
+
+  .container {
+
+    .flex-end {
+      align-items: flex-end;
+    }
+
+    .title-container {
+      display: flex;
+      justify-content: space-between;
+
+      mat-slide-toggle {
+        margin-right: 80px;
+      }
+    }
+  }
+
+  .action-btns {
+    display: flex;
+    margin-top: 25px;
+  }
+}
