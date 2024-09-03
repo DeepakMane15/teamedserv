@@ -6,7 +6,10 @@ import { Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { AppConstants } from 'src/app/common/constants/AppConstants';
-import { ADD_POPUP_COMPONENT, FileType } from 'src/app/common/constants/AppEnum';
+import {
+  ADD_POPUP_COMPONENT,
+  FileType,
+} from 'src/app/common/constants/AppEnum';
 import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
 import { AssignmentTypeModel } from 'src/app/common/models/AssignmentTypeModel';
 import { MedicalTeamModel } from 'src/app/common/models/MedicalTeamModel';
@@ -29,7 +32,7 @@ export class AddAssignmentComponent implements OnInit {
   public patientsMaster: PatientModel[] = [];
   public assignmentsMaster: AssignmentTypeModel[] = [];
   public photoError!: string;
-  public fileType = FileType
+  public fileType = FileType;
 
   assignmentForm = this.fb.group({
     customer_id: 0,
@@ -49,10 +52,13 @@ export class AddAssignmentComponent implements OnInit {
     cPerson2Phone: [''],
     visitDate: ['', Validators.required],
     visitTime: ['', Validators.required],
+    visitTimeOut: ['', Validators.required],
     prNotes: [''],
     pNotes: [''],
     iNotes: [''],
     image: null as File | null,
+    typeOf: ['in-person'], // 'in-person' selected by default
+    visitType: ['scheduled'], // Default value
   });
   public medSettings!: IDropdownSettings;
   public assSettings!: IDropdownSettings;
@@ -116,9 +122,12 @@ export class AddAssignmentComponent implements OnInit {
         cPerson2Phone: this.assignmentData.cphone2,
         visitDate: this.assignmentData.fromdate,
         visitTime: this.assignmentData.time,
+        visitTimeOut: this.assignmentData.timeOut,
         prNotes: this.assignmentData.ptnotes,
         pNotes: this.assignmentData.pnotes,
         iNotes: this.assignmentData.inotes,
+        typeOf: this.assignmentData.typeOf,
+        visitType: this.assignmentData.visitType,
       });
     }
     // this.fetchMedicalTeams();
@@ -293,6 +302,36 @@ export class AddAssignmentComponent implements OnInit {
     return null;
   }
 
+  calculateTimeDifference(): string {
+    const timeIn = this.assignmentForm.get('visitTime')?.value;
+    const timeOut = this.assignmentForm.get('visitTimeOut')?.value;
+
+    if (timeIn && timeOut) {
+      const [hoursIn, minutesIn] = timeIn.split(':').map(Number);
+      const [hoursOut, minutesOut] = timeOut.split(':').map(Number);
+
+      const dateIn = new Date();
+      dateIn.setHours(hoursIn, minutesIn, 0, 0);
+
+      const dateOut = new Date();
+      dateOut.setHours(hoursOut, minutesOut, 0, 0);
+
+      let diff = (dateOut.getTime() - dateIn.getTime()) / 1000 / 60; // difference in minutes
+
+      if (diff < 0) {
+        diff += 24 * 60; // Adjust for negative difference (time out on the next day)
+      }
+
+      const hours = Math.floor(diff / 60);
+      const minutes = diff % 60;
+
+      return `${hours}:${minutes.toString().padStart(2, '0')}`;
+    } else {
+      return '';
+    }
+  }
+
+
   public openAddPopUpForm() {
     const dialogRef = this.dialog.open(AddFormPopupComponent, {
       width: '900px',
@@ -328,9 +367,7 @@ export class AddAssignmentComponent implements OnInit {
           this.setErrorMsg(type, 'size');
           return;
         }
-        this.assignmentForm
-          .get('image')
-          ?.patchValue(file);
+        this.assignmentForm.get('image')?.patchValue(file);
         this.removeErrorMsg(type);
       } else {
         this.setErrorMsg(type, 'type');

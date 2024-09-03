@@ -72,8 +72,20 @@ export class ViewAssignmentComponent implements OnInit {
       type: 'date',
     },
     {
-      label: 'Time',
+      label: 'Time In',
       key: 'time',
+    },
+    {
+      label: 'Time Out',
+      key: 'timeOut',
+    },
+    {
+      label: 'Type Of',
+      key: 'typeOf',
+    },
+    {
+      label: 'Visit Type',
+      key: 'visitType',
     },
     {
       label: 'Payment Date',

@@ -79,6 +79,23 @@
                   </mat-form-field>
                 </div>
               </div>
+              <div class="row">
+                <div class="col">
+                  <label>Type Of: </label>
+                  <mat-radio-group aria-label="Select an option" formControlName="typeOf">
+                    <mat-radio-button value="in-person">in-person</mat-radio-button>
+                    <mat-radio-button value="telephone">telephone</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <div class="col">
+                  <label>Visit Type: </label>
+                  <mat-radio-group aria-label="Select an option" formControlName="visitType">
+                    <mat-radio-button value="scheduled">scheduled</mat-radio-button>
+                    <mat-radio-button value="unscheduled">unscheduled</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+
             </div>
           </mat-expansion-panel>
         </mat-accordion>
@@ -106,12 +123,12 @@
                     Patient is invalid
                   </mat-error>
                   <button mat-raised-button class="center" style="margin: 10px 0 6px 0" color="primary"
-                  (click)="openAddPopUpForm()">
-                  <div>
-                    Add
-                  </div>
-                  <mat-icon>add</mat-icon>
-                </button>
+                    (click)="openAddPopUpForm()">
+                    <div>
+                      Add
+                    </div>
+                    <mat-icon>add</mat-icon>
+                  </button>
                 </div>
                 <div class="col">
                   <mat-form-field class="full-width">
@@ -170,30 +187,44 @@
                   </mat-form-field>
                 </div>
                 <div class="col">
-                  <!-- <mat-form-field class="full-width">
-                    <mat-label>Visit Time</mat-label>
-                    <div class="uname-input">
-                      <input matInput formControlName="visitTime">
-                    </div>
-                    <mat-error
-                      *ngIf="assignmentForm.get('visitTime')?.invalid && assignmentForm.get('visitTime')?.touched">
-                      Visit Time is invalid
-                    </mat-error>
-                  </mat-form-field> -->
                   <mat-form-field>
                     <input matInput [format]="24" formControlName="visitTime" [ngxMatTimepicker]="pickerS"
-                      placeholder="Visit Time" readonly />
+                      placeholder="Time In" readonly />
                     <mat-icon matSuffix (click)="pickerS.open()">
                       watch_later
                     </mat-icon>
                     <mat-error
-                    *ngIf="assignmentForm.get('visitTime')?.invalid && assignmentForm.get('visitTime')?.touched">
-                    Visit Time is invalid
-                  </mat-error>
+                      *ngIf="assignmentForm.get('visitTime')?.invalid && assignmentForm.get('visitTime')?.touched">
+                      Visit Time is invalid
+                    </mat-error>
                   </mat-form-field>
                   <ngx-mat-timepicker color="accent" #pickerS></ngx-mat-timepicker>
 
                   <ngx-mat-timepicker #pickerA dottedMinutesInGap enableKeyboardInput></ngx-mat-timepicker>
+                </div>
+                <div class="col">
+                  <mat-form-field>
+                    <input matInput [format]="24" formControlName="visitTimeOut" [ngxMatTimepicker]="pickerS1"
+                      placeholder="Time Out" readonly />
+                    <mat-icon matSuffix (click)="pickerS1.open()">
+                      watch_later
+                    </mat-icon>
+                    <mat-error
+                      *ngIf="assignmentForm.get('visitTimeOut')?.invalid && assignmentForm.get('visitTimeOut')?.touched">
+                      Visit Time is invalid
+                    </mat-error>
+                  </mat-form-field>
+                  <ngx-mat-timepicker color="accent" #pickerS1></ngx-mat-timepicker>
+
+                  <ngx-mat-timepicker #pickerA dottedMinutesInGap enableKeyboardInput></ngx-mat-timepicker>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Difference</mat-label>
+                    <div class="uname-input">
+                      <input matInput [value]="calculateTimeDifference()" readonly>
+                    </div>
+                  </mat-form-field>
                 </div>
               </div>
               <div class="row">
@@ -222,8 +253,8 @@
         </mat-accordion>
       </div>
 
-       <!-- Professional -->
-       <div class="form-panel">
+      <!-- Professional -->
+      <div class="form-panel">
         <mat-accordion>
           <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
             <mat-expansion-panel-header>
