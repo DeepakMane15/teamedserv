@@ -13,7 +13,7 @@
 .mat-expansion-panel-header-description {
   font-size: 16px;
   line-height: 20px;
-  font-family: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 .form-panel {
@@ -25,6 +25,17 @@
 }
 .action-btns{
   padding: 24px 16px;
+}
+
+.typeOF {
+  ::ng-deep .mdc-form-field .mdc-label {
+    font-size: 16px;
+    line-height: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  font-size: 16px;
+  line-height: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 

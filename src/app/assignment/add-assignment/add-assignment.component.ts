@@ -59,10 +59,12 @@ export class AddAssignmentComponent implements OnInit {
     image: null as File | null,
     typeOf: ['in-person'], // 'in-person' selected by default
     visitType: ['scheduled'], // Default value
+    timezone: ['1', Validators.required]
   });
   public medSettings!: IDropdownSettings;
   public assSettings!: IDropdownSettings;
   public patSettings!: IDropdownSettings;
+  public timezones:any;
 
   constructor(
     private fb: FormBuilder,
@@ -73,6 +75,7 @@ export class AddAssignmentComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.getTimeZones();
     this.medSettings = {
       singleSelection: true,
       idField: 'pid',
@@ -128,6 +131,7 @@ export class AddAssignmentComponent implements OnInit {
         iNotes: this.assignmentData.inotes,
         typeOf: this.assignmentData.typeOf,
         visitType: this.assignmentData.visitType,
+        timezone: this.assignmentData.timezone
       });
     }
     // this.fetchMedicalTeams();
@@ -135,6 +139,26 @@ export class AddAssignmentComponent implements OnInit {
   }
   onItemSelect(item: any) {
     this.handleMedicalSelect(item);
+  }
+  public getTimeZones() {
+    this.showSpinner = true;
+    this._apiService.get(APIConstant.GET_TIMEZONE).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.showSpinner = false;
+          this.timezones = res.data;
+          this.assignmentForm.patchValue({
+            timezone: res.data[0].id
+          })
+        } else {
+          console.error('Timexone fetch failed');
+        }
+      },
+      (error) => {
+        this.showSpinner = false;
+        console.error('Timexone fetch failed', error);
+      }
+    );
   }
   onSelectAll(items: any) {}
   public fetchInitialData() {

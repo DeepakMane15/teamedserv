@@ -79,23 +79,6 @@
                   </mat-form-field>
                 </div>
               </div>
-              <div class="row">
-                <div class="col">
-                  <label>Type Of: </label>
-                  <mat-radio-group aria-label="Select an option" formControlName="typeOf">
-                    <mat-radio-button value="in-person">in-person</mat-radio-button>
-                    <mat-radio-button value="telephone">telephone</mat-radio-button>
-                  </mat-radio-group>
-                </div>
-                <div class="col">
-                  <label>Visit Type: </label>
-                  <mat-radio-group aria-label="Select an option" formControlName="visitType">
-                    <mat-radio-button value="scheduled">scheduled</mat-radio-button>
-                    <mat-radio-button value="unscheduled">unscheduled</mat-radio-button>
-                  </mat-radio-group>
-                </div>
-              </div>
-
             </div>
           </mat-expansion-panel>
         </mat-accordion>
@@ -174,6 +157,22 @@
                 </div>
               </div>
               <div class="row">
+                <div class="col typeOF">
+                  <label>Type Of: </label>
+                  <mat-radio-group aria-label="Select an option" formControlName="typeOf">
+                    <mat-radio-button value="in-person">In-Person</mat-radio-button>
+                    <mat-radio-button value="telephone">Telephone</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <div class="col typeOF">
+                  <label>Visit Type: </label>
+                  <mat-radio-group aria-label="Select an option" formControlName="visitType">
+                    <mat-radio-button value="scheduled">Scheduled</mat-radio-button>
+                    <mat-radio-button value="unscheduled">Unscheduled</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+              <div class="row">
                 <div class="col">
                   <mat-form-field class="full-width">
                     <mat-label>Visit Date</mat-label>
@@ -187,7 +186,22 @@
                   </mat-form-field>
                 </div>
                 <div class="col">
-                  <mat-form-field>
+                  <mat-form-field class="full-width">
+                    <mat-label>TimeZone</mat-label>
+                    <!-- <input matInput formControlName="timezone"> -->
+                    <mat-select formControlName="timezone">
+                      <mat-option *ngFor="let timezone of timezones"
+                        [value]="timezone.id">{{timezone.timezone}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="assignmentForm.get('timezone')?.invalid && assignmentForm.get('timezone')?.touched">
+                      TimeZone is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
                     <input matInput [format]="24" formControlName="visitTime" [ngxMatTimepicker]="pickerS"
                       placeholder="Time In" readonly />
                     <mat-icon matSuffix (click)="pickerS.open()">
@@ -203,7 +217,7 @@
                   <ngx-mat-timepicker #pickerA dottedMinutesInGap enableKeyboardInput></ngx-mat-timepicker>
                 </div>
                 <div class="col">
-                  <mat-form-field>
+                  <mat-form-field class="full-width">
                     <input matInput [format]="24" formControlName="visitTimeOut" [ngxMatTimepicker]="pickerS1"
                       placeholder="Time Out" readonly />
                     <mat-icon matSuffix (click)="pickerS1.open()">
@@ -219,12 +233,19 @@
                   <ngx-mat-timepicker #pickerA dottedMinutesInGap enableKeyboardInput></ngx-mat-timepicker>
                 </div>
                 <div class="col">
-                  <mat-form-field class="full-width">
-                    <mat-label>Difference</mat-label>
-                    <div class="uname-input">
-                      <input matInput [value]="calculateTimeDifference()" readonly>
-                    </div>
-                  </mat-form-field>
+                  <!-- <mat-form-field class="full-width"> -->
+                  <!-- <mat-label>Difference</mat-label> -->
+                  <div class="uname-input">
+                    <input style="height: 38px;
+                      border: none;
+                      margin-top: 5px;
+                      font-size: 16px;
+                      background: #f6ffa4;
+                      padding: 4px;
+                      border-radius: 3px;
+                      color: black;" placeholder="Difference" [value]="calculateTimeDifference()" disabled>
+                  </div>
+                  <!-- </mat-form-field> -->
                 </div>
               </div>
               <div class="row">
@@ -259,7 +280,7 @@
           <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                Professional
+                Medical Member
               </mat-panel-title>
             </mat-expansion-panel-header>
 
