@@ -193,14 +193,15 @@
                       <mat-option *ngFor="let timezone of timezones"
                         [value]="timezone.id">{{timezone.timezone}}</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="assignmentForm.get('timezone')?.invalid && assignmentForm.get('timezone')?.touched">
+                    <mat-error
+                      *ngIf="assignmentForm.get('timezone')?.invalid && assignmentForm.get('timezone')?.touched">
                       TimeZone is required
                     </mat-error>
                   </mat-form-field>
                 </div>
               </div>
-              <div class="row">
-                <div class="col">
+              <div class="row" style="margin-bottom: 20px;">
+                <!-- <div class="col">
                   <mat-form-field class="full-width">
                     <input matInput [format]="24" formControlName="visitTime" [ngxMatTimepicker]="pickerS"
                       placeholder="Time In" readonly />
@@ -231,14 +232,63 @@
                   <ngx-mat-timepicker color="accent" #pickerS1></ngx-mat-timepicker>
 
                   <ngx-mat-timepicker #pickerA dottedMinutesInGap enableKeyboardInput></ngx-mat-timepicker>
+                </div> -->
+                <!-- Time In -->
+                <div class="col">
+                  <div class="time-selector">
+                    <label style="font-size: 16px;
+                    padding-right: 6px;">Time In: </label>
+                    <div class="time-input-container">
+                      <input type="number" class="time-input" [value]="(assignmentForm.get('hourIn')?.value || 12)" formControlName="hourIn" (input)="validateHour('in')"
+                       />
+                      <span>:</span>
+                      <input type="number" class="time-input" formControlName="minuteIn" [value]="(assignmentForm.get('minuteIn')?.value || 0)" (input)="validateMinute('in')"
+                        />
+                      <!-- <input type="text" class="time-input" value="AM"/> -->
+                      <input type="text" class="time-input" formControlName="inAmPm" readonly />
+                      <div class="am-pm-toggle">
+                        <button class="toggle-button" (click)="toggleAmPm('in')">▲</button>
+                        <button class="toggle-button" (click)="toggleAmPm('in')">▼</button>
+                      </div>
+                    </div>
+                  </div>
+                  <mat-error
+                    *ngIf="(assignmentForm.get('hourIn')?.invalid && assignmentForm.get('hourIn')?.touched) || (assignmentForm.get('minuteIn')?.invalid && assignmentForm.get('minuteIn')?.touched)">
+                    Invalid time.
+                  </mat-error>
+                </div>
+
+                <!-- Time Out -->
+                <div class="col">
+                  <div class="time-selector">
+                    <label style="font-size: 16px;
+                    padding-right: 6px;">Time Out: </label>
+                    <div class="time-input-container">
+                      <input type="number" class="time-input" [value]="(assignmentForm.get('hourOut')?.value || 12)" formControlName="hourOut" (input)="validateHour('out')"
+                         />
+                      <span>:</span>
+                      <input type="number" class="time-input" [value]="(assignmentForm.get('minuteOut')?.value || 0)" formControlName="minuteOut"
+                        (input)="validateMinute('out')" />
+                      <input type="text" class="time-input" formControlName="outAmPm" readonly />
+                      <div class="am-pm-toggle">
+                        <button class="toggle-button" (click)="toggleAmPm('out')">▲</button>
+                        <button class="toggle-button" (click)="toggleAmPm('out')">▼</button>
+                      </div>
+                    </div>
+                  </div>
+                  <mat-error
+                    *ngIf="(assignmentForm.get('hourOut')?.invalid && assignmentForm.get('hourOut')?.touched) || (assignmentForm.get('minuteOut')?.invalid && assignmentForm.get('minuteOut')?.touched)">
+                    Invalid time.
+                  </mat-error>
                 </div>
                 <div class="col">
                   <!-- <mat-form-field class="full-width"> -->
                   <!-- <mat-label>Difference</mat-label> -->
                   <div class="uname-input">
-                    <input style="height: 38px;
+                    <label style="font-size: 16px;
+                    padding-right: 10px; width: 101px;">Duration (h:m): </label>
+                    <input style="
                       border: none;
-                      margin-top: 5px;
                       font-size: 16px;
                       background: #f6ffa4;
                       padding: 4px;
@@ -250,7 +300,7 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <div> <span class="text-sb">Attach Patient Image </span>
+                  <div> <span class="text-sb" style="font-size: 16px;">Attach Patient Image </span>
                     <span class="help-text">
                       ( allowed JPG or PNG, max size 1 mb)
                     </span>

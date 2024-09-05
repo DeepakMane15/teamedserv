@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
@@ -33,6 +33,11 @@ export class AddAssignmentComponent implements OnInit {
   public assignmentsMaster: AssignmentTypeModel[] = [];
   public photoError!: string;
   public fileType = FileType;
+  public currentTime = new Date();
+  public currentHour =
+    this.currentTime.getHours() === 0 ? 12 : this.currentTime.getHours();
+  public currentMinute = this.currentTime.getMinutes();
+  public amPm = this.currentTime.getHours() >= 12 ? 'PM' : 'AM';
 
   assignmentForm = this.fb.group({
     customer_id: 0,
@@ -51,21 +56,40 @@ export class AddAssignmentComponent implements OnInit {
     cPerson2Name: [''],
     cPerson2Phone: [''],
     visitDate: ['', Validators.required],
-    visitTime: ['', Validators.required],
-    visitTimeOut: ['', Validators.required],
+    visitTime: [''],
+    visitTimeOut: [''],
     prNotes: [''],
     pNotes: [''],
     iNotes: [''],
     image: null as File | null,
     typeOf: ['in-person'], // 'in-person' selected by default
     visitType: ['scheduled'], // Default value
-    timezone: ['1', Validators.required]
+    timezone: ['1', Validators.required],
+    hourIn: [
+      this.padWithZero(this.currentHour),
+      [Validators.required, Validators.min(0), Validators.max(23)],
+    ],
+    minuteIn: [
+      this.padWithZero(this.currentMinute),
+      [Validators.required, Validators.min(0), Validators.max(59)],
+    ],
+    hourOut: [
+      this.padWithZero(this.currentHour),
+      [Validators.required, Validators.min(0), Validators.max(23)],
+    ],
+    minuteOut: [
+      this.padWithZero(this.currentMinute),
+      [Validators.required, Validators.min(0), Validators.max(59)],
+    ],
+    inAmPm: this.amPm,
+    outAmPm: this.amPm,
   });
   public medSettings!: IDropdownSettings;
   public assSettings!: IDropdownSettings;
   public patSettings!: IDropdownSettings;
-  public timezones:any;
+  public timezones: any;
 
+  timeForm!: FormGroup;
   constructor(
     private fb: FormBuilder,
     private _apiService: ApiService,
@@ -76,6 +100,7 @@ export class AddAssignmentComponent implements OnInit {
 
   ngOnInit() {
     this.getTimeZones();
+    // Initializing the form with default values
     this.medSettings = {
       singleSelection: true,
       idField: 'pid',
@@ -124,19 +149,50 @@ export class AddAssignmentComponent implements OnInit {
         cPerson2Name: this.assignmentData.cperson2,
         cPerson2Phone: this.assignmentData.cphone2,
         visitDate: this.assignmentData.fromdate,
-        visitTime: this.assignmentData.time,
-        visitTimeOut: this.assignmentData.timeOut,
+        // visitTime: this.assignmentData.time,
+        // visitTimeOut: this.assignmentData.timeOut,
         prNotes: this.assignmentData.ptnotes,
         pNotes: this.assignmentData.pnotes,
         iNotes: this.assignmentData.inotes,
         typeOf: this.assignmentData.typeOf,
         visitType: this.assignmentData.visitType,
-        timezone: this.assignmentData.timezone
+        timezone: this.assignmentData.timezone,
+        hourIn: this.convertTo12HourFormat(this.assignmentData.time).hour,
+        minuteIn: this.convertTo12HourFormat(this.assignmentData.time).minute,
+        hourOut: this.convertTo12HourFormat(this.assignmentData.timeOut).hour,
+        minuteOut: this.convertTo12HourFormat(this.assignmentData.timeOut)
+          .minute,
+        inAmPm: this.convertTo12HourFormat(this.assignmentData.time).amPm,
+        outAmPm: this.convertTo12HourFormat(this.assignmentData.timeOut).amPm,
       });
     }
     // this.fetchMedicalTeams();
     this.fetchInitialData();
   }
+
+  private convertTo12HourFormat(time: string) {
+    let [hour, minute] = time.split(':').map(Number); // Split and convert to number
+
+    let amPm = 'AM';
+
+    if (hour >= 12) {
+      amPm = 'PM';
+      if (hour > 12) {
+        hour -= 12; // Convert 13:00, 14:00, etc. to 1:00, 2:00, etc.
+      }
+    }
+
+    if (hour === 0) {
+      hour = 12; // Midnight case
+    }
+
+    return {
+      hour: hour.toString().padStart(2, '0'), // Pad the hour to always have 2 digits
+      minute: minute.toString().padStart(2, '0'), // Pad the minute to always have 2 digits
+      amPm: amPm,
+    };
+  }
+
   onItemSelect(item: any) {
     this.handleMedicalSelect(item);
   }
@@ -148,8 +204,8 @@ export class AddAssignmentComponent implements OnInit {
           this.showSpinner = false;
           this.timezones = res.data;
           this.assignmentForm.patchValue({
-            timezone: res.data[0].id
-          })
+            timezone: res.data[0].id,
+          });
         } else {
           console.error('Timexone fetch failed');
         }
@@ -160,6 +216,60 @@ export class AddAssignmentComponent implements OnInit {
       }
     );
   }
+  padWithZero(value: number | null): string {
+    return value !== null && value < 10 ? `0${value}` : `${value}`;
+  }
+
+  validateHour(type: string | null | undefined) {
+    if (!type) {
+      return;
+    }
+    const hourControl =
+      type === 'in'
+        ? this.assignmentForm.get('hourIn')
+        : this.assignmentForm.get('hourOut');
+    if (hourControl) {
+      let hour = +(hourControl.value || 0);
+
+      // Loop hours between 1 and 12
+      if (hour > 12) {
+        hour = 1;
+      } else if (hour < 1) {
+        hour = 12;
+      }
+
+      // Update the form control with looped hour value
+      hourControl.setValue(this.padWithZero(hour));
+      hourControl.markAsTouched();
+    }
+  }
+
+  // Loop behavior for minutes (0 -> 59 and 59 -> 0)
+  validateMinute(type: string) {
+    const minuteControl =
+      type === 'in'
+        ? this.assignmentForm.get('minuteIn')
+        : this.assignmentForm.get('minuteOut');
+    if (minuteControl) {
+      let minute = +(minuteControl?.value || 0);
+
+      // Loop minutes between 0 and 59
+      if (minute > 59) {
+        minute = 0;
+      } else if (minute < 0) {
+        minute = 59;
+      }
+
+      // Update the form control with looped minute value
+      minuteControl.setValue(this.padWithZero(minute));
+      minuteControl.markAsTouched();
+    }
+  }
+  // Helper function to clamp values within a range
+  clamp(value: number, min: number, max: number): number {
+    return Math.max(min, Math.min(value, max));
+  }
+
   onSelectAll(items: any) {}
   public fetchInitialData() {
     this.showSpinner = true;
@@ -278,6 +388,42 @@ export class AddAssignmentComponent implements OnInit {
           .map((item: any) => item.id)
           .join(',')
       );
+      let hourIn = +(formData.get('hourIn') || 12);
+      let minuteIn = formData.get('minuteIn');
+      let amPmIn = formData.get('inAmPm');
+
+      let hourOut = +(formData.get('hourOut') || 12);
+      let minuteOut = formData.get('minuteOut');
+      let amPmOut = formData.get('outAmPm');
+
+      // Convert 12-hour time to 24-hour format for Time In
+      if (amPmIn === 'PM' && hourIn < 12) {
+        hourIn += 12;
+      } else if (amPmIn === 'AM' && hourIn === 12) {
+        hourIn = 0; // Midnight case
+      }
+
+      let timeIn =
+        hourIn.toString().padStart(2, '0') +
+        ':' +
+        (minuteIn || 0).toString().padStart(2, '0');
+
+      // Convert 12-hour time to 24-hour format for Time Out
+      if (amPmOut === 'PM' && hourOut < 12) {
+        hourOut += 12;
+      } else if (amPmOut === 'AM' && hourOut === 12) {
+        hourOut = 0; // Midnight case
+      }
+
+      let timeOut =
+        hourOut.toString().padStart(2, '0') +
+        ':' +
+        (minuteOut || 0).toString().padStart(2, '0');
+
+      // Set the converted times back into the formData
+      formData.set('visitTime', timeIn);
+      formData.set('visitTimeOut', timeOut);
+
       this.showSpinner = true;
       this._apiService
         .post(
@@ -327,18 +473,20 @@ export class AddAssignmentComponent implements OnInit {
   }
 
   calculateTimeDifference(): string {
-    const timeIn = this.assignmentForm.get('visitTime')?.value;
-    const timeOut = this.assignmentForm.get('visitTimeOut')?.value;
+    const hourIn = this.assignmentForm.get('hourIn')?.value;
+    const hourOut = this.assignmentForm.get('hourOut')?.value;
+    const minuteIn = this.assignmentForm.get('minuteIn')?.value;
+    const minuteOut = this.assignmentForm.get('minuteOut')?.value;
 
-    if (timeIn && timeOut) {
-      const [hoursIn, minutesIn] = timeIn.split(':').map(Number);
-      const [hoursOut, minutesOut] = timeOut.split(':').map(Number);
+    if (hourIn && hourOut && minuteIn && minuteOut) {
+      // const [hoursIn, minutesIn] = timeIn.split(':').map(Number);
+      // const [hoursOut, minutesOut] = timeOut.split(':').map(Number);
 
       const dateIn = new Date();
-      dateIn.setHours(hoursIn, minutesIn, 0, 0);
+      dateIn.setHours(parseInt(hourIn), parseInt(minuteIn), 0, 0);
 
       const dateOut = new Date();
-      dateOut.setHours(hoursOut, minutesOut, 0, 0);
+      dateOut.setHours(parseInt(hourOut), parseInt(minuteOut), 0, 0);
 
       let diff = (dateOut.getTime() - dateIn.getTime()) / 1000 / 60; // difference in minutes
 
@@ -355,6 +503,18 @@ export class AddAssignmentComponent implements OnInit {
     }
   }
 
+  toggleAmPm(type: string) {
+    if (type === 'in') {
+      this.assignmentForm.patchValue({
+        inAmPm: this.assignmentForm.get('inAmPm')?.value === 'AM' ? 'PM' : 'AM',
+      });
+    } else {
+      this.assignmentForm.patchValue({
+        outAmPm:
+          this.assignmentForm.get('outAmPm')?.value === 'AM' ? 'PM' : 'AM',
+      });
+    }
+  }
 
   public openAddPopUpForm() {
     const dialogRef = this.dialog.open(AddFormPopupComponent, {
