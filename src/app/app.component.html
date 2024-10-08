@@ -75,8 +75,8 @@
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
         <div class="navbar-title">
-          <span class="text-title">{{userProfile.type}} |</span>
-          <span>ProfMedServices</span>
+          <!-- <span class="text-title">{{userProfile.type}} |</span> -->
+          <span>{{userProfile.company_name}}</span>
         </div>
         <div class="profile-pic-dropdown" [matMenuTriggerFor]="menu">
           <a class="profile-icon"> <img
@@ -85,11 +85,11 @@
           <mat-menu #menu="matMenu" class="custom-menu">
             <span class="profile-text">Hello {{userProfile?.name}}
               <div style="font-size: 13px; font-weight: 500; text-transform: capitalize;
-    color: #222425;">({{userProfile.type}})!</div>
+    color: #222425;">({{userProfile.email}})!</div>
             </span>
             <button mat-menu-item *ngIf="canAccessCompany()" (click)="redirectToHome()">
               <mat-icon>person</mat-icon>
-              <span>Home (Company)</span>
+              <span>Company Setting</span>
             </button>
             <button mat-menu-item *ngIf="canAccessAccount()" (click)="redirectToHome()">
               <mat-icon>person</mat-icon>

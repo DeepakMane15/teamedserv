@@ -40,7 +40,7 @@
           </div>
         </div>
       </div>
-      <button class="preview-btn" mat-button (click)="navigateToPreview(isPreview)">
+      <button  *ngIf="!pid" class="preview-btn" mat-button (click)="navigateToPreview(isPreview)">
         {{isPreview ? 'Edit Mode' : 'Preview'}}
         <mat-icon>
           {{isPreview ? 'edit' : 'open_in_new'}}

@@ -1,6 +1,10 @@
 main {
   margin: 10px;
 
+  .delete-icon {
+    cursor: pointer;
+  }
+
   .customer-card {
     padding: 10px;
     background-color: #e9ecf2;

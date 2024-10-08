@@ -45,9 +45,13 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Time Zone</mat-label>
-            <div class="uname-input">
+            <!-- <div class="uname-input">
               <input matInput formControlName="timeZone">
-            </div>
+            </div> -->
+            <mat-select formControlName="timezone">
+              <mat-option *ngFor="let timezone of timezones"
+                [value]="timezone.id">{{timezone.timezone}}</mat-option>
+            </mat-select>
             <mat-error *ngIf="patientForm.get('timeZone')?.invalid && patientForm.get('timeZone')?.touched">
               Time Zone is required
             </mat-error>

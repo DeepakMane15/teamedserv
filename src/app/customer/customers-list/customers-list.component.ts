@@ -1,10 +1,12 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { CustomerModel } from 'src/app/common/models/CustomerModel';
+import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/delete-confirm.component';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
@@ -32,14 +34,19 @@ export class CustomersListComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private _apiService: ApiService, private router: Router,
-    private filterService: FilterServiceService, private authService: AuthService) {}
+  constructor(
+    private _apiService: ApiService,
+    private router: Router,
+    private filterService: FilterServiceService,
+    private authService: AuthService,
+    private dialog: MatDialog
+  ) {}
 
-    ngOnInit() {
-      let userProfile = this.authService.getUserData();
-      this.isProf = userProfile.user_type === 'professional';
-      this.fetchCustomers();
-    }
+  ngOnInit() {
+    let userProfile = this.authService.getUserData();
+    this.isProf = userProfile.user_type === 'professional';
+    this.fetchCustomers();
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -47,7 +54,10 @@ export class CustomersListComponent implements AfterViewInit {
   }
 
   applyFilter(): void {
-    this.filteredDataSource = this.filterService.applyFilter(this.dataSource.data, this.searchTerm);
+    this.filteredDataSource = this.filterService.applyFilter(
+      this.dataSource.data,
+      this.searchTerm
+    );
   }
 
   fetchCustomers() {
@@ -76,27 +86,37 @@ export class CustomersListComponent implements AfterViewInit {
   }
   navigateToView(customerData: CustomerModel) {
     this.router.navigate(['/customer/view'], {
-      state: { customerData: customerData, hideEdit: this.isProf, tabIndex:0 },
+      state: { customerData: customerData, hideEdit: this.isProf, tabIndex: 0 },
     });
   }
+
   handleDeleteCustomer(customerId: any) {
-    let fd = new FormData();
-    fd.append('customer_id', customerId);
-    this.showSpinner = true;
-    this._apiService.post(APIConstant.DELETE_CUSTOMER, fd).subscribe(
-      (res: any) => {
-        if (res && res.status) {
-          this.showSpinner = false;
-          console.log(res.message);
-          this.fetchCustomers();
-        } else {
-          this.showSpinner = false;
-        }
-      },
-      (error) => {
-        this.showSpinner = false;
-        console.log('Delete failed', error);
+    const dialogRef = this.dialog.open(DeleteConfirmComponent, {
+      width: '400px',
+      data: { name: 'Customer' },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        let fd = new FormData();
+        fd.append('customer_id', customerId);
+        this.showSpinner = true;
+        this._apiService.post(APIConstant.DELETE_CUSTOMER, fd).subscribe(
+          (res: any) => {
+            if (res && res.status) {
+              this.showSpinner = false;
+              console.log(res.message);
+              this.fetchCustomers();
+            } else {
+              this.showSpinner = false;
+            }
+          },
+          (error) => {
+            this.showSpinner = false;
+            console.log('Delete failed', error);
+          }
+        );
       }
-    );
+    });
   }
 }
